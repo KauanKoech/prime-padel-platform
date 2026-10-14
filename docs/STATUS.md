@@ -1,6 +1,6 @@
 # Estado do projeto
 
-## Checkpoint 3 — integração, documentação e validação concluídas
+## Checkpoint 4 — estrutura da landing concluída
 
 - Export original intacto; 174 arquivos inventariados com tamanho e SHA-256.
 - Todos os arquivos textuais/código lidos; imagens analisadas por metadados, hashes e inspeção visual.
@@ -13,5 +13,9 @@
 - Build, lint, 2 testes de integridade e 28 referências no Edge via file:// aprovados.
 - Backup externo ZIP aberto e 174 hashes verificados: ../backups/prime-padel-design-system-export-20261014-005221.zip.
 - Commit canônico de fase 2: a3f5281. Após commit desta fase, remoção segura do bruto autorizada pelos critérios do usuário.
-- Próximo: landing completa e demonstração de agendamento, depois revisão mobile/desktop.
+- Landing completa em src/App.tsx; conteúdo e dados reais centralizados em src/config.
+- Header responsivo, galeria ampliável, FAQ, navegação, contatos e privacidade funcionais.
+- Fotografias ausentes: painel de marca e galeria de comunicação identificada; nenhum diferencial comercial inventado.
+- Remoção do bruto bloqueada pelo ambiente; pasta preservada e ignorada pelo Git/build.
+- Próximo: substituir o carregamento provisório do agendamento pelo fluxo demonstrativo completo, depois revisão mobile/desktop.
 

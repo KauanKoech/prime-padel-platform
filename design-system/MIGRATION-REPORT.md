@@ -28,7 +28,7 @@ _adherence.oxlintrc.json preservado byte a byte em lint. Não havia configuraç�
 
 Fase 0: build TypeScript/Vite e lint aprovados; 2 testes de integridade (fontes, marca e lint original) aprovados. Os 28 HTMLs foram abertos via file:// no Edge headless sem erros JavaScript, requisições falhas ou imagens quebradas. Caminhos de CSS/fontes/assets verificados. Runtime recompilável localmente.
 
-Commit canônico: a3f5281 (checkpoint 2). Backup externo criado depois desse commit: C:/Users/Cliente/Desktop/JKsoftware/Projetos/backups/prime-padel-design-system-export-20261014-005221.zip. ZIP reaberto; 174 entradas conferidas individualmente contra os SHA-256 do inventário. Critérios de remoção do export bruto satisfeitos; resta registrar execução após o checkpoint 3.
+Commit canônico: a3f5281 (checkpoint 2). Integração validada: ba3f90a (checkpoint 3). Backup externo criado depois do commit canônico: C:/Users/Cliente/Desktop/JKsoftware/Projetos/backups/prime-padel-design-system-export-20261014-005221.zip. ZIP reaberto; 174 entradas conferidas individualmente contra os SHA-256 do inventário. A tentativa de remoção restrita a design-system-export foi bloqueada pelo ambiente. Por segurança, o bruto continua intacto, ignorado pelo Git e fora da aplicação. Nenhum dado bruto foi apagado.
 
 ## Pendências reais
 
