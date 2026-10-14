@@ -19,7 +19,7 @@ for(const f of walk('design-system/references').filter(f=>/\.(html|jsx|css)$/.te
  // Every copied reference gained the references/ path segment.
  s=s.replaceAll('../../styles.css','../../../styles.css').replaceAll('../../assets/','../../../assets/');
  if(f.includes('guidelines'))s=s.replaceAll('../styles.css','../../styles.css').replaceAll('../assets/','../../assets/');
- s=s.replaceAll("const BASE = '../../'","const BASE = '../../../'");
+ s=s.replaceAll("BASE = '../../'","BASE = '../../../'");
  // Reference booking remains illustrative, but never persists personal data.
  s=s.replaceAll('localStorage.getItem(', 'window.referenceMemory.getItem(').replaceAll('localStorage.setItem(', 'window.referenceMemory.setItem(').replaceAll('localStorage.removeItem(', 'window.referenceMemory.removeItem(');
  fs.writeFileSync(f,s);

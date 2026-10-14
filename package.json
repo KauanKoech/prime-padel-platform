@@ -1,0 +1,38 @@
+{
+  "name": "prime-padel-platform",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "lint": "eslint src design-system/components && node scripts/check-design.mjs",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "references:build": "node scripts/build-references.mjs",
+    "references:check": "node scripts/check-references.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "0.460.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.0",
+    "@eslint/js": "9.39.1",
+    "@playwright/test": "1.56.1",
+    "@types/node": "^24.19.2",
+    "@types/react": "18.3.27",
+    "@types/react-dom": "18.3.7",
+    "@vitejs/plugin-react": "4.7.0",
+    "esbuild": "0.25.12",
+    "eslint": "9.39.1",
+    "globals": "16.4.0",
+    "postcss": "8.5.6",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.46.2",
+    "vite": "6.4.1",
+    "vitest": "3.2.6"
+  }
+}

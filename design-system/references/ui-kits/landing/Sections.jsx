@@ -1,6 +1,6 @@
 (() => {
 const { Button, Icon, Logo, Eyebrow, Card, CourtCard, Badge, Accordion, IconButton } = window.PrimePadelDesignSystem_093c26;
-const LP_BASE = '../../';
+const LP_BASE = '../../../';
 
 function HowItWorks() {
   const steps = [

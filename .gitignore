@@ -5,4 +5,5 @@ test-results/
 .local/
 design-system-export/
 *.log
+*.tsbuildinfo
 

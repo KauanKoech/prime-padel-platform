@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 /** Data table that stacks into cards under 720px (stackOnMobile). */
-export interface TableColumn<T = any> {
+export interface TableColumn<T = Record<string, unknown>> {
   key: string;
   header: React.ReactNode;
   align?: 'left' | 'right';
@@ -12,11 +12,11 @@ export interface TableColumn<T = any> {
   width?: number | string;
   render?: (row: T) => React.ReactNode;
 }
-export interface TableProps<T = any> extends React.HTMLAttributes<HTMLDivElement> {
+export interface TableProps<T = Record<string, unknown>> extends React.HTMLAttributes<HTMLDivElement> {
   columns: TableColumn<T>[];
   rows: T[];
   rowKey?: string;
   onRowClick?: (row: T) => void;
   stackOnMobile?: boolean;
 }
-export function Table<T = any>(props: TableProps<T>): JSX.Element;
+export function Table<T = Record<string, unknown>>(props: TableProps<T>): JSX.Element;

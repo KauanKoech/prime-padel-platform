@@ -1,6 +1,6 @@
 # Estado do projeto
 
-## Checkpoint 2 — design system canônico criado
+## Checkpoint 3 — integração, documentação e validação concluídas
 
 - Export original intacto; 174 arquivos inventariados com tamanho e SHA-256.
 - Todos os arquivos textuais/código lidos; imagens analisadas por metadados, hashes e inspeção visual.
@@ -10,6 +10,8 @@
 - Estrutura canônica criada com 26 componentes, 9 imagens de marca, 4 fontes e 28 HTMLs independentes.
 - CSS legado normalizado em 280 tokens rastreáveis; documentação DESIGN.md e relatório criados.
 - Componentes de interação corrigidos; referências sem dependências de CDN.
-- Próximo: validar build/lint/testes, navegador e backup externo antes de remover o bruto.
-- Não remover export até commit, validações e backup externo verificado.
+- Build, lint, 2 testes de integridade e 28 referências no Edge via file:// aprovados.
+- Backup externo ZIP aberto e 174 hashes verificados: ../backups/prime-padel-design-system-export-20261014-005221.zip.
+- Commit canônico de fase 2: a3f5281. Após commit desta fase, remoção segura do bruto autorizada pelos critérios do usuário.
+- Próximo: landing completa e demonstração de agendamento, depois revisão mobile/desktop.
 
