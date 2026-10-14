@@ -1,0 +1,25 @@
+<!-- @dsCard group="Components" viewport="700x400" name="Display" subtitle="Badge, Chip, Eyebrow, Card, Avatar, StatCard, Table" -->
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Display</title>
+<link rel="stylesheet" href="../../../styles.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{padding:24px;background:#fff}.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.col{display:flex;flex-direction:column;gap:16px}.lbl{font:600 11px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--text-tertiary);width:84px;flex:none}.green{background:var(--pp-green-700);border-radius:16px;padding:16px}</style></head><body><div id="root"></div><script type="text/babel">
+const { Badge, Chip, Eyebrow, Card, Avatar, StatCard, Icon } = window.PrimePadelDesignSystem_093c26;
+
+function App(){
+  return <div className="col">
+    <div className="row"><span className="lbl">Status</span><Badge tone="success" dot>Confirmada</Badge><Badge tone="warning" dot>Aguardando pagamento</Badge><Badge tone="danger" dot>Cancelada</Badge><Badge tone="info" dot>Aula</Badge><Badge tone="neutral" dot>Bloqueada</Badge><Badge tone="ball">Horário nobre</Badge></div>
+    <div className="row"><span className="lbl">Chips</span><Chip selected count={18}>Hoje</Chip><Chip>Amanhã</Chip><Chip dot>Coberta</Chip><Chip dot>Panorâmica</Chip><Eyebrow icon={<Icon name="calendar-check" size={14}/>}>Como funciona</Eyebrow><Eyebrow variant="plain">Categoria open</Eyebrow></div>
+    <div style={{display:'grid',gridTemplateColumns:'1.1fr 1fr 1fr',gap:12}}>
+      <Card variant="brand" padding="md"><Eyebrow variant="onBrand">Mensalista</Eyebrow><div style={{font:'400 30px/1.1 var(--font-display)',marginTop:14}}>R$ 590<span style={{font:'400 14px var(--font-sans)',color:'var(--pp-green-200)'}}> / mês</span></div></Card>
+      <StatCard label="Ocupação hoje" value="78" unit="%" progress={78} foot="31 de 40 horários"/>
+      <StatCard label="Receita (out)" value="R$ 48,2k" delta="+12%" foot="vs. setembro" icon={<Icon name="wallet" size={18}/>}/>
+    </div>
+    <div className="row"><span className="lbl">Avatars</span><Avatar name="Marina Couto" size="xs"/><Avatar name="Rafael Lima" size="sm"/><Avatar name="Ana Beatriz" size="md" tone="brand"/><Avatar name="Pedro Alves" size="lg"/><Card variant="tint" padding="sm" style={{display:'flex',gap:10,alignItems:'center'}}><Avatar name="Júlia Prado" size="sm"/><div><div style={{font:'600 14px var(--font-sans)'}}>Júlia Prado</div><div style={{font:'400 13px var(--font-sans)',color:'var(--text-secondary)'}}>Mensalista · 4ª 19h</div></div></Card></div>
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

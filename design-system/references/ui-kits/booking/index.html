@@ -1,0 +1,203 @@
+<!-- @dsCard group="Booking journey" viewport="390x844" name="Booking — mobile flow" subtitle="Date → court → slot → extras → payment → confirmation (click-through)" -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Prime Padel — Reservar quadra</title>
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="booking.css">
+<script src="../../runtime.js"></script>
+</head>
+<body><aside style="padding:var(--space-3);background:var(--bg-warm);font:var(--type-micro)">Referência visual do export. Dados fictícios, não são ofertas da Prime Padel.</aside>
+<div id="root"></div>
+<script>
+(() => {
+  const { Icon } = window.PrimePadelDesignSystem_093c26;
+  const WEEK = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "S\xE1b"];
+  const WEEK_LONG = ["Domingo", "Segunda", "Ter\xE7a", "Quarta", "Quinta", "Sexta", "S\xE1bado"];
+  const MONTHS = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+  const TODAY = new Date(2026, 9, 13);
+  const DAYS = Array.from({ length: 14 }, (_, i) => {
+    const d = new Date(TODAY);
+    d.setDate(d.getDate() + i);
+    return { key: d.toISOString().slice(0, 10), weekday: i === 0 ? "Hoje" : WEEK[d.getDay()], day: d.getDate(), month: MONTHS[d.getMonth()], today: i === 0, date: d };
+  });
+  const COURTS = [
+    { id: "q1", name: "Quadra 1", tags: ["Coberta", "Panor\xE2mica"], peak: 180, off: 150 },
+    { id: "q2", name: "Quadra 2", tags: ["Coberta", "Vidro"], peak: 160, off: 130 },
+    { id: "q3", name: "Quadra 3", tags: ["Coberta", "Vidro"], peak: 160, off: 130 }
+  ];
+  const HOURS = Array.from({ length: 16 }, (_, i) => 7 + i);
+  const PERIODS = { manha: [7, 11], tarde: [12, 17], noite: [18, 22] };
+  const isPeak = (h) => h >= 18 && h <= 21;
+  const rate = (court, h) => isPeak(h) ? court.peak : court.off;
+  const fmt = (n) => "R$ " + n.toLocaleString("pt-BR", { minimumFractionDigits: 0 });
+  const hh = (h) => String(h).padStart(2, "0") + ":00";
+  function taken(dayKey, courtId, h) {
+    let s = 0;
+    const str = dayKey + courtId + h;
+    for (let i = 0; i < str.length; i++) s = (s * 31 + str.charCodeAt(i)) % 997;
+    if (dayKey === DAYS[0].key && h < 11) return true;
+    return s % 3 === 0;
+  }
+  function freeCount(dayKey, courtId) {
+    return HOURS.filter((h) => !taken(dayKey, courtId, h)).length;
+  }
+  function longDate(dayKey) {
+    const d = DAYS.find((x) => x.key === dayKey).date;
+    return WEEK[d.getDay()] + ", " + d.getDate() + " " + MONTHS[d.getMonth()];
+  }
+  const ADDONS = [
+    { id: "raquete", name: "Raquete", price: 20, icon: "shopping-bag", max: 4 },
+    { id: "bolas", name: "Tubo com 3 bolas", price: 35, icon: "circle-dot", max: 3 },
+    { id: "toalha", name: "Toalha", price: 10, icon: "shirt", max: 4 }
+  ];
+  function calc(b) {
+    const court = COURTS.find((c) => c.id === b.court);
+    const base = b.hour != null ? rate(court, b.hour) * (b.duration / 60) : 0;
+    const extras = ADDONS.reduce((s, a) => s + (b.addons[a.id] || 0) * a.price, 0);
+    return { court, base, extras, total: base + extras };
+  }
+  function SummaryRows({ b }) {
+    const { court, base, extras, total } = calc(b);
+    return /* @__PURE__ */ React.createElement("div", { className: "bk-sum" }, /* @__PURE__ */ React.createElement("div", { className: "bk-sum__row" }, /* @__PURE__ */ React.createElement("span", null, "Data"), /* @__PURE__ */ React.createElement("span", null, longDate(b.day))), /* @__PURE__ */ React.createElement("div", { className: "bk-sum__row" }, /* @__PURE__ */ React.createElement("span", null, "Hor\xE1rio"), /* @__PURE__ */ React.createElement("span", null, b.hour != null ? hh(b.hour) + " \xB7 " + b.duration + " min" : "\u2014")), /* @__PURE__ */ React.createElement("div", { className: "bk-sum__row" }, /* @__PURE__ */ React.createElement("span", null, "Quadra"), /* @__PURE__ */ React.createElement("span", null, court.name)), /* @__PURE__ */ React.createElement("div", { className: "bk-sum__row" }, /* @__PURE__ */ React.createElement("span", null, "Quadra (", b.duration, " min)"), /* @__PURE__ */ React.createElement("span", null, b.hour != null ? fmt(base) : "\u2014")), extras ? /* @__PURE__ */ React.createElement("div", { className: "bk-sum__row" }, /* @__PURE__ */ React.createElement("span", null, "Extras"), /* @__PURE__ */ React.createElement("span", null, fmt(extras))) : null, /* @__PURE__ */ React.createElement("div", { className: "bk-sum__total" }, /* @__PURE__ */ React.createElement("span", { style: { font: "500 14px var(--font-sans)", color: "var(--text-secondary)" } }, "Total"), /* @__PURE__ */ React.createElement("b", null, b.hour != null ? fmt(total) : "\u2014")));
+  }
+  Object.assign(window, { BK: { DAYS, COURTS, HOURS, PERIODS, ADDONS, isPeak, rate, fmt, hh, taken, freeCount, longDate, calc }, SummaryRows });
+})();
+
+</script>
+<script>
+(() => {
+  const { Icon, IconButton, Button, DateStrip, TimeSlot, CourtCard, Chip, SegmentedControl, Input, Checkbox, Badge } = window.PrimePadelDesignSystem_093c26;
+  const { DAYS, COURTS, HOURS, PERIODS, ADDONS, isPeak, rate, fmt, hh, taken, freeCount } = window.BK;
+  const BASE = "../../../";
+  function StepTime({ b, set }) {
+    const court = COURTS.find((c) => c.id === b.court);
+    const [p0, p1] = PERIODS[b.period];
+    const hours = HOURS.filter((h) => h >= p0 && h <= p1);
+    const free = hours.filter((h) => !taken(b.day, b.court, h));
+    return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", { className: "bk-block" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__head" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__title" }, "Quando voc\xEA quer jogar?")), /* @__PURE__ */ React.createElement(DateStrip, { days: DAYS, value: b.day, onChange: (day) => set({ day, hour: null }) }), /* @__PURE__ */ React.createElement(SegmentedControl, { block: true, options: [{ value: "60", label: "60 min" }, { value: "90", label: "90 min" }, { value: "120", label: "120 min" }], value: String(b.duration), onChange: (v) => set({ duration: Number(v) }) })), /* @__PURE__ */ React.createElement("div", { className: "bk-block" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__head" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__title" }, "Quadra"), /* @__PURE__ */ React.createElement("span", { style: { font: "400 13px var(--font-sans)", color: "var(--text-secondary)" } }, "Todas cobertas")), /* @__PURE__ */ React.createElement("div", { className: "bk-courts" }, COURTS.map((c) => /* @__PURE__ */ React.createElement(
+      CourtCard,
+      {
+        key: c.id,
+        compact: true,
+        name: c.name,
+        tags: c.tags,
+        basePath: BASE,
+        selected: b.court === c.id,
+        price: fmt(c.off) + "+",
+        availability: freeCount(b.day, c.id) + " hor\xE1rios livres",
+        onClick: () => set({ court: c.id, hour: null })
+      }
+    )))), /* @__PURE__ */ React.createElement("div", { className: "bk-block" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__head" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "bk-block__title" }, "Hor\xE1rio"), /* @__PURE__ */ React.createElement("div", { className: "bk-block__sub" }, "Pre\xE7o por ", b.duration, " min na ", court.name))), /* @__PURE__ */ React.createElement("div", { className: "bk-row" }, [["manha", "Manh\xE3", "sunrise"], ["tarde", "Tarde", "sun"], ["noite", "Noite", "moon"]].map(([k, l, ic]) => /* @__PURE__ */ React.createElement(Chip, { key: k, selected: b.period === k, icon: /* @__PURE__ */ React.createElement(Icon, { name: ic, size: 16 }), onClick: () => set({ period: k, hour: null }) }, l))), free.length ? /* @__PURE__ */ React.createElement("div", { className: "bk-slots" }, hours.map((h) => {
+      const t = taken(b.day, b.court, h);
+      return /* @__PURE__ */ React.createElement(
+        TimeSlot,
+        {
+          key: h,
+          time: hh(h),
+          peak: isPeak(h),
+          meta: t ? "Reservado" : fmt(rate(court, h) * b.duration / 60),
+          status: t ? "unavailable" : b.hour === h ? "selected" : "available",
+          onClick: () => set({ hour: h })
+        }
+      );
+    })) : /* @__PURE__ */ React.createElement("div", { className: "bk-empty" }, "Nenhum hor\xE1rio livre neste per\xEDodo.", /* @__PURE__ */ React.createElement("br", null), "Que tal outro turno ou outra quadra?"), /* @__PURE__ */ React.createElement("div", { className: "bk-legend" }, /* @__PURE__ */ React.createElement("span", null, /* @__PURE__ */ React.createElement("i", { style: { background: "var(--pp-ball)" } }), "Hor\xE1rio nobre (18h\u201322h)"), /* @__PURE__ */ React.createElement("span", null, /* @__PURE__ */ React.createElement("i", { style: { background: "var(--pp-neutral-300)" } }), "Reservado"))));
+  }
+  function StepDetails({ b, set }) {
+    const setQty = (id, d) => {
+      const a = ADDONS.find((x) => x.id === id);
+      const v = Math.max(0, Math.min(a.max, (b.addons[id] || 0) + d));
+      set({ addons: Object.assign({}, b.addons, { [id]: v }) });
+    };
+    return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", { className: "bk-block" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__head" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "bk-block__title" }, "Quem vai jogar?"), /* @__PURE__ */ React.createElement("div", { className: "bk-block__sub" }, "Opcional \u2014 ajuda a recep\xE7\xE3o no check-in."))), /* @__PURE__ */ React.createElement("div", { className: "bk-grid2" }, [0, 1, 2, 3].map((i) => /* @__PURE__ */ React.createElement(Input, { key: i, size: "sm", placeholder: i === 0 ? "Voc\xEA" : "Jogador " + (i + 1), iconLeft: /* @__PURE__ */ React.createElement(Icon, { name: "user", size: 16 }), value: b.players[i] || "", onChange: (e) => {
+      const p = b.players.slice();
+      p[i] = e.target.value;
+      set({ players: p });
+    } })))), /* @__PURE__ */ React.createElement("div", { className: "bk-block" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__head" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "bk-block__title" }, "Extras"), /* @__PURE__ */ React.createElement("div", { className: "bk-block__sub" }, "Retire na recep\xE7\xE3o ao chegar."))), /* @__PURE__ */ React.createElement("div", null, ADDONS.map((a) => /* @__PURE__ */ React.createElement("div", { key: a.id, className: "bk-addon" }, /* @__PURE__ */ React.createElement("span", { className: "bk-addon__ic" }, /* @__PURE__ */ React.createElement(Icon, { name: a.icon, size: 20 })), /* @__PURE__ */ React.createElement("div", { className: "bk-addon__txt" }, /* @__PURE__ */ React.createElement("div", { className: "bk-addon__name" }, a.name), /* @__PURE__ */ React.createElement("div", { className: "bk-addon__price" }, fmt(a.price), " cada")), /* @__PURE__ */ React.createElement("div", { className: "bk-qty" }, /* @__PURE__ */ React.createElement(IconButton, { variant: "secondary", size: "md", icon: /* @__PURE__ */ React.createElement(Icon, { name: "minus", size: 18 }), label: "Menos " + a.name, disabled: !b.addons[a.id], onClick: () => setQty(a.id, -1) }), /* @__PURE__ */ React.createElement("b", null, b.addons[a.id] || 0), /* @__PURE__ */ React.createElement(IconButton, { variant: "secondary", size: "md", icon: /* @__PURE__ */ React.createElement(Icon, { name: "plus", size: 18 }), label: "Mais " + a.name, onClick: () => setQty(a.id, 1) })))))), /* @__PURE__ */ React.createElement("div", { className: "bk-block" }, /* @__PURE__ */ React.createElement(Input, { label: "Observa\xE7\xF5es", optional: true, multiline: true, rows: 3, placeholder: "Ex.: anivers\xE1rio, preciso de bola extra\u2026", value: b.notes, onChange: (e) => set({ notes: e.target.value }) })));
+  }
+  function StepPayment({ b, set, errors }) {
+    const opts = [["pix", "Pix", "Aprova\xE7\xE3o imediata", "qr-code", true], ["card", "Cart\xE3o de cr\xE9dito", "Visa, Master, Elo", "credit-card"], ["arena", "Pagar na arena", "Garantia com cart\xE3o", "store"]];
+    return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", { className: "bk-block" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__head" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__title" }, "Seus dados")), /* @__PURE__ */ React.createElement(Input, { label: "Nome completo", placeholder: "Como devemos te chamar?", value: b.name, onChange: (e) => set({ name: e.target.value }), error: errors.name }), /* @__PURE__ */ React.createElement("div", { className: "bk-grid2" }, /* @__PURE__ */ React.createElement(Input, { label: "WhatsApp", placeholder: "(11) 90000-0000", inputMode: "tel", iconLeft: /* @__PURE__ */ React.createElement(Icon, { name: "phone", size: 18 }), value: b.phone, onChange: (e) => set({ phone: e.target.value }), error: errors.phone, hint: "A confirma\xE7\xE3o chega por aqui" }), /* @__PURE__ */ React.createElement(Input, { label: "E-mail", optional: true, placeholder: "voce@email.com", type: "email", value: b.email, onChange: (e) => set({ email: e.target.value }) }))), /* @__PURE__ */ React.createElement("div", { className: "bk-block" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__head" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__title" }, "Pagamento")), /* @__PURE__ */ React.createElement("div", { className: "bk-pay", role: "radiogroup" }, opts.map(([k, n, d, ic, rec]) => /* @__PURE__ */ React.createElement("div", { key: k, role: "radio", "aria-checked": b.pay === k, tabIndex: 0, className: "bk-payopt" + (b.pay === k ? " bk-payopt--on" : ""), onClick: () => set({ pay: k }) }, /* @__PURE__ */ React.createElement("span", { className: "bk-payopt__ic" }, /* @__PURE__ */ React.createElement(Icon, { name: ic, size: 20 })), /* @__PURE__ */ React.createElement("div", { className: "bk-payopt__txt" }, /* @__PURE__ */ React.createElement("div", { className: "bk-payopt__name" }, n, rec ? /* @__PURE__ */ React.createElement(Badge, { tone: "brand", size: "sm" }, "Recomendado") : null), /* @__PURE__ */ React.createElement("div", { className: "bk-payopt__desc" }, d)), /* @__PURE__ */ React.createElement("span", { className: "bk-dot" })))), b.pay === "card" ? /* @__PURE__ */ React.createElement("div", { className: "bk-grid2" }, /* @__PURE__ */ React.createElement("div", { style: { gridColumn: "1/-1" } }, /* @__PURE__ */ React.createElement(Input, { label: "N\xFAmero do cart\xE3o", placeholder: "0000 0000 0000 0000", inputMode: "numeric", iconLeft: /* @__PURE__ */ React.createElement(Icon, { name: "credit-card", size: 18 }) })), /* @__PURE__ */ React.createElement(Input, { label: "Validade", placeholder: "MM/AA" }), /* @__PURE__ */ React.createElement(Input, { label: "CVV", placeholder: "123" })) : null, /* @__PURE__ */ React.createElement("div", { className: "bk-note" }, /* @__PURE__ */ React.createElement(Icon, { name: "info", size: 18 }), /* @__PURE__ */ React.createElement("span", null, /* @__PURE__ */ React.createElement("b", null, "Cancelamento gr\xE1tis at\xE9 24h antes."), " Depois disso, o valor fica como cr\xE9dito na arena.")), /* @__PURE__ */ React.createElement(Checkbox, { label: "Li e concordo com a pol\xEDtica de reservas", checked: b.terms, onChange: (e) => set({ terms: e.target.checked }) }), errors.terms ? /* @__PURE__ */ React.createElement("span", { style: { font: "400 13px var(--font-sans)", color: "var(--pp-danger-600)", marginTop: -8 } }, errors.terms) : null));
+  }
+  function StepDone({ b, onRestart }) {
+    const { court, total } = window.BK.calc(b);
+    return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", { className: "bk-done" }, /* @__PURE__ */ React.createElement("span", { className: "bk-done__circle" }), /* @__PURE__ */ React.createElement("span", { className: "bk-done__check" }, /* @__PURE__ */ React.createElement(Icon, { name: "check", size: 30, strokeWidth: 2.25 })), /* @__PURE__ */ React.createElement("h1", null, "Reserva confirmada!"), /* @__PURE__ */ React.createElement("p", null, "Tudo certo, ", (b.name || "jogador").split(" ")[0], ". Enviamos os detalhes para o seu WhatsApp."), /* @__PURE__ */ React.createElement("div", { className: "bk-ticket" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("small", null, "Data"), /* @__PURE__ */ React.createElement("b", null, window.BK.longDate(b.day))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("small", null, "Hor\xE1rio"), /* @__PURE__ */ React.createElement("b", null, hh(b.hour), " \xB7 ", b.duration, " min")), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("small", null, "Quadra"), /* @__PURE__ */ React.createElement("b", null, court.name)), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("small", null, "Total pago"), /* @__PURE__ */ React.createElement("b", null, fmt(total))))), /* @__PURE__ */ React.createElement("div", { className: "bk-block" }, /* @__PURE__ */ React.createElement(Button, { variant: "primary", size: "lg", block: true, iconLeft: /* @__PURE__ */ React.createElement(Icon, { name: "calendar-plus", size: 18 }) }, "Adicionar \xE0 agenda"), /* @__PURE__ */ React.createElement(Button, { variant: "secondary", size: "lg", block: true, iconLeft: /* @__PURE__ */ React.createElement(Icon, { name: "share-2", size: 18 }) }, "Enviar para o grupo"), /* @__PURE__ */ React.createElement(Button, { as: "a", href: "../landing/index.html", variant: "ghost", block: true, onClick: onRestart }, "Voltar ao in\xEDcio")));
+  }
+  Object.assign(window, { StepTime, StepDetails, StepPayment, StepDone });
+})();
+
+</script>
+<script>
+(() => {
+  const { Icon, IconButton, Button, Logo, ProgressSteps, Toast } = window.PrimePadelDesignSystem_093c26;
+  const { DAYS, hh, fmt, calc, longDate } = window.BK;
+  const STEPS = ["Hor\xE1rio", "Detalhes", "Pagamento", "Confirma\xE7\xE3o"];
+  const INITIAL = { day: DAYS[0].key, duration: 90, court: "q1", period: "noite", hour: null, players: ["", "", "", ""], addons: {}, notes: "", name: "", phone: "", email: "", pay: "pix", terms: false };
+  function BookingApp() {
+    const saved = (() => {
+      try {
+        const s = JSON.parse(window.referenceMemory.getItem("pp-booking-step"));
+        return s && s.step < 3 ? s : null;
+      } catch (e) {
+        return null;
+      }
+    })();
+    const [step, setStep] = React.useState(saved ? saved.step : 0);
+    const [b, setB] = React.useState(saved ? Object.assign({}, INITIAL, saved.b) : INITIAL);
+    const [errors, setErrors] = React.useState({});
+    const [busy, setBusy] = React.useState(false);
+    const [toast, setToast] = React.useState(false);
+    const set = (patch) => setB((prev) => Object.assign({}, prev, patch));
+    React.useEffect(() => {
+      window.referenceMemory.setItem("pp-booking-step", JSON.stringify({ step, b }));
+    }, [step, b]);
+    React.useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [step]);
+    const { total } = calc(b);
+    const canNext = step === 0 ? b.hour != null : true;
+    const ctaLabel = step === 0 ? "Continuar" : step === 1 ? "Ir para pagamento" : b.pay === "arena" ? "Confirmar reserva" : "Pagar " + fmt(total);
+    function next() {
+      if (step === 2) {
+        const e = {};
+        if (!b.name.trim()) e.name = "Informe seu nome";
+        if (b.phone.replace(/\D/g, "").length < 10) e.phone = "Informe um WhatsApp v\xE1lido";
+        if (!b.terms) e.terms = "Aceite a pol\xEDtica para continuar";
+        setErrors(e);
+        if (Object.keys(e).length) return;
+        setBusy(true);
+        setTimeout(() => {
+          setBusy(false);
+          setStep(3);
+          setToast(true);
+          setTimeout(() => setToast(false), 3600);
+        }, 900);
+        return;
+      }
+      setStep((s) => s + 1);
+    }
+    function back() {
+      if (step === 0) {
+        window.location.href = "../landing/index.html";
+        return;
+      }
+      setStep((s) => s - 1);
+    }
+    function restart() {
+      window.referenceMemory.removeItem("pp-booking-step");
+    }
+    const meta = b.hour != null ? longDate(b.day) + " \xB7 " + hh(b.hour) + " \xB7 " + b.duration + " min" : "Escolha um hor\xE1rio";
+    const cta = /* @__PURE__ */ React.createElement(Button, { size: "lg", disabled: !canNext || busy, onClick: next, iconRight: busy ? /* @__PURE__ */ React.createElement("span", { className: "bk-spin" }) : /* @__PURE__ */ React.createElement(Icon, { name: "arrow-right", size: 18 }) }, busy ? "Processando" : ctaLabel);
+    return /* @__PURE__ */ React.createElement("div", { className: "bk" }, /* @__PURE__ */ React.createElement("header", { className: "bk-top" }, /* @__PURE__ */ React.createElement("div", { className: "bk-top__in" }, /* @__PURE__ */ React.createElement("div", { className: "bk-top__row" }, step < 3 ? /* @__PURE__ */ React.createElement(IconButton, { variant: "secondary", icon: /* @__PURE__ */ React.createElement(Icon, { name: "chevron-left", size: 20 }), label: "Voltar", onClick: back }) : null, /* @__PURE__ */ React.createElement("div", { className: "bk-top__title" }, step < 3 ? "Reservar quadra" : "Reserva"), /* @__PURE__ */ React.createElement("span", { className: "bk-top__logo" }, /* @__PURE__ */ React.createElement(Logo, { color: "green", height: 34, basePath: "../../" })), /* @__PURE__ */ React.createElement(IconButton, { variant: "ghost", icon: /* @__PURE__ */ React.createElement(Icon, { name: "message-circle", size: 20 }), label: "Ajuda pelo WhatsApp" })), step < 3 ? /* @__PURE__ */ React.createElement(ProgressSteps, { steps: STEPS, current: step }) : null)), /* @__PURE__ */ React.createElement("div", { className: "bk-layout" }, /* @__PURE__ */ React.createElement("main", { className: "bk-main" }, step === 0 ? /* @__PURE__ */ React.createElement(StepTime, { b, set }) : null, step === 1 ? /* @__PURE__ */ React.createElement(StepDetails, { b, set }) : null, step === 2 ? /* @__PURE__ */ React.createElement(StepPayment, { b, set: (p) => {
+      set(p);
+      setErrors({});
+    }, errors }) : null, step === 3 ? /* @__PURE__ */ React.createElement(StepDone, { b, onRestart: restart }) : null), step < 3 ? /* @__PURE__ */ React.createElement("aside", { className: "bk-aside" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block" }, /* @__PURE__ */ React.createElement("div", { className: "bk-block__title" }, "Resumo"), /* @__PURE__ */ React.createElement(SummaryRows, { b }), cta, /* @__PURE__ */ React.createElement("span", { style: { font: "400 12px var(--font-sans)", color: "var(--text-tertiary)", textAlign: "center" } }, "Cancelamento gr\xE1tis at\xE9 24h antes"))) : null), step < 3 ? /* @__PURE__ */ React.createElement("div", { className: "bk-bar" }, /* @__PURE__ */ React.createElement("div", { className: "bk-bar__info" }, /* @__PURE__ */ React.createElement("div", { className: "bk-bar__price" }, b.hour != null ? fmt(total) : "\u2014"), /* @__PURE__ */ React.createElement("div", { className: "bk-bar__meta" }, meta)), cta) : null, toast ? /* @__PURE__ */ React.createElement("div", { className: "bk-toast" }, /* @__PURE__ */ React.createElement(Toast, { title: "Enviado para o seu WhatsApp", description: "Voc\xEA recebe um lembrete 2h antes do jogo.", onClose: () => setToast(false) })) : null);
+  }
+  ReactDOM.createRoot(document.getElementById("root")).render(/* @__PURE__ */ React.createElement(BookingApp, null));
+})();
+
+</script>
+</body>
+</html>

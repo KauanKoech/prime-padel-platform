@@ -1,0 +1,28 @@
+<!-- @dsCard group="Components" viewport="700x460" name="Booking" subtitle="DateStrip, TimeSlot, CourtCard" -->
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Booking</title>
+<link rel="stylesheet" href="../../../styles.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{padding:24px;background:#fff}.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.col{display:flex;flex-direction:column;gap:16px}.lbl{font:600 11px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--text-tertiary);width:84px;flex:none}.green{background:var(--pp-green-700);border-radius:16px;padding:16px}</style></head><body><div id="root"></div><script type="text/babel">
+const { DateStrip, TimeSlot, CourtCard, Button, Badge } = window.PrimePadelDesignSystem_093c26;
+
+const days=[['Seg',12,true],['Ter',13],['Qua',14],['Qui',15],['Sex',16],['Sáb',17],['Dom',18],['Seg',19]].map(([w,d,dis])=>({key:String(d),weekday:w,day:d,month:'out',today:d===13,disabled:dis}));
+function App(){
+  const [day,setDay]=React.useState('13');const [slot,setSlot]=React.useState('19:00');
+  const slots=[['17:00','R$ 140'],['18:00','R$ 180',1],['19:00','R$ 180',1],['20:00',null,0,'unavailable'],['21:00','R$ 180',1],['22:00','R$ 140']];
+  return <div style={{display:'grid',gridTemplateColumns:'1fr 260px',gap:20}}>
+    <div className="col">
+      <DateStrip days={days} value={day} onChange={setDay}/>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:8}}>
+        {slots.map(([t,m,p,s])=><TimeSlot key={t} time={t} meta={m} peak={!!p} status={s||(slot===t?'selected':'available')} onClick={()=>setSlot(t)}/>)}
+      </div>
+      <CourtCard compact selected name="Quadra 1" tags={['Coberta','Panorâmica']} price="R$ 180" availability="Disponível às 19:00" basePath="../../" onClick={()=>{}}/>
+    </div>
+    <CourtCard name="Quadra 2" tags={['Coberta','Vidro']} price="R$ 160" availability="6 horários livres hoje" flag={<Badge tone="ball" size="sm">Mais reservada</Badge>} basePath="../../"><Button size="sm">Reservar</Button></CourtCard>
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>
