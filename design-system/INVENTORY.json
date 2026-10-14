@@ -1,0 +1,1505 @@
+{
+  "date": "2026-10-14",
+  "source": "design-system-export",
+  "files": [
+    {
+      "path": "_adherence.oxlintrc.json",
+      "bytes": 26585,
+      "sha256": "D11DC04248CE92779CE6E9D67EAB1B9BD2FC5FA4AE78D2B2C522A0F2B91DC056",
+      "classification": "canônico",
+      "destination": "design-system/lint/_adherence.oxlintrc.json",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "_ds_bundle.js",
+      "bytes": 125471,
+      "sha256": "ECBC694FABBA61B679FD05D315BBE39E8F0A4FB67C6207BDA0C28CD64A9BE014",
+      "classification": "interno da ferramenta",
+      "destination": null,
+      "reason": "Artefato gerado, sem implementação canônica independente; mantido apenas no backup bruto."
+    },
+    {
+      "path": "_ds_manifest.json",
+      "bytes": 24680,
+      "sha256": "BEF491D79980222A1E4D8C58DF7B853CF3DF6C4FF682F17B68E681FCF0C8C1FD",
+      "classification": "interno da ferramenta",
+      "destination": null,
+      "reason": "Artefato gerado, sem implementação canônica independente; mantido apenas no backup bruto."
+    },
+    {
+      "path": ".thumbnail",
+      "bytes": 10314,
+      "sha256": "7145F4581FE9FAE979F221391063516E7823DE4CD5309E054AA619276796E2E3",
+      "imageError": "Exception calling \"FromFile\" with \"1\" argument(s): \"Out of memory.\"",
+      "classification": "interno da ferramenta",
+      "destination": null,
+      "reason": "Artefato gerado, sem implementação canônica independente; mantido apenas no backup bruto."
+    },
+    {
+      "path": "readme.md",
+      "bytes": 12123,
+      "sha256": "0D80932FA47568A564FF4FD269A43A5A83C4DB345C393C132189669F455D3DD5",
+      "classification": "referência visual",
+      "destination": "design-system/references/export-readme.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "SKILL.md",
+      "bytes": 1336,
+      "sha256": "078078ECDB80C32C8B7A62F81D6727671ECD94ECB43B2B046A99D294EF019155",
+      "classification": "referência visual",
+      "destination": "design-system/references/export-SKILL.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "styles.css",
+      "bytes": 217,
+      "sha256": "9ED05C81314838F5995BACA81C3C25A9E4399904F0CA5D1941F8F82A86066EFA",
+      "classification": "canônico",
+      "destination": "design-system/styles.css",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "thumbnail.html",
+      "bytes": 788,
+      "sha256": "4A07DDD1139E30D02E2AE5CA74AA9F23A222CAC5937DF7A1A4E00B9FF26E6539",
+      "classification": "interno da ferramenta",
+      "destination": null,
+      "reason": "Artefato gerado, sem implementação canônica independente; mantido apenas no backup bruto."
+    },
+    {
+      "path": "assets/brand/day-use-post.jpg",
+      "bytes": 110848,
+      "sha256": "41EC64C6F2C9D2B76EB2CD64C769DE16783FE73E54008CFB5F09DAB70942AF76",
+      "width": 731,
+      "height": 842,
+      "format": "Jpeg",
+      "classification": "canônico",
+      "destination": "design-system/assets/brand/day-use-post.jpg",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "assets/brand/open-prime-padel-post.jpg",
+      "bytes": 63691,
+      "sha256": "32C523391189912F849EEF6DA07C6D502DA036F57D0E172CC30C587F74D0E480",
+      "width": 694,
+      "height": 543,
+      "format": "Jpeg",
+      "classification": "canônico",
+      "destination": "design-system/assets/brand/open-prime-padel-post.jpg",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "assets/brand/prime-cup-logo.jpg",
+      "bytes": 39640,
+      "sha256": "CFEF6FAF65AFA49886493EBD2A7CC7A49B3885E9F07572F5D529EDCBCE697CD5",
+      "width": 477,
+      "height": 327,
+      "format": "Jpeg",
+      "classification": "canônico",
+      "destination": "design-system/assets/brand/prime-cup-logo.jpg",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "assets/brand/prime-padel-logo-original.jpg",
+      "bytes": 8765,
+      "sha256": "0682BFD50FBDAA752B662526A14E86267A7A25C4872064ACEFD98196A6459997",
+      "width": 150,
+      "height": 150,
+      "format": "Jpeg",
+      "classification": "canônico",
+      "destination": "design-system/assets/brand/prime-padel-logo-original.jpg",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "assets/logo/open-prime-padel-green.png",
+      "bytes": 128534,
+      "sha256": "833D01CDF97C2C713E477ABF355E06251E1EE6AD62A675F9B447B7BB255AF91C",
+      "width": 713,
+      "height": 565,
+      "format": "Png",
+      "classification": "canônico",
+      "destination": "design-system/assets/brand/open-prime-padel-green.png",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "assets/logo/open-prime-padel-white.png",
+      "bytes": 99637,
+      "sha256": "95A1D194D1F314D46AB271A2CB6AAF9DF8B0C5AD6DDE6A048B77EBDE739684A4",
+      "width": 713,
+      "height": 565,
+      "format": "Png",
+      "classification": "canônico",
+      "destination": "design-system/assets/brand/open-prime-padel-white.png",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "assets/logo/prime-padel-green.png",
+      "bytes": 87814,
+      "sha256": "016F0417CC06BB347147E4AEED64CD0C1D2FA1FE6562E971AC422A871271B4A2",
+      "width": 554,
+      "height": 269,
+      "format": "Png",
+      "classification": "canônico",
+      "destination": "design-system/assets/brand/prime-padel-green.png",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "assets/logo/prime-padel-ink.png",
+      "bytes": 86548,
+      "sha256": "98A9F1C746305B420E847D3456A74FE6506F575B8C047A0222D5CEAE834698CD",
+      "width": 554,
+      "height": 269,
+      "format": "Png",
+      "classification": "canônico",
+      "destination": "design-system/assets/brand/prime-padel-ink.png",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "assets/logo/prime-padel-white.png",
+      "bytes": 62257,
+      "sha256": "2ABA798EFF8090C11C8F45388638A7F193FA6BFE0F859430E7DEA2939F3BB05C",
+      "width": 554,
+      "height": 269,
+      "format": "Png",
+      "classification": "canônico",
+      "destination": "design-system/assets/brand/prime-padel-white.png",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/pp-components.css",
+      "bytes": 28777,
+      "sha256": "03867FE7D37DEC88546333778E46A32B6DA7BE330FB3F000898C75CAE09C93D7",
+      "classification": "canônico",
+      "destination": "design-system/components/pp-components.css",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/actions/actions.card.html",
+      "bytes": 2925,
+      "sha256": "7993931541049618A9D97C417F302929F732E316B17631970A4C4EDC063BFDD7",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/actions/actions.card.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/actions/Button.d.ts",
+      "bytes": 885,
+      "sha256": "8621B8F33B85050A5B67BAF120F02E29BDC9B04E05B8E8AF7D782A39EF1BE710",
+      "classification": "canônico",
+      "destination": "design-system/components/actions/Button.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/actions/Button.jsx",
+      "bytes": 703,
+      "sha256": "678CDA15C6F94224C55A4F12A93F03A881BAC30D256F42384033EBC22EA5C3CB",
+      "classification": "canônico",
+      "destination": "design-system/components/actions/Button.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/actions/Button.prompt.md",
+      "bytes": 562,
+      "sha256": "56C047995877AE311C3BDA8B5D76595A51965C1835AEF129996E171FFB035F89",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/actions/Button.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/actions/IconButton.d.ts",
+      "bytes": 562,
+      "sha256": "6624B437EE26E7FC56A089A218EA6E0EF90C035A93FF997676888FFFCD9BF6A4",
+      "classification": "canônico",
+      "destination": "design-system/components/actions/IconButton.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/actions/IconButton.jsx",
+      "bytes": 451,
+      "sha256": "F19BAD7C6E12610906F6DA58917EB7C67093C8DF1C1A63AD233DCEAA05F1B258",
+      "classification": "canônico",
+      "destination": "design-system/components/actions/IconButton.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/actions/IconButton.prompt.md",
+      "bytes": 393,
+      "sha256": "94F1C503269DFD3CEBCCBFDE3460DDC7FAB3455B037C6ED39D50F94CE2AF3109",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/actions/IconButton.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/booking/booking.card.html",
+      "bytes": 2914,
+      "sha256": "741170254C2AAA07AF528462EC134BE1CE2073AEF2A2D20F1BB9E015ABB75A1D",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/booking/booking.card.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/booking/CourtCard.d.ts",
+      "bytes": 809,
+      "sha256": "06F896739635F76B795C33E775D381F6BD9D224CEA0FD9E489DC8DCD47785A86",
+      "classification": "canônico",
+      "destination": "design-system/components/booking/CourtCard.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/booking/CourtCard.jsx",
+      "bytes": 1799,
+      "sha256": "8E6AF54745240993BB461B946FA7882FD565D742878D3F2C628EB23FCE52E8D5",
+      "classification": "canônico",
+      "destination": "design-system/components/booking/CourtCard.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/booking/CourtCard.prompt.md",
+      "bytes": 314,
+      "sha256": "1BEB42192BC7BEEB56A28363ECD844CC4CBE6FB5DA0D37C695BD3F60630F1BAC",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/booking/CourtCard.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/booking/DateStrip.d.ts",
+      "bytes": 482,
+      "sha256": "09F025596AAF74241E9A81DEF6737D9002FDE80A7FC56ECDFB97D65101B21D04",
+      "classification": "canônico",
+      "destination": "design-system/components/booking/DateStrip.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/booking/DateStrip.jsx",
+      "bytes": 736,
+      "sha256": "368EF8692EAF67FD69E9FFE3F12AB512055372B92556E50CDC7282EDB97F887A",
+      "classification": "canônico",
+      "destination": "design-system/components/booking/DateStrip.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/booking/DateStrip.prompt.md",
+      "bytes": 245,
+      "sha256": "AB3D0C0F1AB5A5B3EC71D0BD1DC8F2F9A3F3A99FB0BF9CD6CFE20C14BEBE7180",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/booking/DateStrip.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/booking/TimeSlot.d.ts",
+      "bytes": 532,
+      "sha256": "99D8BD122891144ED017072420F5D38710CAD6B9D7B8444DAA9395AD3F190C76",
+      "classification": "canônico",
+      "destination": "design-system/components/booking/TimeSlot.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/booking/TimeSlot.jsx",
+      "bytes": 775,
+      "sha256": "343D8EA7682BB20AC3CB6AC87F90D9F007FC37BF7ECB3A63AF59DBE054576D53",
+      "classification": "canônico",
+      "destination": "design-system/components/booking/TimeSlot.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/booking/TimeSlot.prompt.md",
+      "bytes": 210,
+      "sha256": "B30BE32946B677D9D622212B2FDAEE8A8355A793B6285C491C2292370AE9E145",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/booking/TimeSlot.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/brand/brand.card.html",
+      "bytes": 2573,
+      "sha256": "734F7C8457E919535CAD9B68E34B2489550058ED5FC7FA2B1F6FBBB59B0CB527",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/brand/brand.card.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/brand/Icon.d.ts",
+      "bytes": 402,
+      "sha256": "9AC8949D407184EA73915C4F9B02B172850BE526A3C278DC78DE01A497CCB183",
+      "classification": "canônico",
+      "destination": "design-system/components/brand/Icon.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/brand/Icon.jsx",
+      "bytes": 1198,
+      "sha256": "1F0619E37581E1B1BCCF82D07DE11B6BA595B74E35D097E6F86FB937C3873455",
+      "classification": "canônico",
+      "destination": "design-system/components/brand/Icon.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/brand/Icon.prompt.md",
+      "bytes": 266,
+      "sha256": "7FC3693D3AA899B0DF20226A29303D8CD0907CF774AE6F5A931ED615957876A2",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/brand/Icon.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/brand/Logo.d.ts",
+      "bytes": 627,
+      "sha256": "DDCAB96354BF9C904CC13EBE962A3C27B0121CD93267C2FA1197C877EB5B0512",
+      "classification": "canônico",
+      "destination": "design-system/components/brand/Logo.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/brand/Logo.jsx",
+      "bytes": 463,
+      "sha256": "AA3F786A40F1A0FB1752163A534EC07185A93F487FDC718B15457432068F83CD",
+      "classification": "canônico",
+      "destination": "design-system/components/brand/Logo.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/brand/Logo.prompt.md",
+      "bytes": 239,
+      "sha256": "A0E275BBD4F344A8A9B5D587452B2B0D7680A690AE40019629FB57988E6E4313",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/brand/Logo.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Avatar.d.ts",
+      "bytes": 312,
+      "sha256": "CE3333C742206DBDEE71345862B14EC7BE04461A2B262D85EDEF6F7B8A65090E",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Avatar.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Avatar.jsx",
+      "bytes": 553,
+      "sha256": "623621312D9BBEC7358D4B687933178B1CE2EDD48CE595086975C6044DF2D433",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Avatar.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Avatar.prompt.md",
+      "bytes": 125,
+      "sha256": "5984F16930F55AD2170CF1CDCE0AA683D72F3FAD606B5192019FFECC7915ECDF",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/display/Avatar.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Badge.d.ts",
+      "bytes": 503,
+      "sha256": "D43BC578CB48DB9AE6DDC395CD37024474A0BAEEE386E392706866CAF46F5DD4",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Badge.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Badge.jsx",
+      "bytes": 325,
+      "sha256": "52EF0C93A869487B8701B3D558F30BC3F1A70BC2095AB33031EB51741C70EAB6",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Badge.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Badge.prompt.md",
+      "bytes": 299,
+      "sha256": "C6FD53147F1453678FEE1674AF72E6E6D8B340D6C5797FDC1579763EFC752671",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/display/Badge.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Card.d.ts",
+      "bytes": 453,
+      "sha256": "10083FC0DB975D35CD68490C2D60E5E73E0FD035CA72494ED3E2D04C66ED0E29",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Card.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Card.jsx",
+      "bytes": 479,
+      "sha256": "A03CF0594E53F1312F960E388AA8B0F697ACFFD7016E96E2D22BFF0FCE7A55E6",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Card.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Card.prompt.md",
+      "bytes": 256,
+      "sha256": "E27D4599F2224270584264C951A97FC958EEF1ADCCA05A84492112F3CC555839",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/display/Card.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Chip.d.ts",
+      "bytes": 360,
+      "sha256": "75EDD98794BDA2D7369484FA1043EC84B616EF8DCE96BF57FF8E0B765A524583",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Chip.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Chip.jsx",
+      "bytes": 439,
+      "sha256": "8C9A896115762029F6E95D0F81ACA5FA6555A1598F17A3054A47FFEE79A5217E",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Chip.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Chip.prompt.md",
+      "bytes": 178,
+      "sha256": "7D1134604BE6FC609456880BFFF54477DC4BE49B48F7DB1C985E2B6FCA59982A",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/display/Chip.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/display.card.html",
+      "bytes": 3468,
+      "sha256": "8491B048EDF9AB2CB9048F895C00AE0040E982454980F31A4111BC1C6C18D0D0",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/display/display.card.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Eyebrow.d.ts",
+      "bytes": 395,
+      "sha256": "F4282052C8A13516DA2DCC37FD921A6402552938E76F21A253E1EA09B226826F",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Eyebrow.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Eyebrow.jsx",
+      "bytes": 269,
+      "sha256": "736B7314C50037DEDED70C5E066210DD37576D7D2439C46051936983558B6820",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Eyebrow.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Eyebrow.prompt.md",
+      "bytes": 211,
+      "sha256": "40357AE839CD0A057B24097992DC7ED21F24B0287FB72B548A968B41C625770E",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/display/Eyebrow.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/StatCard.d.ts",
+      "bytes": 617,
+      "sha256": "0E71886A26BC476180C65611C4FD8FDAD4770CDF8A5E41A4719787425C1E2231",
+      "classification": "canônico",
+      "destination": "design-system/components/display/StatCard.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/StatCard.jsx",
+      "bytes": 964,
+      "sha256": "A95B7D98796E0F51C3F278AF9582B38D44ACB2D5B0213547873D0C126DDDFE55",
+      "classification": "canônico",
+      "destination": "design-system/components/display/StatCard.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/StatCard.prompt.md",
+      "bytes": 236,
+      "sha256": "507B751DC714B069C9F5B67D9467A39C919CA350B61A61728764E32F87AC39D6",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/display/StatCard.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Table.d.ts",
+      "bytes": 674,
+      "sha256": "3E58CDC76835E959BA792534B1BF8ABF105A0CAA5FB5CC1E219C4859142DCDE5",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Table.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Table.jsx",
+      "bytes": 1287,
+      "sha256": "B12F6C832721A52B69C80DC60D451D5F294EC933647FEB1B78EF67217BC9DC78",
+      "classification": "canônico",
+      "destination": "design-system/components/display/Table.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/display/Table.prompt.md",
+      "bytes": 329,
+      "sha256": "A72E7CD704F4B125C20584988C6D17256946AF74F120ADBF1D1BACE3694DDFFE",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/display/Table.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/feedback/Dialog.d.ts",
+      "bytes": 489,
+      "sha256": "4F1B017E11031394072AD10B198A3D35E86F9AA11543865279F76DD14EF4C01D",
+      "classification": "canônico",
+      "destination": "design-system/components/feedback/Dialog.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/feedback/Dialog.jsx",
+      "bytes": 1386,
+      "sha256": "3D41750FBC7DB968F7D801C0CF7CDC7D8D5236A136AB88BA0B4270A298E237F1",
+      "classification": "canônico",
+      "destination": "design-system/components/feedback/Dialog.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/feedback/Dialog.prompt.md",
+      "bytes": 382,
+      "sha256": "E5E105F0786BC8A8CBBB8A9221DEE91B21E55B768E8B1C9CD598D7E074A23ED9",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/feedback/Dialog.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/feedback/feedback.card.html",
+      "bytes": 3100,
+      "sha256": "AA7E8B6D73130E1F91A22F68F109760E387E9AE2A58B59D50BF8294C6416E734",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/feedback/feedback.card.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/feedback/Toast.d.ts",
+      "bytes": 519,
+      "sha256": "8075F72FCC6786088AEADF7AAE236B6FD51ADDB2A95CAE291841EF04B0C66919",
+      "classification": "canônico",
+      "destination": "design-system/components/feedback/Toast.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/feedback/Toast.jsx",
+      "bytes": 994,
+      "sha256": "6C4EFEEFCD90D2029E828A9B3F66C46837800913D0EB8326E7C2884C95046D2E",
+      "classification": "canônico",
+      "destination": "design-system/components/feedback/Toast.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/feedback/Toast.prompt.md",
+      "bytes": 228,
+      "sha256": "BB21F926159D6DCF478A467B855A462C0249759357C8053C905D391A173EEC74",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/feedback/Toast.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/feedback/Tooltip.d.ts",
+      "bytes": 317,
+      "sha256": "A1A701BB46EDCBCAC81EA31282F9984E13A60C13E9A0F333BEA3AB8302175E2A",
+      "classification": "canônico",
+      "destination": "design-system/components/feedback/Tooltip.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/feedback/Tooltip.jsx",
+      "bytes": 384,
+      "sha256": "5DBF045DF748CC048542D63644EDA08E8184B987354A18BEC34657236A216078",
+      "classification": "canônico",
+      "destination": "design-system/components/feedback/Tooltip.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/feedback/Tooltip.prompt.md",
+      "bytes": 221,
+      "sha256": "395A61B8D3F4FE35F0A52F63EE6EEDA3D70135EA3F3E33AC3E2ED502C82B6259",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/feedback/Tooltip.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Checkbox.d.ts",
+      "bytes": 292,
+      "sha256": "81482AA8AA4E68B73B78C91BAA44EA4D0B82F29875F7AD8C79E5A230C864C4A9",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/Checkbox.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Checkbox.jsx",
+      "bytes": 472,
+      "sha256": "097D066BC257CA5AE4E67260A14B613B71439C215EF5BF9B3011BC9C5E2049B7",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/Checkbox.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Checkbox.prompt.md",
+      "bytes": 195,
+      "sha256": "E9FE3DB6D493CED2172ABEBDD0F81A226EA21F5F362F21B8C7100AC76171CB0E",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/forms/Checkbox.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/forms.card.html",
+      "bytes": 2936,
+      "sha256": "FF7F993F0B36045155EF8897403DB03D013F687DC08CD881F0D72465FE2630CC",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/forms/forms.card.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Input.d.ts",
+      "bytes": 599,
+      "sha256": "70BADCE8F9253138D259402AC6AE3D5F106852B46DC2180802FA8FB041DC08BA",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/Input.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Input.jsx",
+      "bytes": 1065,
+      "sha256": "8A5CC6119549210B165D13962D21AD7B799F2197E6896258E4CE440249CD414F",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/Input.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Input.prompt.md",
+      "bytes": 386,
+      "sha256": "CF67F6F8BDB63B41EED82F28E165FC4292193FB4D1ECE61117B67CD59EE63B64",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/forms/Input.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Radio.d.ts",
+      "bytes": 297,
+      "sha256": "4F8CC9204F26ABD5D392CDBA93C5CC3F58925C1CD566E0EF8246F7121E3221E9",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/Radio.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Radio.jsx",
+      "bytes": 487,
+      "sha256": "279E6C8CF4013237FAA9A408CF0E17DC7AC9D9BB0A9A925E443ED8A9DE21BEFF",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/Radio.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Radio.prompt.md",
+      "bytes": 189,
+      "sha256": "6EEBDA7E8CE9CFA7F66FA0A523FBADE3031B8315CABB44B8F60AD6280C1F9972",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/forms/Radio.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/SegmentedControl.d.ts",
+      "bytes": 606,
+      "sha256": "9101169D4BA27595C5277C384F28EF0BA3662F5D68408CA56617EB445559680C",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/SegmentedControl.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/SegmentedControl.jsx",
+      "bytes": 880,
+      "sha256": "4E16BC92B842BD6DD76D964234AFEEE50F74649050F7E4CC5D63224DB4F4B818",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/SegmentedControl.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/SegmentedControl.prompt.md",
+      "bytes": 245,
+      "sha256": "1ED1BA04A57FEFEF31324C703B3A8AC9B6ED4D7926FA8C88448110082480AEC9",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/forms/SegmentedControl.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Select.d.ts",
+      "bytes": 449,
+      "sha256": "8AED18E0F9FC237F094077FA82EEC7C4E3EE94CEF9A354161095761DA380A230",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/Select.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Select.jsx",
+      "bytes": 1232,
+      "sha256": "C4FD907A42C9C67064AB98EF2A9FE1EB8260AD93164C6DF29EDCA8383FA7357B",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/Select.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Select.prompt.md",
+      "bytes": 232,
+      "sha256": "F71B64AB25E7E861F7982C44573F898F58145D43D62521776AE3A4E9F6CE080B",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/forms/Select.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Switch.d.ts",
+      "bytes": 224,
+      "sha256": "04A3930D13856AA46522F66C0FD31ED7B4B6662B65786A3D34AA6E462CA81F3C",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/Switch.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Switch.jsx",
+      "bytes": 400,
+      "sha256": "34A84C751ECB8F7460DE119543823C1AC88F747CC9EF8AECE68CCE737D60D799",
+      "classification": "canônico",
+      "destination": "design-system/components/forms/Switch.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/forms/Switch.prompt.md",
+      "bytes": 173,
+      "sha256": "C962CF374F0CAC93D450DEDA119FCCE87A5306AB633E8ED8363C28BF06C5254B",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/forms/Switch.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/navigation/Accordion.d.ts",
+      "bytes": 402,
+      "sha256": "69A4926F1D61DFEF3B39AF63E1939CD5D7AFAC87CF078DD9147798BFBE22B50D",
+      "classification": "canônico",
+      "destination": "design-system/components/navigation/Accordion.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/navigation/Accordion.jsx",
+      "bytes": 1089,
+      "sha256": "C7D35031B85421408E0C59CAE9AB8D4456C971939EE07F18578F35E18DF2B839",
+      "classification": "canônico",
+      "destination": "design-system/components/navigation/Accordion.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/navigation/Accordion.prompt.md",
+      "bytes": 189,
+      "sha256": "EF3B30D89C4789B1C4F68B4CC1FD89663E88E4401026914744AC97473F6E1443",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/navigation/Accordion.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/navigation/navigation.card.html",
+      "bytes": 2483,
+      "sha256": "1E5D7BF7A78665CBB9F791D6ECA61BA64B0F9C321F947B165E80C604D3C7FC85",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/navigation/navigation.card.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/navigation/ProgressSteps.d.ts",
+      "bytes": 427,
+      "sha256": "CDDD030B7599954E3463FA485989AE17986645141A3A6A58ED80F1FE5446C2C3",
+      "classification": "canônico",
+      "destination": "design-system/components/navigation/ProgressSteps.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/navigation/ProgressSteps.jsx",
+      "bytes": 995,
+      "sha256": "B7CC5280F4116B70E419E4F1C7BD3D1EBA9701DFCED141EAB03FE63CD9221E08",
+      "classification": "canônico",
+      "destination": "design-system/components/navigation/ProgressSteps.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/navigation/ProgressSteps.prompt.md",
+      "bytes": 167,
+      "sha256": "4334388F07F8E307EBD85A606B4E3A89323301F09B45A3559C5C3ED659E808F1",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/navigation/ProgressSteps.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/navigation/Tabs.d.ts",
+      "bytes": 445,
+      "sha256": "BDC682E9673E42F9C35FA48B1757B569ACAC81E7A7D2E3E6470C288C40FEBB3E",
+      "classification": "canônico",
+      "destination": "design-system/components/navigation/Tabs.d.ts",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/navigation/Tabs.jsx",
+      "bytes": 763,
+      "sha256": "E6D2AB2283A542836374ECD22EC73D5F7E6C3DD207FF2F9C3E3A4CC53E91DCE3",
+      "classification": "canônico",
+      "destination": "design-system/components/navigation/Tabs.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "components/navigation/Tabs.prompt.md",
+      "bytes": 220,
+      "sha256": "DC8B3F7D71D297A53946A677DED697254860D42E68C0DEED5494CE858E321C63",
+      "classification": "referência visual",
+      "destination": "design-system/references/components/navigation/Tabs.prompt.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "fonts/DMSerifDisplay-Italic.woff2",
+      "bytes": 24572,
+      "sha256": "ED8B291611E32FA2D2900488DD48FC95FAF0957B2EF7DDF1527E8D21DD9CF2DF",
+      "classification": "canônico",
+      "destination": "design-system/fonts/DMSerifDisplay-Italic.woff2",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "fonts/DMSerifDisplay.woff2",
+      "bytes": 24744,
+      "sha256": "FDF61E20FD2C0108E0EA28DA4DACA0035205B4B7FC031A3974B865B704DE160A",
+      "classification": "canônico",
+      "destination": "design-system/fonts/DMSerifDisplay.woff2",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "fonts/InstrumentSans-Variable.woff2",
+      "bytes": 30092,
+      "sha256": "2EE17598A98D8A59E4DF8152D015BEC9AB8E4D5672CC0AB42BEF806B568E3971",
+      "classification": "canônico",
+      "destination": "design-system/fonts/InstrumentSans-Variable.woff2",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "fonts/PinyonScript.woff2",
+      "bytes": 39044,
+      "sha256": "3E1F69A201572CAD4AABEA7CCF720F093A7DBC005380B2A1B89E0B94476D3E42",
+      "classification": "canônico",
+      "destination": "design-system/fonts/PinyonScript.woff2",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/brand-comms.html",
+      "bytes": 1137,
+      "sha256": "3A45B20E0B08BBB0965DB45D6E3E71F1052BFAE4AC6CB6B2DDE7027EDBF55635",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/brand-comms.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/brand-event-marks.html",
+      "bytes": 1235,
+      "sha256": "F268CC5EF96572B4092435FE8321F2C3FD7829FAC683F93A7FC521A7E4A9EA0C",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/brand-event-marks.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/brand-logo.html",
+      "bytes": 1578,
+      "sha256": "697A60E39CB0DC82ED6F131128D1C176651AC45BB4A5C7258A21728390FCF040",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/brand-logo.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/brand-motifs.html",
+      "bytes": 2542,
+      "sha256": "39598C51B78547156382190ABB63525EB9FDBA3C94982930B9FDBC8BFB420E4F",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/brand-motifs.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/colors-accent-semantic.html",
+      "bytes": 2910,
+      "sha256": "293F639C2510DC445AB6EEAB6E1FDDA429B09825727FA83A8C544691673B77B8",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/colors-accent-semantic.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/colors-booking-status.html",
+      "bytes": 3140,
+      "sha256": "415CC054CAC7540605B1C5BBFD3BADF9B583B231CE6C67C737DAB58D8682377F",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/colors-booking-status.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/colors-brand-green.html",
+      "bytes": 2248,
+      "sha256": "365D562ADF930784DDDF6C1945EDE9E2C6A17ED49DB5067C3E46994E005E8935",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/colors-brand-green.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/colors-neutrals.html",
+      "bytes": 2351,
+      "sha256": "7CDAF8362E2C499E6BD621C5C34756C4DC65EDA37C05DEB8F8C7AAEEEF69AE98",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/colors-neutrals.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/colors-surfaces.html",
+      "bytes": 3010,
+      "sha256": "E3466510FE2BCFCEA13AD9000BC96EBBDD1FBC710AC03B172B0B7053CAA2DC83",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/colors-surfaces.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/grid.html",
+      "bytes": 2528,
+      "sha256": "8FD7A8DCBE7D5929CDF3EA9B40398D71443D71E7C814000F37BC60785E038F60",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/grid.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/radii.html",
+      "bytes": 2158,
+      "sha256": "5FE361B4528810BFBD6C6C0AF00AEFF810B17810F7363494FFDF53572B3D43C1",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/radii.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/shadows.html",
+      "bytes": 1886,
+      "sha256": "E3A7C8B82951DACB39B146CBAF6F67B70E964309BECE3059141EAA680523F8FB",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/shadows.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/spacing-scale.html",
+      "bytes": 4079,
+      "sha256": "111D1BC9D42FC924FEDFF7229E0393BEE7BC8E2FCD7F978CA1A0CEC4F4F3B3FE",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/spacing-scale.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/type-display.html",
+      "bytes": 1215,
+      "sha256": "0F9713BF5D9E2739C8A141FDD9795BA2B732B75BC4317E2E72B2FA0F30812C5D",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/type-display.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/type-headline-pattern.html",
+      "bytes": 1177,
+      "sha256": "19A072CC0CB7FD3C15AF1F0B69F4A52C070C4BE381C28E2C1542EFDFA4059529",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/type-headline-pattern.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/type-sans.html",
+      "bytes": 1658,
+      "sha256": "EB7BD6D78EE805524C561F338987B3281E71DD092F47CF66715326979D5C4E35",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/type-sans.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/type-scale.html",
+      "bytes": 4007,
+      "sha256": "AFF3749F3ADDDC36C9C355D1CE09DD81DF04ECD567F73913BB82C0A2E5E50AF5",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/type-scale.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "guidelines/type-script.html",
+      "bytes": 1193,
+      "sha256": "05547BE10D97EE48849FB6DA0F07322955BAF6CBBE5D8CEE57D63338BA703A6D",
+      "classification": "referência visual",
+      "destination": "design-system/references/guidelines/type-script.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "tokens/base.css",
+      "bytes": 624,
+      "sha256": "1E74F394F770F8D038D23A026EE674F22AD29D05B68C93F52FDCB332B89D2FEA",
+      "classification": "canônico",
+      "destination": "design-system/tokens/base.css",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "tokens/colors.css",
+      "bytes": 2771,
+      "sha256": "861A899F9ED4B578C99D329EFA3DA21AF940796B4DB5339B15A5BAD17EE2C6FC",
+      "classification": "canônico",
+      "destination": "design-system/tokens/colors.css",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "tokens/fonts.css",
+      "bytes": 840,
+      "sha256": "9CECD912FE21444D8CD43DD41ADABB34A43261C0BC0C3C3D2A1E563E4E1827C3",
+      "classification": "canônico",
+      "destination": "design-system/tokens/fonts.css",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "tokens/spacing.css",
+      "bytes": 1484,
+      "sha256": "DB19416EBC50AEEA80073B1ADAC0091C8313E7B5216406D7EA5CC7697357A7D8",
+      "classification": "canônico",
+      "destination": "design-system/tokens/spacing.css",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "tokens/typography.css",
+      "bytes": 1998,
+      "sha256": "0E6369091D94DC435137A6CD85709AE330D8643C30FDEF65A18ED6D21D3983ED",
+      "classification": "canônico",
+      "destination": "design-system/tokens/typography.css",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/admin/admin.css",
+      "bytes": 11996,
+      "sha256": "F10B754056C375295758FCA6B4EE8AB60CBAE38287B63614B36EDBAD04F64A9D",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/admin/admin.css",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/admin/Dashboard.jsx",
+      "bytes": 5500,
+      "sha256": "930ABB1B6364B89F4E0BE6FB5396171BFC345A3DC2F9226C6A35136340C047DB",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/admin/Dashboard.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/admin/data.jsx",
+      "bytes": 4316,
+      "sha256": "2A86424B716F271AEE392C483B38563830DF5A66394ECF7537F1F53F4A6606FC",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/admin/data.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/admin/Dialogs.jsx",
+      "bytes": 5707,
+      "sha256": "4AB3165166E5C01D3BA9027720FF361DD033407BD73ED789F13126129D87B7F4",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/admin/Dialogs.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/admin/index.html",
+      "bytes": 4865,
+      "sha256": "AD69885456B15A08E44927D6162D8FC047BB78C16373891B00311DA0EEF9489D",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/admin/index.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/admin/README.md",
+      "bytes": 1233,
+      "sha256": "15200ECC36181F758D44683460F74BD9D39533618C567EBB97FFC9DBF64F55D1",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/admin/README.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/admin/Screens.jsx",
+      "bytes": 8131,
+      "sha256": "4A723496E85D5F75ABE442A3C16F8E22D2CCD69F6611D4A5EF03FCAB6B32134C",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/admin/Screens.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/admin/Shell.jsx",
+      "bytes": 3222,
+      "sha256": "CF581356B1088A4BFC2A2CB7C3672C0E9FE07915A4A7512BB13D5DADA5132ECC",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/admin/Shell.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/booking/booking.css",
+      "bytes": 7072,
+      "sha256": "51F073847EA41569223811F27BDFE95C539071F75DD8F2194AB28D9E40251071",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/booking/booking.css",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/booking/data.jsx",
+      "bytes": 3367,
+      "sha256": "C21979D323BC297F939DA34BDBBDEC15A4126E7BFC667113279014B17BD32A5A",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/booking/data.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/booking/index.html",
+      "bytes": 5937,
+      "sha256": "40E202B3F211D76DFD8D2A580850B7117F8DEA06C68520E08EB2FC24045D50CB",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/booking/index.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/booking/README.md",
+      "bytes": 901,
+      "sha256": "5B72106C7CEF5F61B5185C682C18415DDCAC6A1BD35337747BC4135F47E033F2",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/booking/README.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/booking/Steps.jsx",
+      "bytes": 9084,
+      "sha256": "E0362E6CB077369A09FEB869AEA449047AB81DC9EE90A9F6BF4EF3BB7DE281AB",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/booking/Steps.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/landing/Header.jsx",
+      "bytes": 4346,
+      "sha256": "FA3A3CAFAC6C8E2CBA32AE571FC3A081892EC8B0627E7A63481D864232594745",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/landing/Header.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/landing/index.html",
+      "bytes": 1824,
+      "sha256": "B70ED9C61A90966327A5E7EA1917AB2FDCC05F480EA4F4A2FE419764191670C2",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/landing/index.html",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/landing/landing.css",
+      "bytes": 9695,
+      "sha256": "465329E2914FC44E049F4B244A94FF24553508D3246097828D1555B55876A62D",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/landing/landing.css",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/landing/README.md",
+      "bytes": 963,
+      "sha256": "98CEABA102C6564E522D28C32F91CAF23CF357739AE3DFEAFB9F8D350C18C566",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/landing/README.md",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "ui_kits/landing/Sections.jsx",
+      "bytes": 10075,
+      "sha256": "1A8342B00A53F26301F1001A89BD341EBFE5F50D16E7874D17F2B96D104F6EE9",
+      "classification": "referência visual",
+      "destination": "design-system/references/ui-kits/landing/Sections.jsx",
+      "reason": "Fonte única no export; preservada e adaptada quando necessário."
+    },
+    {
+      "path": "uploads/01.png",
+      "bytes": 6411988,
+      "sha256": "10A12C88FDC360FAD457081F78C6AEF9D86D8C0883F7135ED4AE91E59437B8CA",
+      "width": 3840,
+      "height": 2210,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/01.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/02.png",
+      "bytes": 204345,
+      "sha256": "9A769CFC10821033940581AAD5DDF3F28D04FD6578D12F2E2DCABC94085A7025",
+      "width": 3840,
+      "height": 2086,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/02.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/03.png",
+      "bytes": 582779,
+      "sha256": "2B023C231FB145F69E7962157031541D29E6BBDA4DE6198EF8C8530815D5ED73",
+      "width": 3840,
+      "height": 2000,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/03.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/04.png",
+      "bytes": 9734351,
+      "sha256": "84B4D4305A2245E044710FC11BFC2FF5854BCF8198A754C6907FCFB3D1685884",
+      "width": 3840,
+      "height": 3954,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/04.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/05.png",
+      "bytes": 338450,
+      "sha256": "F7A3357992352A06DAE5F5629F6BA40ABD364C747F549FEB661220138C37F0ED",
+      "width": 3840,
+      "height": 2232,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/05.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/06.png",
+      "bytes": 5130348,
+      "sha256": "DE2E5760AEAFBCD2B0154530F979A9ABF09AEC1D65234E930FE261BFE375C881",
+      "width": 3840,
+      "height": 2400,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/06.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/07.png",
+      "bytes": 4708202,
+      "sha256": "CCA025DA9C54DFFE45CE02C22C3E6E69C886E4F76105D2CA0ABCFDCF8F021276",
+      "width": 3840,
+      "height": 1768,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/07.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/08.png",
+      "bytes": 344554,
+      "sha256": "72ED953DD904BF28C117A8F6F4883D88B013D0090A038CB434A282985B312C0E",
+      "width": 3840,
+      "height": 3782,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/08.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/09.png",
+      "bytes": 3896590,
+      "sha256": "D8EA659A2359CD6340B1043D87C2CA7F9E3EE299967EFD591C98CC4A6261EBC9",
+      "width": 3840,
+      "height": 3008,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/09.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/10.png",
+      "bytes": 596011,
+      "sha256": "EFCB854666ED301C2142EC393E9332336AB7BF2F1457BA863B957A5C7108D47E",
+      "width": 3840,
+      "height": 3338,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/10.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/15.png",
+      "bytes": 5717621,
+      "sha256": "4661768A62862B8399DB2EA73FCF57CE1C632C60AB5D0370338CF95B92ECF912",
+      "width": 3842,
+      "height": 3502,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/15.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/16.png",
+      "bytes": 9599062,
+      "sha256": "1849C96603DBD3BD0235DBA1A69049018AEB42EA6EA86C792D2F03A0AE643BB4",
+      "width": 3840,
+      "height": 2400,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/16.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/17.png",
+      "bytes": 4244163,
+      "sha256": "6DD48F63140DC876C93B7F1F7CA873AECDC7BE95E47A9A46C608312185CEAA87",
+      "width": 3840,
+      "height": 7656,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/17.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/18.png",
+      "bytes": 4971586,
+      "sha256": "EFE5C4D729E1A07E0FE7CDF4F6DD30BC56BF44C78C33D7C3696CAB00050BFC1C",
+      "width": 3840,
+      "height": 6906,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/18.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/19.png",
+      "bytes": 10079077,
+      "sha256": "D0DE2D13DBAD5035063D353AD538716593A31765B8882F5AA1D51BD66D6F2F5D",
+      "width": 3840,
+      "height": 10264,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/19.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/20.png",
+      "bytes": 1766864,
+      "sha256": "F5484254DF0DA8557A326201DD00463997EDC7DA0AC78DD83734199DBB2919E5",
+      "width": 3840,
+      "height": 3198,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/20.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/21.png",
+      "bytes": 8115055,
+      "sha256": "48D71638CBC4C2577D5205B3AF7F37544BC8A60DE847A67E1AE4028D938A2D30",
+      "width": 3852,
+      "height": 2368,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/21.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/22.png",
+      "bytes": 142555,
+      "sha256": "04AF8F48D2596D8F1ECFA7ECEA60ADB5BD2D03B1037513F42422DE7E87C66887",
+      "width": 3840,
+      "height": 2416,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/22.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/brand_files-1791934520638-nae8.jpg",
+      "bytes": 8765,
+      "sha256": "0682BFD50FBDAA752B662526A14E86267A7A25C4872064ACEFD98196A6459997",
+      "width": 150,
+      "height": 150,
+      "format": "Jpeg",
+      "classification": "duplicado ou derivado",
+      "destination": "design-system/assets/brand/prime-padel-logo-original.jpg",
+      "reason": "SHA-256 idêntico ao original de marca."
+    },
+    {
+      "path": "uploads/brand_files-1791934528742-qpn2.jpg",
+      "bytes": 63691,
+      "sha256": "32C523391189912F849EEF6DA07C6D502DA036F57D0E172CC30C587F74D0E480",
+      "width": 694,
+      "height": 543,
+      "format": "Jpeg",
+      "classification": "duplicado ou derivado",
+      "destination": "design-system/assets/brand/open-prime-padel-post.jpg",
+      "reason": "SHA-256 idêntico ao original de marca."
+    },
+    {
+      "path": "uploads/brand_files-1791934532126-02r0.jpg",
+      "bytes": 39640,
+      "sha256": "CFEF6FAF65AFA49886493EBD2A7CC7A49B3885E9F07572F5D529EDCBCE697CD5",
+      "width": 477,
+      "height": 327,
+      "format": "Jpeg",
+      "classification": "duplicado ou derivado",
+      "destination": "design-system/assets/brand/prime-cup-logo.jpg",
+      "reason": "SHA-256 idêntico ao original de marca."
+    },
+    {
+      "path": "uploads/brand_files-1791934542210-lj4o.jpg",
+      "bytes": 110848,
+      "sha256": "41EC64C6F2C9D2B76EB2CD64C769DE16783FE73E54008CFB5F09DAB70942AF76",
+      "width": 731,
+      "height": 842,
+      "format": "Jpeg",
+      "classification": "duplicado ou derivado",
+      "destination": "design-system/assets/brand/day-use-post.jpg",
+      "reason": "SHA-256 idêntico ao original de marca."
+    },
+    {
+      "path": "uploads/ref_files-1791934564401-4x1v.png",
+      "bytes": 63830,
+      "sha256": "442F0F9038AC8E631E1107219F5DDEAA6BEAAB97FED98D26D6068B923E2CC4EC",
+      "width": 3840,
+      "height": 2658,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/ref_files-1791934564401-4x1v.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/ref_files-1791934564411-mm82.png",
+      "bytes": 184957,
+      "sha256": "914C7F2AC40A6EE807504C5AAC794C175D14E6C79FF99BD93582115B0B0463B8",
+      "width": 3840,
+      "height": 2460,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/ref_files-1791934564411-mm82.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/ref_files-1791934564652-yryn.png",
+      "bytes": 5925476,
+      "sha256": "7EEFF6E3BE16876A170C572E53849334F593DC95DFABE63C499BB012F54C412A",
+      "width": 3840,
+      "height": 2800,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/ref_files-1791934564652-yryn.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    },
+    {
+      "path": "uploads/ref_files-1791934565068-78d5.png",
+      "bytes": 10842720,
+      "sha256": "5B5EA16EB5746651A214B93E4958CBDA773199459B57557D54487089A317BDB4",
+      "width": 3840,
+      "height": 2800,
+      "format": "Png",
+      "classification": "referência visual",
+      "destination": "design-system/references/images/ref_files-1791934565068-78d5.png",
+      "reason": "Composição e hierarquia de terceiro; nunca identidade ou conteúdo de produção."
+    }
+  ]
+}
+
