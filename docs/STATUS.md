@@ -1,6 +1,6 @@
 # Estado do projeto
 
-## Checkpoint 4 — estrutura da landing concluída
+## Checkpoint 5 — agendamento demonstrativo concluído
 
 - Export original intacto; 174 arquivos inventariados com tamanho e SHA-256.
 - Todos os arquivos textuais/código lidos; imagens analisadas por metadados, hashes e inspeção visual.
@@ -17,5 +17,9 @@
 - Header responsivo, galeria ampliável, FAQ, navegação, contatos e privacidade funcionais.
 - Fotografias ausentes: painel de marca e galeria de comunicação identificada; nenhum diferencial comercial inventado.
 - Remoção do bruto bloqueada pelo ambiente; pasta preservada e ignorada pelo Git/build.
-- Próximo: substituir o carregamento provisório do agendamento pelo fluxo demonstrativo completo, depois revisão mobile/desktop.
+- Fluxo completo: data, quadra/duração, horários simulados, formulário, resumo e conclusão explícita sem reserva.
+- Contratos tipados, serviço substituível, mocks centralizados, abort de consultas e validação.
+- Nenhum backend, pagamento, envio ou persistência. Dados do formulário descartados ao concluir/fechar.
+- Build/lint e 8 testes unitários aprovados. Testes de navegador mobile/desktop em execução.
+- Próximo: revisão visual, acessibilidade, responsividade e documentação de entrega.
 
