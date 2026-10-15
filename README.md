@@ -4,7 +4,7 @@ Plataforma digital da Prime Padel, em Lages, Santa Catarina.
 
 ## Estado atual
 
-O repositorio usa Next.js com React, TypeScript estrito, npm e CSS proprio. A base tecnica esta inicializada; a landing e o agendamento ainda dependem da especificacao e do plano aprovados.
+O repositorio usa Next.js com React, TypeScript estrito, npm e CSS proprio. A especificacao e o plano foram aprovados em 15/10/2026. O primeiro marco implementa o catalogo centralizado, o calendario da arena e o servico de agendamento simulado com testes de dominio. A landing e as telas de agendamento serao implementadas nos proximos marcos.
 
 A primeira entrega tera dois resultados:
 
@@ -47,11 +47,45 @@ npm install
 npm run dev
 npm run lint
 npm run typecheck
+npm run test:unit
 npm run test:e2e
 npm run build
 ```
 
 Use `npm run test:e2e:ui` quando precisar investigar um fluxo no navegador de forma interativa.
+
+`npm run test:unit` executa somente o projeto Playwright `domain`, sem navegador
+ou servidor. `npm run test:e2e` executa os projetos `chromium-desktop` e
+`chromium-mobile`; inicia um servidor proprio em `http://127.0.0.1:3100` e
+nao reutiliza um servidor existente. Deixe a porta 3100 livre para os testes.
+O servidor de testes recebe `NEXT_PUBLIC_ENABLE_TEST_HARNESS=1`; o ponto de
+composicao que consumira essa opcao sera implementado junto do fluxo, no marco 3.
+Nao habilite essa variavel no build normal.
+
+A verificacao completa inclui os cinco comandos: lint, typecheck, test:unit,
+test:e2e e build. Os testes de navegador atuais cobrem a tela inicial da base;
+nao comprovam a landing ou a jornada, ainda nao implementadas.
+
+## Servico simulado
+
+O contrato esta em `src/services/booking-service.ts`; a implementacao local em
+`src/services/mock/booking-service.ts`. Crie uma instancia por visita ao fluxo.
+As respostas usam unioes discriminadas para disponibilidade, pendencia de
+funcionamento, erro, conflito, expiracao e sucesso simulado.
+
+O adaptador consulta somente as seis ofertas de `src/content/courts.ts`.
+Precos sao totais por quadra/duracao. O calendario usa `America/Sao_Paulo` e
+uma janela demonstrativa de 14 dias; quarta-feira nao gera horarios.
+Consultas e envios expiram em 8 segundos. Abortamento rejeita com
+`AbortError`; o consumidor deve ignorar cancelamentos intencionais.
+Nome ficticio e tentativas ficam somente na memoria da instancia.
+
+Os cenarios e atrasos podem ser injetados pelo construtor para testes:
+`normal`, `empty`, `all-unavailable`, `query-error-once`,
+`submit-error-once`, `conflict-once`, `query-timeout` e `submit-timeout`.
+Timeout continua sem resposta naquela instancia; erros com sufixo
+`-once` permitem a recuperacao na tentativa seguinte.
+Nao ha envio a arena, reserva real ou persistencia.
 
 Consulte `docs/DEPENDENCY-NOTES.md` antes de aplicar correcoes automaticas do `npm audit`.
 

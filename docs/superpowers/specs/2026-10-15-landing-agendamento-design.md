@@ -1,8 +1,8 @@
 # Prime Padel — especificação da landing e do agendamento simulado
 
-Data: 15 de outubro de 2026. Estado: **proposta para aprovação; não aprovada**.
+Data: 15 de outubro de 2026. Estado: **aprovada pelo responsável em 15/10/2026**, juntamente com o plano de implementação. P01–P06 aceitas para a demonstração; dados factuais pendentes permanecem pendentes.
 
-Esta sessão entrega somente esta especificação. Não autoriza implementação, criação de telas, integração externa ou publicação. Após a aprovação, a próxima sessão deverá produzir um plano de implementação, também sujeito a aprovação.
+Registro de aprovação: “Pode aprovar as duas e continuar com a utilização das skills.” Implementação autorizada conforme o plano aprovado, sem integrações externas ou publicação. As referências a propostas e sessões documentais abaixo descrevem a elaboração original, anterior a esta aprovação.
 
 ## 1. Objetivo, fontes e natureza das decisões
 

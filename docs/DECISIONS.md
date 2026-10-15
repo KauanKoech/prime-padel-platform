@@ -17,14 +17,33 @@
 | npm como gerenciador de pacotes | Aceita | Ja esta disponivel no ambiente e reduz configuracao adicional |
 | CSS proprio com tokens do design system | Aceita | Preserva a identidade sem adicionar outra camada de estilos |
 | Playwright para fluxos de navegador | Aceita | Valida a experiencia em celular e desktop |
+| P01: resultado como solicitacao simulada | Aceita em 15/10/2026 | Aprovacao explicita da especificacao e do plano; nenhum envio ou reserva real |
+| P02: somente nome ficticio | Aceita em 15/10/2026 | Exercita formulario sem solicitar contato real nem definir cadastro operacional |
+| P03: quarta-feira sem consulta enquanto pendente | Aceita em 15/10/2026 | Nao inventa horario de abertura; nao significa arena fechada |
+| P04: janela de 14 dias, candidatos a cada 30 minutos e memoria por visita | Aceita em 15/10/2026 | Regras exclusivas da demonstracao, sem politica comercial ou persistencia |
+| P05: landing com precos por quadra e conteudo confirmado | Aceita em 15/10/2026 | Sem planos, FAQ, agenda no hero ou fotografias nao autorizadas |
+| P06: agendamento em rota propria, tres etapas e resumo responsivo | Aceita em 15/10/2026 | Organiza horario, dados e revisao; implementacao nos proximos marcos |
+| Playwright em projeto domain para testes puros | Aceita em 15/10/2026 | Reutiliza o runner existente sem adicionar dependencia ou iniciar servidor |
+| Datas da arena em America/Sao_Paulo, precos em centavos e ofertas explicitas | Aceita em 15/10/2026 | Evita diferencas por fuso do dispositivo e precos calculados por proporcionalidade |
+| Adaptador simulado com timeout de 8 segundos e idempotencia por tentativa | Aceita em 15/10/2026 | Demonstra recuperacao e previne duplicacao; memoria limitada a visita, sem gravacao externa |
+| Servidor E2E isolado na porta 3100 | Aceita em 15/10/2026 | Impede validar acidentalmente outra instancia; cenarios de UI serao opt-in fora de producao no marco 3 |
 
-## Decisoes pendentes antes da inicializacao da aplicacao
+## Decisoes pendentes para etapas futuras
 
 | Decisao | Recomendacao inicial | Estado |
 |---|---|---|
-| Resultado do agendamento simulado | Solicitar reserva, sem prometer confirmacao real | Pendente |
+| Resultado do agendamento operacional | Definir solicitacao versus confirmacao real antes de implementar backend | Pendente |
 | Hospedagem | Escolher depois do framework | Pendente |
-| Testes unitarios e de componentes | Adicionar quando o primeiro comportamento testavel for planejado | Pendente |
+| Testes de componentes isolados | Avaliar quando houver necessidade alem dos testes de dominio e navegador | Pendente |
+
+## Registro da aprovacao
+
+Em 15/10/2026, o responsavel aprovou explicitamente
+`docs/superpowers/specs/2026-10-15-landing-agendamento-design.md` e
+`docs/superpowers/plans/2026-10-15-landing-agendamento.md`:
+“Pode aprovar as duas e continuar com a utilização das skills.”
+Essa aprovacao autoriza implementacao por marcos, sem publicacao.
+WhatsApp, quarta-feira e demais dados factuais abaixo continuam pendentes.
 
 ## Dados pendentes de confirmacao
 
