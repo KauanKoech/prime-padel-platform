@@ -1,0 +1,72 @@
+<!-- @dsCard group="Admin panel" viewport="1440x900" name="Admin — desktop" subtitle="Arena dashboard, agenda by court, bookings table, customers; drawer + dialogs" -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Prime Padel — Painel da arena</title>
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="admin.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="data.jsx"></script>
+<script type="text/babel" src="Shell.jsx"></script>
+<script type="text/babel" src="Dashboard.jsx"></script>
+<script type="text/babel" src="Screens.jsx"></script>
+<script type="text/babel" src="Dialogs.jsx"></script>
+<script type="text/babel">
+(() => {
+const { Toast } = window.PrimePadelDesignSystem_093c26;
+const { BOOKINGS, hm, courtName } = window.AD;
+const TITLES = { dashboard: ['Visão geral', 'Terça, 13 de outubro'], agenda: ['Agenda', '3 quadras · 07h às 23h'], reservas: ['Reservas', 'Hoje'], clientes: ['Clientes', '7 ativos este mês'] };
+
+function AdminApp() {
+  const [page, setPage] = React.useState(() => localStorage.getItem('pp-admin-page') || 'dashboard');
+  const [tab, setTab] = React.useState(null);
+  const [bookings, setBookings] = React.useState(BOOKINGS);
+  const [openId, setOpenId] = React.useState(null);
+  const [newDlg, setNewDlg] = React.useState(null);
+  const [toast, setToast] = React.useState(null);
+  React.useEffect(() => { localStorage.setItem('pp-admin-page', page); window.scrollTo(0, 0); }, [page]);
+  const go = (p, t) => { setTab(t || null); setPage(p); };
+  const notify = (t) => { setToast(t); clearTimeout(window.__ppT); window.__ppT = setTimeout(() => setToast(null), 3600); };
+  const patch = (id, p) => setBookings(bs => bs.map(b => b.id === id ? Object.assign({}, b, p) : b));
+  const open = (b) => setOpenId(b.id);
+  const current = bookings.find(b => b.id === openId);
+  const nav = window.AD_NAV.find(n => n.id === page);
+  const [title, sub] = TITLES[page] || [nav ? nav.label : '', ''];
+  return (
+    <div className="ad">
+      <Sidebar page={page} go={go} />
+      <div className="ad-main">
+        <Topbar title={title} subtitle={sub} onNew={() => setNewDlg({})} />
+        <div className="ad-content">
+          {page === 'dashboard' ? <Dashboard bookings={bookings} open={open} go={go} /> : null}
+          {page === 'agenda' ? <Agenda bookings={bookings} open={open} onNewAt={(court, start) => setNewDlg({ court, start })} /> : null}
+          {page === 'reservas' ? <Bookings key={tab || 'x'} bookings={bookings} open={open} initialTab={tab} /> : null}
+          {page === 'clientes' ? <Clients /> : null}
+          {['financeiro', 'quadras', 'config'].includes(page) ? <OutOfScope label={nav.label} /> : null}
+        </div>
+      </div>
+      <BottomNav page={page} go={go} onNew={() => setNewDlg({})} />
+      <BookingDrawer key={openId} booking={current} onClose={() => setOpenId(null)}
+        onCheckin={(b) => { patch(b.id, { checkin: true }); notify({ title: 'Check-in feito', description: b.client + ' · ' + courtName(b.court) }); }}
+        onConfirmPay={(b) => { patch(b.id, { status: 'confirmada' }); notify({ title: 'Pagamento confirmado', description: b.client + ' · ' + hm(b.start) }); }}
+        onCancel={(b) => { patch(b.id, { status: 'cancelada' }); setOpenId(null); notify({ title: 'Reserva cancelada', description: 'Horário liberado na agenda', tone: 'light' }); }} />
+      <NewBookingDialog open={!!newDlg} preset={newDlg} onClose={() => setNewDlg(null)}
+        onCreate={(nb) => { const id = 'R-' + (2056 + bookings.length); setBookings(bs => bs.concat([Object.assign({ id }, nb)])); setNewDlg(null); notify({ title: 'Reserva criada', description: nb.client + ' · ' + courtName(nb.court) + ' · ' + hm(nb.start) }); }} />
+      {toast ? <div className="ad-toast"><Toast tone={toast.tone || 'default'} title={toast.title} description={toast.description} onClose={() => setToast(null)} /></div> : null}
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<AdminApp />);
+})();
+</script>
+</body>
+</html>

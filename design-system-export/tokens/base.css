@@ -1,0 +1,10 @@
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font:var(--type-body);color:var(--text-primary);background:var(--bg-page);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4,p{margin:0;text-wrap:pretty}
+a{color:var(--text-link);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--text-link-hover)}
+::selection{background:var(--pp-green-200);color:var(--pp-ink)}
+:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+img{max-width:100%;display:block}
+.pp-num{font-variant-numeric:tabular-nums}

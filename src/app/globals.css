@@ -1,0 +1,54 @@
+:root {
+  --brand-green: #324d3e;
+  --brand-cream: #f7f5ef;
+  --brand-ink: #141a16;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--brand-cream);
+  color: var(--brand-ink);
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.setup-shell {
+  display: grid;
+  min-height: 100dvh;
+  place-content: center;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.setup-shell h1,
+.setup-shell p {
+  margin: 0;
+}
+
+.setup-shell h1 {
+  color: var(--brand-green);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(36px, 8vw, 72px);
+  font-weight: 400;
+}
+
+.setup-shell > p:last-child {
+  margin-inline: auto;
+  max-width: 56ch;
+  line-height: 1.6;
+}
+
+.setup-eyebrow {
+  color: var(--brand-green);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
