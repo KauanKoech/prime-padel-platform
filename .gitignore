@@ -38,3 +38,6 @@ Thumbs.db
 # Codex local output
 .codex-log/
 .superpowers/
+
+# Isolated development workspaces
+.worktrees/
