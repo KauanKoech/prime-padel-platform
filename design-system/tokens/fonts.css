@@ -1,6 +1,0 @@
-/* Prime Padel webfonts — Google Fonts substitutes (latin subset), self-hosted in /fonts.
-   Display serif ≈ "ATLETAS CONFIRMADOS" / "PADEL" caps · Script ≈ "Prime" wordmark · Sans ≈ poster body copy. */
-@font-face{font-family:'DM Serif Display';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/DMSerifDisplay.woff2') format('woff2');}
-@font-face{font-family:'DM Serif Display';font-style:italic;font-weight:400;font-display:swap;src:url('../fonts/DMSerifDisplay-Italic.woff2') format('woff2');}
-@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url('../fonts/InstrumentSans-Variable.woff2') format('woff2');}
-@font-face{font-family:'Pinyon Script';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/PinyonScript.woff2') format('woff2');}
