@@ -85,6 +85,16 @@ As linhas finas decorativas nao transmitem estado ou informacao essencial.
 
 ## Limites da verificacao
 
+Revisao independente do intervalo `6967a79..9fdd182` concluida com
+`gpt-6.1-sol`, apos indisponibilidade por limite de uso do revisor preferencial.
+Nao foram encontrados problemas criticos ou importantes nos marcos 1 e 2.
+O revisor inspecionou codigo, testes e evidencias, sem reexecutar os comandos.
+
+Pendencia menor: `SectionLink` intercepta Ctrl/Cmd/Shift+clique nas ancoras,
+navegando na aba atual. Preservar os modificadores para permitir abrir outra
+aba/janela fica registrado para ajuste posterior; navegacao simples e teclado
+permanecem cobertos pelos testes.
+
 Leitor de tela real, teclado virtual de dispositivo fisico e zoom real de 200%
 nao foram exercitados neste marco. A02/R02 nao sao declarados integralmente
 aprovados. Esses ensaios e a matriz integrada pertencem ao marco 5.
