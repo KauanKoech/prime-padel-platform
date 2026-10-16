@@ -6,12 +6,11 @@ Plataforma digital da Prime Padel, em Lages, Santa Catarina.
 
 O repositorio usa Next.js com React, TypeScript estrito, npm e CSS proprio. A especificacao e o plano foram aprovados em 15/10/2026. O catalogo centralizado, o calendario e o servico simulado estao implementados. O marco 2 entrega a landing publica responsiva, com conteudo confirmado, precos, navegacao acessivel e ativos locais.
 
-O marco 3 implementa `/agendamento` e a entrada `/agendamento?quadra=...`:
-selecao de data, quadra, duracao e horario simulado, resumo responsivo e
-recuperacao de consultas. Dados, revisao e envio pertencem ao marco 4; por ora,
-Continuar abre apenas a apresentacao da etapa Dados com retorno ao horario.
-A plataforma nao deve ser publicada como produto completo antes da conclusao
-e verificacao da jornada.
+Os marcos 3 e 4 implementam `/agendamento` e a entrada
+`/agendamento?quadra=...`: selecao de data, quadra, duracao e horario,
+nome ficticio, revisao e resultado simulado. A jornada inclui historico,
+recuperacao de erro, conflito e expiracao, sem envio ou reserva real.
+O marco 5 ainda deve concluir a verificacao integrada da entrega.
 
 A primeira entrega tera dois resultados:
 
@@ -77,12 +76,15 @@ Deixe essa porta livre.
 O teste percorre os links visiveis e detecta erros de console, respostas HTTP
 com falha e chamadas externas, inclusive prefetch que nao ocorre no servidor dev.
 Os E2E verificam conteudo, menu/foco, responsividade, recuperacao de imagens e
-selecao de horarios, incluindo vazio, erro, timeout, filtros e expiracao.
-O smoke de producao verifica tambem descarte da visita e isolamento dos cenarios.
+selecao de horarios, formulario, revisao, resultado e historico, incluindo
+vazio, erro, timeout, conflito, filtros e expiracao.
+O smoke de producao percorre a jornada e verifica descarte da visita e
+isolamento dos cenarios.
 
 Consulte [as evidencias do marco 2](docs/verification/landing-marco-2.md) para
 dimensoes verificadas, contrastes medidos e limitacoes.
 Consulte tambem [as evidencias do marco 3](docs/verification/agendamento-marco-3.md).
+O fluxo completo esta registrado [nas evidencias do marco 4](docs/verification/agendamento-marco-4.md).
 
 ## Servico simulado
 

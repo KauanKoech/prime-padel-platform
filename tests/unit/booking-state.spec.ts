@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { createDraft, changeDate, changeCourt, changeOffer, getFirstIncompleteStep } from '../../src/features/booking/booking-state';
+import { createDraft, changeDate, changeCourt, changeOffer, getFirstIncompleteStep, validateFictitiousName } from '../../src/features/booking/booking-state';
 import type { BookingDraft } from '../../src/domain/booking';
 
 const now = new Date('2026-10-15T12:00:00Z');
@@ -8,6 +8,14 @@ const selected: BookingDraft = {
   slot: { id: 'antidoto-60|2026-10-16|06:00', offerId: 'antidoto-60', date: '2026-10-16',
     startsAt: '2026-10-16T06:00:00-03:00', endsAt: '2026-10-16T07:00:00-03:00', available: true },
 };
+
+test('nome ficticio exige conteudo, normaliza bordas e aceita nome unico longo', () => {
+  expect(validateFictitiousName('')).toEqual({ valid: false, value: '' });
+  expect(validateFictitiousName(' \t ')).toEqual({ valid: false, value: '' });
+  expect(validateFictitiousName('  Jogador  ')).toEqual({ valid: true, value: 'Jogador' });
+  const longName = 'Jogador fictício '.repeat(30).trim();
+  expect(validateFictitiousName(longName)).toEqual({ valid: true, value: longName });
+});
 
 test('entrada valida somente quadra conhecida e usa calendario da arena', () => {
   expect(createDraft(new Date('2026-10-16T02:59:00Z'), 'antidoto')).toEqual({

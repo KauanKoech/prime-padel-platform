@@ -55,6 +55,29 @@
 - O aviso de expiracao usa texto #75480B sobre #FBF0DC (6,92:1), mais escuro
   que o token de aviso do export. Erro usa #B23B2A sobre #F8E3DF (4,80:1).
 
+## Implementacao do marco 4
+
+- O formulario solicita somente nome ficticio obrigatorio. A validacao em
+  blur ou avanco remove espacos das extremidades, aceita nome unico e nao
+  impoe limite artificial. Entradas invalidas permanecem no campo.
+- O historico nativo preserva o estado interno do Next e armazena somente
+  identidade da visita e etapa no namespace primePadel. Acoes explicitas
+  criam entradas; guardas e resultado substituem a entrada atual. Todo
+  popstate passa pelas mesmas guardas, inclusive depois do resultado terminal.
+- O hook recebe o servico e uma funcao de reinicio da composicao externa.
+  Reiniciar recria estado e servico, sem reaplicar a quadra da URL. Sair,
+  Activity e pagehide descartam a visita; pageshow persistido inicia outra.
+- O envio tem trava sincrona e AbortController. A tentativa usa UUID mantido
+  para retry do mesmo conteudo e renovado quando ele muda. Erro preserva
+  revisao; conflito/expiracao voltam ao horario, preservando os demais dados
+  validos e focando aviso persistente ate a escolha explicita de outro slot.
+- Nome, rascunho, tentativas e resultado ficam em memoria; nao entram em
+  URL, history.state, cookies ou armazenamento persistente. O resultado
+  informa explicitamente que nao houve solicitacao a arena nem reserva.
+- A barra inferior considera tambem a altura de VisualViewport: ate 560 px,
+  acompanha o documento. Isso permite responder ao espaco reduzido pelo
+  teclado virtual; a validacao com dispositivo fisico fica no marco 5.
+
 ## Decisoes pendentes para etapas futuras
 
 | Decisao | Recomendacao inicial | Estado |

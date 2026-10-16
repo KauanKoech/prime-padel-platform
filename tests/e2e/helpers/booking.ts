@@ -13,3 +13,12 @@ export async function chooseAntidotoSlot(page: Page, duration: 60 | 90) {
   await page.getByRole('radio', { name: duration === 60 ? '1h — R$ 140' : '1h30 — R$ 180', exact: true }).check();
   await page.getByRole('radio', { name: /Disponível$/ }).first().check();
 }
+
+export async function reachReview(page: Page, controls: TestControls = {}, duration: 60 | 90 = 60) {
+  await openBooking(page, controls);
+  await chooseAntidotoSlot(page, duration);
+  await page.getByRole('button', { name: 'Continuar', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Nome fictício', exact: false }).fill('Jogador de teste');
+  await page.getByRole('button', { name: 'Revisar simulação', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Revise a simulação');
+}

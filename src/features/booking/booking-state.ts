@@ -9,12 +9,18 @@ export type BookingState = {
   step: BookingStep; draft: BookingDraft; availability: AvailabilityResult | null;
   loading: boolean; submitting: boolean; notice: string | null;
   nameError: string | null; confirmation: BookingConfirmation | null;
+  focus: { target: 'title' | 'name' | 'notice'; serial: number } | null;
 };
-// Details, submission and history are completed in milestone 4.
 export type BookingActions = {
   setDate(value: string): void; setCourt(value: CourtId): void; setOffer(value: string): void;
   selectSlot(id: string): void; retryAvailability(): void; goTo(step: BookingStep): void;
+  setName(value: string): void; validateName(): boolean; submit(): Promise<void>; restart(): void;
 };
+
+export function validateFictitiousName(value: string): { valid: boolean; value: string } {
+  const trimmed = value.trim();
+  return { valid: trimmed.length > 0, value: trimmed };
+}
 
 export function createDraft(now: Date, initialCourtId: string | null): BookingDraft {
   const draft: BookingDraft = { date: getArenaDate(now), courtId: null, offerId: null, slot: null, fictitiousName: '' };
@@ -42,5 +48,5 @@ export function getFirstIncompleteStep(draft: BookingDraft, now: Date): 'time' |
     Date.parse(slot.startsAt) < Date.parse(arenaInstant(draft.date, hours.opens)) ||
     Date.parse(slot.endsAt) > Date.parse(arenaInstant(draft.date, hours.closes)) ||
     Date.parse(slot.endsAt) - Date.parse(slot.startsAt) !== offer.durationMinutes * 60000) return 'time';
-  return draft.fictitiousName.trim() ? 'review' : 'details';
+  return validateFictitiousName(draft.fictitiousName).valid ? 'review' : 'details';
 }

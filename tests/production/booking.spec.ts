@@ -18,6 +18,10 @@ for (const width of [390, 1440]) {
     await expect(page.getByRole('button', { name: 'Continuar', exact: true })).toBeEnabled();
     await page.getByRole('button', { name: 'Continuar', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Dados de demonstração' })).toBeVisible();
+    await page.getByRole('textbox', { name: /Nome fictício/ }).fill('Jogador de teste');
+    await page.getByRole('button', { name: 'Revisar simulação' }).click();
+    await page.getByRole('button', { name: 'Simular solicitação', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Solicitação simulada concluída' })).toBeVisible();
     await page.getByRole('link', { name: 'Voltar ao início', exact: true }).click();
     await page.locator('header').getByRole('link', { name: 'Ver horários', exact: true }).click();
     await expect(page.getByRole('button', { name: 'Continuar', exact: true })).toBeDisabled();

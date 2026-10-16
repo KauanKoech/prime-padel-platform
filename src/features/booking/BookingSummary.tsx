@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { courts, offers } from '../../content/courts';
 import type { BookingDraft } from '../../domain/booking';
 import { formatArenaDate, formatArenaTime, formatDuration, formatPrice } from '../../domain/format';
@@ -7,6 +7,19 @@ import styles from './booking.module.css';
 export function BookingSummary({ draft, children }: { draft: BookingDraft; children?: ReactNode }) {
   const offer = offers.find(offer => offer.id === draft.offerId);
   const bar = useRef<HTMLDivElement>(null);
+  const [shortViewport, setShortViewport] = useState(false);
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    const update = () => setShortViewport((viewport?.height ?? window.innerHeight) <= 560);
+    viewport?.addEventListener('resize', update);
+    window.addEventListener('resize', update);
+    const frame = requestAnimationFrame(update);
+    return () => {
+      cancelAnimationFrame(frame);
+      viewport?.removeEventListener('resize', update);
+      window.removeEventListener('resize', update);
+    };
+  }, []);
   useEffect(() => {
     const observer = new ResizeObserver(() => {
       document.documentElement.style.setProperty('--booking-bar-height', `${bar.current?.offsetHeight ?? 0}px`);
@@ -23,7 +36,7 @@ export function BookingSummary({ draft, children }: { draft: BookingDraft; child
         <div><dt>Horário</dt><dd>{draft.slot ? `${formatArenaTime(draft.slot.startsAt)} até ${formatArenaTime(draft.slot.endsAt)}` : 'A escolher'}</dd></div>
         <div><dt>Duração</dt><dd>{offer ? formatDuration(offer.durationMinutes) : 'A escolher'}</dd></div>
       </dl>
-      <div className={styles.summaryAction} ref={bar}>
+      <div className={`${styles.summaryAction} ${shortViewport ? styles.shortViewport : ''}`} ref={bar}>
         <div className={styles.total}>
           <span>{offer ? `Por quadra · ${formatDuration(offer.durationMinutes)}` : 'Selecione uma oferta'}</span>
           <strong>{offer ? formatPrice(offer.priceCents) : 'Valor a definir'}</strong>
