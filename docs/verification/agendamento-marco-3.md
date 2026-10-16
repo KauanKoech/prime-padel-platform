@@ -61,6 +61,16 @@ marco 2. Movimento reduzido continua coberto pelo CSS global.
 
 ## Limites e continuidade
 
+Revisao independente com `gpt-6.1-sol` do intervalo `6967a79..0647136`, com foco
+no marco 3, nao encontrou problemas novos criticos, importantes ou menores.
+O revisor inspecionou codigo, testes e evidencias sem reexecutar as suites.
+Permanece o ajuste menor de Ctrl/Cmd+clique nas ancoras da landing, registrado
+no marco 2 e sem alteracao neste marco.
+
+A proxima etapa deve reutilizar o ciclo de visita compativel com Activity ao
+adicionar historico e envio. Descarte com bfcache de documento completo e
+protecao do resultado tambem precisam integrar essa verificacao.
+
 Leitor de tela real, teclado virtual fisico e zoom real permanecem no marco 5;
 nao se declara A02/R02 integralmente aprovado. Sem novas dependencias, alteracoes
 no export, armazenamento persistente, backend, integracoes ou publicacao.
