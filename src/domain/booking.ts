@@ -1,4 +1,12 @@
-import type { Court, CourtOffer } from "./arena";
+import type { Court, CourtId, CourtOffer } from "./arena";
+
+export type BookingDraft = {
+  date: string;
+  courtId: CourtId | null;
+  offerId: string | null;
+  slot: AvailabilitySlot | null;
+  fictitiousName: string;
+};
 
 export type AvailabilitySlot = {
   id: string;

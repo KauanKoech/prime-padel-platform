@@ -35,6 +35,26 @@
 | Prefetch desativado nos links para agendamento | Implementada no marco 2 em 16/10/2026 | Evita requisicoes especulativas para uma rota do marco 3; o destino e a navegacao explicita permanecem os previstos |
 | Smoke separado da versao de producao na porta 3200 | Implementada no marco 2 em 16/10/2026 | Inspecao encontrou 404s de prefetch ausentes em dev; teste reproduziu a falha antes da correcao |
 
+## Implementacao do marco 3
+
+- `/agendamento` inicia com HTML neutro; apos montagem, le somente `quadra`
+  conhecida e cria uma instancia de `BookingService` por visita. Os componentes
+  nao importam o adaptador nem cenarios; `create-booking-service.ts` concentra
+  essa composicao. Controles de teste exigem opt-in e ambiente nao produtivo.
+- Filtros invalidam imediatamente horario e resultados. Consultas usam
+  AbortController e identificador sequencial para descartar respostas antigas.
+  A janela da arena e a selecao sao revalidadas ao consultar e avancar.
+- Radios nativos representam data, quadra, duracao e horario. A barra inferior
+  e o resumo lateral compartilham um unico CTA; sua altura medida reserva espaco
+  no conteudo e margem de rolagem para nao ocultar foco por teclado. Com altura
+  de viewport ate 560 px, a barra acompanha o fluxo do documento.
+- Cache Components usa Activity e pode preservar a pagina ao sair. A limpeza
+  em useLayoutEffect descarta a visita; uma nova identidade recria o fluxo ao
+  retornar. O teste de producao reproduziu a retencao antes da correcao. A
+  navegacao entre etapas e o historico serao completados no marco 4.
+- O aviso de expiracao usa texto #75480B sobre #FBF0DC (6,92:1), mais escuro
+  que o token de aviso do export. Erro usa #B23B2A sobre #F8E3DF (4,80:1).
+
 ## Decisoes pendentes para etapas futuras
 
 | Decisao | Recomendacao inicial | Estado |

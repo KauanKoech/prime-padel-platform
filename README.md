@@ -6,10 +6,12 @@ Plataforma digital da Prime Padel, em Lages, Santa Catarina.
 
 O repositorio usa Next.js com React, TypeScript estrito, npm e CSS proprio. A especificacao e o plano foram aprovados em 15/10/2026. O catalogo centralizado, o calendario e o servico simulado estao implementados. O marco 2 entrega a landing publica responsiva, com conteudo confirmado, precos, navegacao acessivel e ativos locais.
 
-As telas de agendamento pertencem aos marcos 3 e 4. Nesta entrega intermediaria,
-os links `/agendamento` e `/agendamento?quadra=...` ja possuem os destinos
-previstos, mas a rota ainda nao existe. A landing nao deve ser publicada como
-produto completo antes da conclusao e verificacao da jornada.
+O marco 3 implementa `/agendamento` e a entrada `/agendamento?quadra=...`:
+selecao de data, quadra, duracao e horario simulado, resumo responsivo e
+recuperacao de consultas. Dados, revisao e envio pertencem ao marco 4; por ora,
+Continuar abre apenas a apresentacao da etapa Dados com retorno ao horario.
+A plataforma nao deve ser publicada como produto completo antes da conclusao
+e verificacao da jornada.
 
 A primeira entrega tera dois resultados:
 
@@ -64,20 +66,23 @@ Use `npm run test:e2e:ui` quando precisar investigar um fluxo no navegador de fo
 ou servidor. `npm run test:e2e` executa os projetos `chromium-desktop` e
 `chromium-mobile`; inicia um servidor proprio em `http://127.0.0.1:3100` e
 nao reutiliza um servidor existente. Deixe a porta 3100 livre para os testes.
-O servidor de testes recebe `NEXT_PUBLIC_ENABLE_TEST_HARNESS=1`; o ponto de
-composicao que consumira essa opcao sera implementado junto do fluxo, no marco 3.
-Nao habilite essa variavel no build normal.
+O servidor de testes recebe `NEXT_PUBLIC_ENABLE_TEST_HARNESS=1`; somente o ponto
+de composicao `create-booking-service.ts` le `window.__PRIME_PADEL_TEST__` com
+essa opcao e fora de producao. Nao habilite essa variavel no build normal.
 
 A verificacao completa inclui lint, typecheck, test:unit, test:e2e e build.
 `npm run test:production` executa o build e depois verifica a carga da landing
-na versao de producao, com servidor proprio na porta 3200. Deixe essa porta livre.
+e do agendamento na versao de producao, com servidor proprio na porta 3200.
+Deixe essa porta livre.
 O teste percorre os links visiveis e detecta erros de console, respostas HTTP
 com falha e chamadas externas, inclusive prefetch que nao ocorre no servidor dev.
-Os E2E verificam conteudo, menu/foco, responsividade e recuperacao de imagens;
-a jornada ainda nao esta implementada.
+Os E2E verificam conteudo, menu/foco, responsividade, recuperacao de imagens e
+selecao de horarios, incluindo vazio, erro, timeout, filtros e expiracao.
+O smoke de producao verifica tambem descarte da visita e isolamento dos cenarios.
 
 Consulte [as evidencias do marco 2](docs/verification/landing-marco-2.md) para
 dimensoes verificadas, contrastes medidos e limitacoes.
+Consulte tambem [as evidencias do marco 3](docs/verification/agendamento-marco-3.md).
 
 ## Servico simulado
 
