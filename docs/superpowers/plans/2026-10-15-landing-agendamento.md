@@ -164,7 +164,7 @@ Aceite: C02/C04 (dados), J03/J06/J07/J08/J09/J10 (serviço), T01.
 - Produz: `SiteHeader(): React.JSX.Element`, `SiteFooter(): React.JSX.Element`, `LandingSections(): React.JSX.Element`, `BrandPanel(): React.JSX.Element`. Header/footer reutilizáveis; agendamento pode usar cabeçalho reduzido dentro de BookingFlow.
 - Produz: âncoras `#quadras`, `#como-funciona`, `#eventos`, `#loja`, `#localizacao`; CTA geral `/agendamento`, CTA de quadra `/agendamento?quadra=<CourtId>`.
 
-- [ ] **Step 1: Escrever teste da landing e atualizar o smoke para o novo H1.** Usar `test('conteudo factual e entradas do fluxo')` com:
+- [x] **Step 1: Escrever teste da landing e atualizar o smoke para o novo H1.** Usar `test('conteudo factual e entradas do fluxo')` com:
 
 ```ts
 await page.goto('/');
@@ -182,11 +182,11 @@ Cobrir também: ordem dos IDs de seção igual à spec §4; quatro demais cards 
 
 Teste `menu preserva foco e libera pagina`: abrir menu em 390 px, Tab/Shift+Tab contidos, Escape retorna ao botão; abrir e navegar para Quadras foca o título; abrir e mudar para desktop fecha diálogo e libera scroll/foco. Teste `placeholder tolera imagem ausente`: abortar `/brand/**`, recarregar e verificar legenda `Imagem ilustrativa da marca`, nome Prime Padel e CTAs utilizáveis.
 
-- [ ] **Step 2: Confirmar RED.** `npm run test:e2e -- tests/e2e/landing.spec.ts`; esperado falhar por H1, seções e menu ainda ausentes.
-- [ ] **Step 3: Adaptar os tokens e copiar os cinco assets locais listados.** Fontes via `@font-face` local; globals importa fonts/tokens. Aplicar os valores responsivos da spec §§7–8 e foco sólido proposto. Preservar fontes fallback e espaço das imagens. Não carregar scripts/CDNs do export.
-- [ ] **Step 4: Implementar landing e menu.** Seções na ordem da spec §4, todos os textos fixos copiados dali. Usar `dialog` nativo modal para menu compacto, fechamento visível, Escape e foco no destino após âncora. Navegação completa aparece só quando couber (breakpoint inicial 1200 px); detectar overflow e voltar ao modo compacto se necessário. Nenhuma afirmação sobre estrutura, agenda atual ou políticas. Um H1 e skip link; título de destino com foco programático e scroll-margin.
-- [ ] **Step 5: Confirmar GREEN.** `npm run test:e2e -- tests/e2e/landing.spec.ts tests/e2e/setup.spec.ts`, `npm run lint`, `npm run typecheck`. Inspecionar landing em 390 e 1440 px e falha de logo. Esperado: testes aprovados, ausência de erros de console e requisições externas durante carga.
-- [ ] **Step 6: Revisar e commitar.** `git diff --check`; adicionar somente arquivos desta tarefa; `git commit -m "feat: build public Prime Padel landing"`.
+- [x] **Step 2: Confirmar RED.** `npm run test:e2e -- tests/e2e/landing.spec.ts`; esperado falhar por H1, seções e menu ainda ausentes.
+- [x] **Step 3: Adaptar os tokens e copiar os cinco assets locais listados.** Fontes via `@font-face` local; globals importa fonts/tokens. Aplicar os valores responsivos da spec §§7–8 e foco sólido proposto. Preservar fontes fallback e espaço das imagens. Não carregar scripts/CDNs do export.
+- [x] **Step 4: Implementar landing e menu.** Seções na ordem da spec §4, todos os textos fixos copiados dali. Usar `dialog` nativo modal para menu compacto, fechamento visível, Escape e foco no destino após âncora. Navegação completa aparece só quando couber (breakpoint inicial 1200 px); detectar overflow e voltar ao modo compacto se necessário. Nenhuma afirmação sobre estrutura, agenda atual ou políticas. Um H1 e skip link; título de destino com foco programático e scroll-margin.
+- [x] **Step 5: Confirmar GREEN.** `npm run test:e2e -- tests/e2e/landing.spec.ts tests/e2e/setup.spec.ts`, `npm run lint`, `npm run typecheck`. Inspecionar landing em 390 e 1440 px e falha de logo. Esperado: testes aprovados, ausência de erros de console e requisições externas durante carga.
+- [x] **Step 6: Revisar e commitar.** `git diff --check`; adicionar somente arquivos desta tarefa; `git commit -m "feat: build public Prime Padel landing"`.
 
 Aceite: C01–C05, J01 (destinos), A01 (menu), T02 (assets).
 

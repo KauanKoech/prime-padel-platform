@@ -4,7 +4,12 @@ Plataforma digital da Prime Padel, em Lages, Santa Catarina.
 
 ## Estado atual
 
-O repositorio usa Next.js com React, TypeScript estrito, npm e CSS proprio. A especificacao e o plano foram aprovados em 15/10/2026. O primeiro marco implementa o catalogo centralizado, o calendario da arena e o servico de agendamento simulado com testes de dominio. A landing e as telas de agendamento serao implementadas nos proximos marcos.
+O repositorio usa Next.js com React, TypeScript estrito, npm e CSS proprio. A especificacao e o plano foram aprovados em 15/10/2026. O catalogo centralizado, o calendario e o servico simulado estao implementados. O marco 2 entrega a landing publica responsiva, com conteudo confirmado, precos, navegacao acessivel e ativos locais.
+
+As telas de agendamento pertencem aos marcos 3 e 4. Nesta entrega intermediaria,
+os links `/agendamento` e `/agendamento?quadra=...` ja possuem os destinos
+previstos, mas a rota ainda nao existe. A landing nao deve ser publicada como
+produto completo antes da conclusao e verificacao da jornada.
 
 A primeira entrega tera dois resultados:
 
@@ -50,6 +55,7 @@ npm run typecheck
 npm run test:unit
 npm run test:e2e
 npm run build
+npm run test:production
 ```
 
 Use `npm run test:e2e:ui` quando precisar investigar um fluxo no navegador de forma interativa.
@@ -62,9 +68,16 @@ O servidor de testes recebe `NEXT_PUBLIC_ENABLE_TEST_HARNESS=1`; o ponto de
 composicao que consumira essa opcao sera implementado junto do fluxo, no marco 3.
 Nao habilite essa variavel no build normal.
 
-A verificacao completa inclui os cinco comandos: lint, typecheck, test:unit,
-test:e2e e build. Os testes de navegador atuais cobrem a tela inicial da base;
-nao comprovam a landing ou a jornada, ainda nao implementadas.
+A verificacao completa inclui lint, typecheck, test:unit, test:e2e e build.
+`npm run test:production` executa o build e depois verifica a carga da landing
+na versao de producao, com servidor proprio na porta 3200. Deixe essa porta livre.
+O teste percorre os links visiveis e detecta erros de console, respostas HTTP
+com falha e chamadas externas, inclusive prefetch que nao ocorre no servidor dev.
+Os E2E verificam conteudo, menu/foco, responsividade e recuperacao de imagens;
+a jornada ainda nao esta implementada.
+
+Consulte [as evidencias do marco 2](docs/verification/landing-marco-2.md) para
+dimensoes verificadas, contrastes medidos e limitacoes.
 
 ## Servico simulado
 
@@ -95,7 +108,7 @@ Consulte `docs/DEPENDENCY-NOTES.md` antes de aplicar correcoes automaticas do `n
 - React.
 - TypeScript em modo estrito.
 - ESLint.
-- CSS proprio, preparado para receber os tokens do design system.
+- CSS proprio com tokens adaptados do design system e fontes locais.
 - Playwright com projetos de desktop e celular.
 
 ## Dados que nao podem ser publicados como definitivos

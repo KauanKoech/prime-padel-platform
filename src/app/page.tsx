@@ -1,12 +1,14 @@
+import { SiteHeader } from "../components/layout/SiteHeader";
+import { SiteFooter } from "../components/layout/SiteFooter";
+import { LandingSections } from "../features/landing/LandingSections";
+
 export default function Home() {
   return (
-    <main className="setup-shell">
-      <p className="setup-eyebrow">Prime Padel</p>
-      <h1>Plataforma em preparacao.</h1>
-      <p>
-        A base React esta pronta. A landing e o agendamento serao construidos
-        depois da aprovacao da especificacao e do plano.
-      </p>
-    </main>
+    <>
+      <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
+      <SiteHeader />
+      <LandingSections />
+      <SiteFooter />
+    </>
   );
 }

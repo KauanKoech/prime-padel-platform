@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { arena } from "../content/arena";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Prime Padel",
-  description: "Arena de padel em Lages, Santa Catarina.",
+  title: arena.name,
+  description: `Conheça as quadras da ${arena.name} em ${arena.city}, confira os valores e experimente o agendamento demonstrativo.`,
 };
 
 type RootLayoutProps = Readonly<{

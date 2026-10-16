@@ -27,6 +27,13 @@
 | Datas da arena em America/Sao_Paulo, precos em centavos e ofertas explicitas | Aceita em 15/10/2026 | Evita diferencas por fuso do dispositivo e precos calculados por proporcionalidade |
 | Adaptador simulado com timeout de 8 segundos e idempotencia por tentativa | Aceita em 15/10/2026 | Demonstra recuperacao e previne duplicacao; memoria limitada a visita, sem gravacao externa |
 | Servidor E2E isolado na porta 3100 | Aceita em 15/10/2026 | Impede validar acidentalmente outra instancia; cenarios de UI serao opt-in fora de producao no marco 3 |
+| Fontes e logos locais, sem runtime do export | Implementada no marco 2 em 16/10/2026 | DM Serif Display normal/italica, Instrument Sans e logos Prime Padel verde/branco; sem Pinyon ou icones onde texto basta |
+| Foco solido de 3 px e texto secundario #5E645F | Implementada no marco 2 em 16/10/2026 | Escolhas aprovadas no plano; anel verde em superficies claras e branco sobre verde, com contraste medido |
+| Composicao inicial sem amarelo | Implementada no marco 2 em 16/10/2026 | Acento opcional do export omitido conforme plano aprovado |
+| Menu compacto com dialog nativo e deteccao de espaco | Implementada no marco 2 em 16/10/2026 | Navegacao completa a partir de 1200 px apenas quando couber; Escape, contencao/restauracao de foco e ancoras acessiveis |
+| Ano do rodape renderizado no servidor com cache horario | Implementada no marco 2 em 16/10/2026 | Compativel com Cache Components da versao instalada; ano no fuso America/Sao_Paulo sem tornar toda a pagina dinamica |
+| Prefetch desativado nos links para agendamento | Implementada no marco 2 em 16/10/2026 | Evita requisicoes especulativas para uma rota do marco 3; o destino e a navegacao explicita permanecem os previstos |
+| Smoke separado da versao de producao na porta 3200 | Implementada no marco 2 em 16/10/2026 | Inspecao encontrou 404s de prefetch ausentes em dev; teste reproduziu a falha antes da correcao |
 
 ## Decisoes pendentes para etapas futuras
 

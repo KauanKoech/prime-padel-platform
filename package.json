@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test --project=chromium-desktop --project=chromium-mobile",
     "test:e2e:ui": "playwright test --project=chromium-desktop --project=chromium-mobile --ui",
-    "test:unit": "playwright test --project=domain"
+    "test:unit": "playwright test --project=domain",
+    "test:production": "npm run build && playwright test --config=playwright.production.config.ts"
   },
   "dependencies": {
     "next": "16.4.1",
