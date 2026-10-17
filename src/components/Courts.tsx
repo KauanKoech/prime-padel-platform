@@ -47,7 +47,8 @@ export function Courts() {
                 <li key={x.id}>
                   <button type="button" className={`court-pick${active ? ' is-active' : ''}`} aria-pressed={active} onClick={() => pick(x.id)}>
                     <span className="court-pick__plate">
-                      <CourtDrawing ball={active ? { x: 30, y: 58 } : null} />
+                      <CourtDrawing className="court-pick__v" ball={active ? { x: 30, y: 58 } : null} />
+                      <CourtDrawing className="court-pick__h" orientation="horizontal" ball={active ? { x: 30, y: 58 } : null} />
                     </span>
                     <span className="court-pick__info">
                       <span className="court-pick__name">{x.name}</span>

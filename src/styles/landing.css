@@ -412,7 +412,7 @@
   max-width: 34ch;
   font-size: clamp(1.0625rem, 0.3vw + 1rem, 1.25rem);
   line-height: 1.5;
-  color: var(--pp-neutral-700);
+  color: var(--pp-ink);
 }
 
 .hero__ctas {
@@ -627,31 +627,27 @@
   min-width: 0;
 }
 
+/* Celular: lista vertical, quadra deitada ao lado do nome e do preço (nada cortado na borda). */
 .courts__row {
   display: flex;
-  gap: 12px;
-  margin: 0 calc(var(--container-pad) * -1);
-  padding: 4px var(--container-pad) 8px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--container-pad);
-  scrollbar-width: none;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.courts__row::-webkit-scrollbar {
+.court-pick__h {
+  display: block;
+}
+
+.court-pick__v {
   display: none;
-}
-
-.courts__row li {
-  flex: 0 0 min(42vw, 190px);
-  scroll-snap-align: start;
 }
 
 .court-pick {
   --plate: var(--pp-green-800);
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
   width: 100%;
   padding: 0;
   border: 0;
@@ -663,7 +659,8 @@
 .court-pick__plate {
   position: relative;
   display: block;
-  padding: 16px 14px;
+  flex: 0 0 132px;
+  padding: 10px 12px;
   border-radius: var(--radius-md);
   background: var(--plate);
   box-shadow: inset 0 0 0 1px transparent;
@@ -703,7 +700,6 @@
 }
 
 .court-pick__name {
-  min-height: 2.6em;
   font: 600 var(--fs-small) / 1.3 var(--font-sans);
   letter-spacing: 0.06em;
 }
@@ -748,14 +744,12 @@
 }
 
 .courts__detail-label {
-  font: 600 var(--fs-overline) / 1.2 var(--font-sans);
-  letter-spacing: var(--ls-overline);
-  text-transform: uppercase;
+  font-size: var(--fs-small);
   color: var(--text-on-brand-muted);
 }
 
 .courts__detail-name {
-  margin-top: -8px;
+  margin-top: -10px;
   font: 400 var(--fs-h3) / 1.1 var(--font-display);
 }
 
@@ -823,9 +817,31 @@
   .courts__row {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    margin: 0;
-    padding: 4px 0 0;
-    overflow: visible;
+    gap: 12px;
+    padding-top: 4px;
+  }
+
+  .court-pick {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .court-pick__plate {
+    flex: none;
+    padding: 16px 14px;
+  }
+
+  .court-pick__h {
+    display: none;
+  }
+
+  .court-pick__v {
+    display: block;
+  }
+
+  .court-pick__name {
+    min-height: 2.6em;
   }
 }
 
@@ -893,7 +909,8 @@
   max-width: 520px;
   padding: 32px 24px 44px;
   background: var(--pp-white);
-  /* borda de baixo em serrilha, como um comprovante destacado */
+  /* borda de baixo em serrilha, como um comprovante destacado. A máscara usa conic-gradient só como recorte,
+     nada de degradê visível. taste-skill-ignore */
   --tooth: 18px;
   -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--tooth) 100%;
   mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--tooth) 100%;
