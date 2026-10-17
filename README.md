@@ -10,7 +10,10 @@ Os marcos 3 e 4 implementam `/agendamento` e a entrada
 `/agendamento?quadra=...`: selecao de data, quadra, duracao e horario,
 nome ficticio, revisao e resultado simulado. A jornada inclui historico,
 recuperacao de erro, conflito e expiracao, sem envio ou reserva real.
-O marco 5 ainda deve concluir a verificacao integrada da entrega.
+O marco 5 foi encerrado com verificacao simplificada em 17/10/2026, conforme
+alinhamento com o responsavel. O frontend esta pronto para avaliacao local
+e posterior integracao com o backend; as verificacoes manuais ampliadas
+permanecem registradas para a etapa integrada.
 
 A primeira entrega tera dois resultados:
 
@@ -85,6 +88,8 @@ Consulte [as evidencias do marco 2](docs/verification/landing-marco-2.md) para
 dimensoes verificadas, contrastes medidos e limitacoes.
 Consulte tambem [as evidencias do marco 3](docs/verification/agendamento-marco-3.md).
 O fluxo completo esta registrado [nas evidencias do marco 4](docs/verification/agendamento-marco-4.md).
+O [fechamento do frontend](docs/verification/landing-agendamento.md) consolida
+os resultados finais, a cobertura e as limitacoes.
 
 ## Servico simulado
 

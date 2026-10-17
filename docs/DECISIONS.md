@@ -78,6 +78,19 @@
   acompanha o documento. Isso permite responder ao espaco reduzido pelo
   teclado virtual; a validacao com dispositivo fisico fica no marco 5.
 
+## Fechamento simplificado do frontend — 17/10/2026
+
+O responsavel alinhou o encerramento desta etapa com
+verification-before-completion, aproveitando a cobertura existente antes
+de avaliar localmente a interface e integrar seu prototipo de backend.
+O marco 5 encerra com lint, tipos, testes, build, smoke de producao,
+conferencia de escopo e matriz de evidencias. Nao adiciona outra suite de
+simulacoes nem repete a revisao independente do codigo inalterado.
+Leitor de tela real, teclado virtual fisico, zoom real e ciclo real de
+bfcache ficam para a verificacao integrada; nao sao certificados agora.
+Isso encerra a etapa do frontend para avaliacao local, sem autorizar
+publicacao ou declarar o produto operacional.
+
 ## Decisoes pendentes para etapas futuras
 
 | Decisao | Recomendacao inicial | Estado |

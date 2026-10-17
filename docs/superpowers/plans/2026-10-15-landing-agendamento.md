@@ -274,6 +274,27 @@ Aceite: J02, J05, J07 (envio), J08, J09, J10, J11, J12, E01, A01/A02 (fluxo), T0
 
 ### Task 5: Fechar responsividade, acessibilidade e evidências da entrega
 
+**Estado: encerrado no escopo simplificado alinhado com o responsavel em
+17/10/2026.** Apos discutir o custo das validacoes e a futura integracao
+do prototipo de backend, o responsavel solicitou finalizar esta etapa
+com verification-before-completion. O roteiro abaixo registra o que foi
+executado; o escopo original permanece como referencia, sem ser declarado
+integralmente cumprido.
+
+- [x] Executar lint, tipos, 41 testes de dominio e 76 E2E existentes.
+- [x] Executar build e quatro testes de producao, sem test harness ativo.
+- [x] Conferir diff, conteudo, contratos, limites e evidencias anteriores.
+- [x] Consolidar matriz e limitacoes em docs/verification/landing-agendamento.md.
+- [x] Atualizar README e decisoes para avaliacao local e futura integracao.
+
+Validacoes manuais ampliadas e nova suite responsive.spec.ts nao foram
+executadas neste fechamento. A02/R02 e percurso integral exclusivamente
+por teclado nao recebem certificacao completa. Reutilizada a revisao
+independente do marco 4 e sua correcao verificada; nenhum codigo de produto
+foi alterado neste fechamento.
+
+#### Escopo original de referencia (substituido pelo fechamento acima)
+
 **Files:** Criar `tests/e2e/responsive.spec.ts` e `docs/verification/landing-agendamento.md`. Modificar apenas componentes/CSS das tarefas 2–4 quando testes/inspeção demonstrarem falhas; atualizar `README.md` com estado real e comandos.
 
 **Interfaces:** Consome rotas, helpers e contratos das tarefas anteriores. Produz a mesma interface pública validada e matriz de evidências; não adiciona serviços nem novos módulos.
