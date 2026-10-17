@@ -1,0 +1,10 @@
+# Sobe a landing da Prime Padel: docker compose up -d --build
+# Abre em http://localhost:8080 (outra porta: PORTA=3000 docker compose up -d --build)
+name: prime-padel
+services:
+  site:
+    build: .
+    image: prime-padel-landing:latest
+    ports:
+      - "${PORTA:-8080}:80"
+    restart: unless-stopped
