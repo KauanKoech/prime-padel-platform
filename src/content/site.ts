@@ -1,16 +1,31 @@
 /**
  * Todos os textos da landing e do agendamento. Dados institucionais (endereço, horários, quadras, preços)
- * ficam em `arena.ts`; aqui só a voz da marca. Fontes: landing anterior (commit 1b45848), docs/PRODUCT.md
- * e textos novos marcados para aprovação no design/direcao-visual.md.
+ * ficam em `arena.ts`; aqui a voz da marca, os professores, os eventos e as fotos.
+ * Fontes: landing anterior (commit 1b45848), docs/PRODUCT.md e os posts oficiais em design/originais/
+ * (professores, aulas, Prime Cup Primavera 2026, comunidade, loja). Textos novos estão listados para aprovação
+ * no relatório da entrega.
  */
+
+export type Photo = { src: string; srcSet?: string; width: number; height: number; alt: string };
+
+/** Foto recortada por scripts/images.mjs; `small` = existe a versão de 400 px para o srcset. */
+const foto = (name: string, width: number, height: number, alt: string, small = true): Photo => ({
+  src: `/img/fotos/${name}.webp`,
+  srcSet: small ? `/img/fotos/${name}-400.webp 400w, /img/fotos/${name}.webp ${width}w` : undefined,
+  width,
+  height,
+  alt,
+});
+
 export const site = {
   title: 'Prime Padel',
   skip: 'Pular para o conteúdo',
 
   nav: [
     { href: '#quadras', label: 'Quadras' },
-    { href: '#como-agendar', label: 'Como agendar' },
-    { href: '#eventos', label: 'Eventos' },
+    { href: '#aulas', label: 'Aulas' },
+    { href: '#professores', label: 'Professores' },
+    { href: '#eventos', label: 'Prime Cup' },
     { href: '#loja', label: 'Loja' },
     { href: '#onde-estamos', label: 'Onde estamos' },
   ],
@@ -27,64 +42,138 @@ export const site = {
 
   hero: {
     titleLead: 'Seu próximo jogo',
-    titleAccent: 'começa na Prime.',
-    lead: 'Cinco quadras de padel em São Cristóvão, Lages. Escolha a quadra, a duração e o horário que combinam com a sua turma.',
+    titleMid: 'começa na',
+    titleAccent: 'Prime.',
+    lead: 'Cinco quadras de padel em São Cristóvão, Lages, aulas do iniciante ao avançado e a West Padel Store dentro da arena.',
     primary: 'Ver horários',
     secondary: 'Quadras e valores',
     facts: {
       courts: 'quadras',
       durations: 'partidas de 1h ou 1h30',
       price: 'por quadra, não por pessoa',
+      teachers: 'professores',
     },
-    panelLabel: 'Ilustração de uma quadra de padel vista de cima',
+    open: 'Aberto todos os dias',
+    photo: foto(
+      'aperto-de-maos',
+      651,
+      806,
+      'Dois jogadores se cumprimentam com as mãos em quadra, com raquetes de padel e a placa DGI / EQI ao fundo.',
+    ),
+  },
+
+  values: {
+    label: 'O que você encontra na Prime',
+    items: [
+      { icon: 'court', title: 'Cinco quadras', text: 'valor por quadra e por duração' },
+      { icon: 'learn', title: 'Aulas do zero', text: 'acompanhamento profissional para todos os níveis e idades' },
+      { icon: 'coach', title: 'Professores capacitados', text: 'do primeiro saque ao nível avançado' },
+      { icon: 'premium', title: 'Estrutura premium', text: 'com a West Padel Store dentro da arena' },
+    ],
   },
 
   courts: {
-    title: 'Escolha onde o jogo acontece.',
+    titleLead: 'Escolha sua',
+    titleAccent: 'quadra.',
     lead: 'Cada quadra tem o seu valor, cobrado por quadra e por duração. Toque em uma delas para ver as opções e seguir para os horários.',
     groupLabel: 'Quadras da arena',
     selected: 'Quadra escolhida',
     durationLabel: 'Duração',
     action: 'Ver horários desta quadra',
-    perCourt: 'valor por quadra',
+    perCourt: 'Valor por quadra, para a turma toda.',
+    demo: 'A agenda do site é uma demonstração: os horários são simulados e nada é reservado. Para garantir sua quadra hoje, fale com a arena.',
   },
 
-  how: {
-    title: 'Menos combinação, mais jogo.',
-    lead: 'Da data à revisão em poucos toques, sem ligação e sem espera.',
-    demo: 'Nesta versão a agenda é uma demonstração: os horários são simulados e nenhuma reserva é registrada. Para garantir sua quadra hoje, fale com a arena.',
-    action: 'Experimentar o agendamento',
-    slipTitle: 'Sua próxima partida',
-    steps: [
-      { label: 'Data', value: 'próximos 14 dias' },
-      { label: 'Quadra', value: 'uma das cinco' },
-      { label: 'Duração', value: '1h ou 1h30' },
-      { label: 'Horário', value: 'grade do dia' },
-      { label: 'Seus dados', value: 'nome e telefone' },
-      { label: 'Revisão', value: 'valor por quadra' },
+  lessons: {
+    titleLead: 'Nunca jogou',
+    titleAccent: 'padel?',
+    statement: 'Aqui você aprende do zero.',
+    items: ['Acompanhamento profissional para todos os níveis e idades', 'Professores capacitados', 'Estrutura premium'],
+    text: 'Do primeiro saque ao nível avançado, com aulas também para crianças. Fale com a arena para combinar a sua.',
+    action: 'Quero fazer uma aula',
+    actionMessage: 'Olá! Vi o site da Prime Padel e quero fazer uma aula.',
+    secondary: 'Conhecer os professores',
+    photo: foto('saque', 646, 530, 'Foto em preto e branco, vista de cima, de uma jogadora sacando na quadra de padel, com o braço esticado para o alto.'),
+  },
+
+  coaches: {
+    titleLead: 'Conheça nossos',
+    titleAccent: 'professores.',
+    lead: 'Três professores com formação no padel e anos de raquete, do primeiro contato com a bola ao nível avançado. E aulas para crianças.',
+    levelsLabel: 'Atende',
+    listLabel: 'Professores da Prime Padel',
+    action: (first: string) => `Aula com ${first}`,
+    message: (name: string) => `Olá! Vi o site da Prime Padel e quero agendar uma aula com o professor ${name}.`,
+    swipe: 'Deslize para ver os três professores',
+    items: [
+      {
+        id: 'dorotovio',
+        name: 'Dorotóvio R. Couto',
+        first: 'Dorotóvio',
+        stat: { value: 3, unit: 'anos', label: 'professor na Prime' },
+        facts: [
+          'Bacharel em Educação Física',
+          'Pós-graduado em performance desportiva',
+          'Formação nos métodos PEX, Cobrapa, Villa Padel, Tyson Padel Team, Profit Padel Kids e M3 Academy Online',
+        ],
+        levels: ['Do iniciante ao avançado', 'Crianças de todas as idades'],
+        // A foto vem do post "Conheça nosso professor" (4.png), que abre a apresentação do Dorotóvio (5.png).
+        photo: foto('prof-dorotovio', 330, 412, 'Professor Dorotóvio R. Couto, sorrindo, com a camisa da Prime Padel.', false),
+      },
+      {
+        id: 'gustavo',
+        name: 'Gustavo Silveira',
+        first: 'Gustavo',
+        stat: { value: 5, unit: 'anos', label: 'dando aulas de padel' },
+        facts: ['Joga tênis desde os 10 anos e começou a dar aulas aos 15', 'Conheceu o padel aos 16', 'Joga a categoria Open e torneios profissionais'],
+        levels: ['Do iniciante ao avançado', 'Crianças a partir dos 8 anos'],
+        photo: foto('prof-gustavo', 172, 214, 'Professor Gustavo Silveira, com a camisa da Prime Padel, na quadra.', false),
+      },
+      {
+        id: 'eduardo',
+        name: 'Eduardo Pereira',
+        first: 'Eduardo',
+        stat: { value: 31, unit: 'anos', label: 'como professor de esportes de raquete' },
+        facts: ['Ex-atleta profissional de squash', 'Formação como professor de padel com @fabianopadel'],
+        levels: ['Iniciante e intermediário'],
+        photo: foto('prof-eduardo', 200, 250, 'Professor Eduardo Pereira, sorrindo, com a camisa da Prime Padel, na quadra.', false),
+      },
     ],
-    result: { label: 'Solicitação enviada', value: 'sem pagamento online' },
   },
 
   events: {
-    title: 'Encontros que viram história.',
+    titleLead: 'Encontros que viram',
+    titleAccent: 'história.',
     tabsLabel: 'Eventos da Prime',
+    categoriesLabel: 'Categorias',
     items: [
+      {
+        id: 'cup',
+        tab: 'Prime Cup',
+        title: 'Prime Cup Primavera 2026',
+        meta: '01 a 04 de outubro de 2026',
+        text: 'O torneio da casa, com categorias do iniciante à 2ª e uma categoria infantil. A edição de primavera já aconteceu; a próxima sai primeiro no Instagram.',
+        categories: [
+          { name: 'Masculina', detail: '2ª, 3ª, 4ª, 5ª, 6ª e Iniciante' },
+          { name: 'Feminina', detail: '3ª, 4ª, 5ª, 6ª e Iniciante' },
+          { name: 'Mista', detail: 'B e C' },
+          { name: 'Infantil', detail: 'até 12 anos' },
+        ],
+        image: foto(
+          'prime-cup-primavera-2026',
+          631,
+          787,
+          'Cartaz da Prime Cup Primavera 2026, de 01 a 04 de outubro, com as categorias masculina, feminina, mista e infantil até 12 anos.',
+        ),
+      },
       {
         id: 'open',
         tab: 'Open Prime Padel',
         title: '1º Open Prime Padel',
         meta: 'Categoria open masculina',
         text: 'A primeira edição do torneio da casa reuniu atletas na categoria open masculina.',
-        image: { src: '/img/open-prime-padel.webp', width: 694, height: 543, alt: 'Arte do 1º Open Prime Padel: "Atletas confirmados, categoria open masculina", com o logo do torneio sobre fundo verde.' },
-      },
-      {
-        id: 'cup',
-        tab: 'Prime Cup',
-        title: 'Prime Cup',
-        meta: 'Primavera 2026',
-        text: 'O torneio da Prime, com identidade própria. A arte marca a edição de primavera de 2026.',
-        image: { src: '/img/prime-cup.webp', width: 477, height: 327, alt: 'Logo do torneio Prime Cup, com uma raquete no lugar da letra e o selo "Primavera 2026".' },
+        categories: [],
+        image: { src: '/img/open-prime-padel.webp', width: 694, height: 543, alt: 'Arte do 1º Open Prime Padel: "Atletas confirmados, categoria open masculina", com o logo do torneio sobre fundo verde.' } as Photo,
       },
       {
         id: 'dayuse',
@@ -92,7 +181,8 @@ export const site = {
         title: 'Day Use de feriado',
         meta: 'Edição de 5 de setembro',
         text: 'Quadras em sistema rotativo das 14h às 23h, com pizza, chopp e drinks. Naquela edição, o valor foi de R$ 50 por pessoa.',
-        image: { src: '/img/day-use.webp', width: 731, height: 842, alt: 'Arte do Day Use de feriado de 5 de setembro: quadras em sistema rotativo das 14h às 23h, pizzas, chopp e drinks, R$ 50 por pessoa.' },
+        categories: [],
+        image: { src: '/img/day-use.webp', width: 731, height: 842, alt: 'Arte do Day Use de feriado de 5 de setembro: quadras em sistema rotativo das 14h às 23h, pizzas, chopp e drinks, R$ 50 por pessoa.' } as Photo,
       },
     ],
     note: 'Artes de divulgação da arena, de edições já anunciadas. Datas, categorias e inscrições dos próximos eventos saem primeiro no Instagram.',
@@ -102,10 +192,32 @@ export const site = {
   },
 
   store: {
-    title: 'Tudo para entrar em quadra.',
+    titleLead: 'Você já conhece a',
+    titleAccent: 'West Padel?',
     lead: 'A West Padel Store fica dentro da arena, com equipamentos e acessórios para o padel.',
     more: 'e outros produtos para padel.',
     action: 'Conhecer a loja',
+    photo: foto(
+      'loja-west-padel',
+      599,
+      662,
+      'Interior da West Padel Store: raqueteiras na prateleira, roupas de padel nas araras e caixas de tênis embaixo.',
+    ),
+  },
+
+  community: {
+    lead: 'O melhor da semana quase sempre começa com uma mensagem:',
+    title: 'Bora jogar hoje?',
+    text: 'Junte a turma, escolha a quadra e veja os horários do dia.',
+    primary: 'Ver horários',
+    secondary: 'Chamar a arena no WhatsApp',
+    message: 'Olá! Bora jogar hoje? Quero ver um horário de quadra na Prime Padel.',
+    photo: foto(
+      'amarrando-o-tenis',
+      651,
+      500,
+      'Jogadora sorridente sentada na grama sintética da quadra, amarrando o tênis ao lado da rede.',
+    ),
   },
 
   visit: {
@@ -123,8 +235,19 @@ export const site = {
     whatsappMessage: 'Olá! Vi o site da Prime Padel e quero agendar uma quadra.',
   },
 
+  finalCta: {
+    titleLead: 'Sua quadra está',
+    titleAccent: 'esperando.',
+    text: 'Veja os horários do dia e mande sua solicitação em poucos toques, ou fale direto com a arena.',
+    primary: 'Ver horários',
+    secondary: 'Falar no WhatsApp',
+    message: 'Olá! Vi o site da Prime Padel e quero reservar uma quadra.',
+    photo: foto('raquetes', 620, 334, 'Duas raquetes de padel e bolas sobre a grama sintética, ao lado da rede.'),
+  },
+
   footer: {
     tagline: 'Padel em Lages, Santa Catarina.',
+    follow: 'Siga a Prime',
     year: '2026',
     demo: 'Agenda online em demonstração: nenhuma reserva é registrada pelo site.',
     top: 'Voltar ao início',

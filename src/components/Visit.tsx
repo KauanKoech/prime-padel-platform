@@ -20,7 +20,7 @@ export function Visit() {
   const today = useSyncExternalStore(noop, () => weekday(localDate()), () => null);
 
   return (
-    <section className="visit on-brand" id="onde-estamos" aria-labelledby="visit-title">
+    <section className="visit panel on-brand" id="onde-estamos" aria-labelledby="visit-title">
       <div className="container visit__grid">
         <div className="visit__map" role="img" aria-label={v.mapLabel}>
           <svg className="visit__rings" viewBox="0 0 600 600" aria-hidden="true" focusable="false">

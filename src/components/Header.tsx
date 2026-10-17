@@ -55,7 +55,7 @@ export function Header() {
     <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
       <div className="container site-header__in">
         <a href="#topo" className="site-header__logo" aria-label={site.header.home}>
-          <Logo tone="green" height={40} eager />
+          <Logo tone="white" height={40} eager />
         </a>
         <nav className="site-nav" aria-label={site.header.navLabel}>
           <ul>
@@ -67,13 +67,13 @@ export function Header() {
           </ul>
         </nav>
         <div className="site-header__actions">
-          <ButtonLink size="sm" className="only-desktop" {...trigger()}>
+          <ButtonLink variant="ball" size="sm" className="only-desktop" {...trigger()}>
             {site.header.book}
           </ButtonLink>
-          <ButtonLink size="sm" className="only-mobile" {...trigger()}>
+          <ButtonLink variant="ball" size="sm" className="only-mobile" {...trigger()}>
             {site.header.bookShort}
           </ButtonLink>
-          <button type="button" className="icon-btn only-mobile" aria-label={site.header.menu} aria-haspopup="dialog" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
+          <button type="button" className="icon-btn icon-btn--on-brand only-mobile" aria-label={site.header.menu} aria-haspopup="dialog" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
             <Menu size={22} strokeWidth={1.75} aria-hidden="true" />
           </button>
         </div>
@@ -98,7 +98,7 @@ export function Header() {
           </ul>
         </nav>
         <ButtonLink
-          variant="onBrand"
+          variant="ball"
           size="lg"
           block
           {...trigger()}

@@ -1,18 +1,23 @@
 import { LazyMotion, MotionConfig, domAnimation, useReducedMotion } from 'motion/react';
 import { ReactLenis } from 'lenis/react';
+import { Coaches } from './components/Coaches';
+import { Community } from './components/Community';
 import { Courts } from './components/Courts';
 import { Events } from './components/Events';
+import { FinalCta } from './components/FinalCta';
 import { Footer, WhatsAppFloat } from './components/Footer';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { HowTo } from './components/HowTo';
+import { Lessons } from './components/Lessons';
 import { Store } from './components/Store';
+import { Values } from './components/Values';
 import { Visit } from './components/Visit';
 import { site } from './content/site';
 import { BookingProvider } from './features/booking/BookingContext';
 import { BookingDialog } from './features/booking/BookingDialog';
 import './styles/tokens.css';
 import './styles/base.css';
+import './styles/components.css';
 import './styles/landing.css';
 import './styles/booking.css';
 
@@ -31,11 +36,15 @@ export function App() {
           <Header />
           <main id="conteudo">
             <Hero />
+            <Values />
             <Courts />
-            <HowTo />
+            <Lessons />
+            <Coaches />
             <Events />
             <Store />
+            <Community />
             <Visit />
+            <FinalCta />
           </main>
           <Footer />
           <WhatsAppFloat />

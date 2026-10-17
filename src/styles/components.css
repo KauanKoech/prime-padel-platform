@@ -1,0 +1,347 @@
+/* Componentes compartilhados pela landing e pela janela de agendamento: botões, títulos divididos, abas, cartaz inclinável, fotos. */
+
+/* ---------- Botões (design-system-export/components/actions/Button) ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--tap-min);
+  padding: 0 20px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font: 600 0.9375rem/1.2 var(--font-sans);
+  letter-spacing: 0.01em;
+  max-width: 100%;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn svg {
+  flex: none;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.btn:hover svg:last-child:not(:first-child) {
+  transform: translateX(3px);
+}
+
+/* Rótulo que desliza (kokonutui slide-text-button): as duas cópias dividem a mesma célula da grade. */
+.btn__label {
+  display: grid;
+  overflow: hidden;
+  padding: 0.12em 0;
+  margin: -0.12em 0;
+}
+
+.btn__text {
+  grid-area: 1 / 1;
+  transition: transform 0.26s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.btn__text--next {
+  transform: translateY(110%);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .btn:hover .btn__text,
+  .btn:focus-visible .btn__text {
+    transform: translateY(-110%);
+  }
+
+  .btn:hover .btn__text--next,
+  .btn:focus-visible .btn__text--next {
+    transform: none;
+  }
+}
+
+.btn--sm {
+  padding: 0 16px;
+}
+
+.btn--lg {
+  min-height: 52px;
+  padding: 0 26px;
+  font-size: 1rem;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn--primary {
+  background: var(--pp-green-700);
+  color: var(--pp-white);
+}
+
+.btn--primary:hover {
+  background: var(--pp-green-800);
+}
+
+.btn--ball {
+  background: var(--pp-ball);
+  color: var(--pp-ball-ink);
+}
+
+.btn--ball:hover {
+  background: #e4f47a;
+}
+
+.btn--onBrand {
+  background: var(--pp-cream);
+  color: var(--pp-green-900);
+}
+
+.btn--onBrand:hover {
+  background: var(--pp-white);
+}
+
+.btn--outline {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--pp-ink);
+}
+
+.btn--outline:hover {
+  border-color: var(--pp-green-700);
+  background: var(--pp-neutral-50);
+}
+
+.btn--outlineOnBrand {
+  background: transparent;
+  border-color: rgba(247, 245, 239, 0.42);
+  color: var(--pp-cream);
+}
+
+.btn--outlineOnBrand:hover {
+  border-color: var(--pp-cream);
+  background: rgba(247, 245, 239, 0.08);
+}
+
+.btn--tint {
+  background: var(--pp-green-100);
+  color: var(--pp-green-800);
+}
+
+.btn--tint:hover {
+  background: var(--pp-green-200);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--pp-green-700);
+  padding: 0 14px;
+}
+
+.btn--ghost:hover {
+  background: var(--pp-green-50);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  flex: none;
+  border: 1px solid var(--border-default);
+  border-radius: 50%;
+  background: var(--pp-white);
+  color: var(--pp-ink);
+  transition: background-color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+}
+
+.icon-btn:hover {
+  background: var(--pp-neutral-50);
+  border-color: var(--border-strong);
+}
+
+.icon-btn--on-brand {
+  background: transparent;
+  border-color: rgba(247, 245, 239, 0.32);
+  color: var(--pp-cream);
+}
+
+.icon-btn--on-brand:hover {
+  background: rgba(247, 245, 239, 0.1);
+}
+
+.only-desktop {
+  display: none !important;
+}
+
+@media (min-width: 960px) {
+  .only-desktop {
+    display: inline-flex !important;
+  }
+
+  .only-mobile {
+    display: none !important;
+  }
+}
+
+/* Utilitário: transform controlado pelo Motion (sem transição CSS de transform por cima). */
+.m {
+  transition: none !important;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ---------- Títulos ---------- */
+.section-title {
+  font: 700 var(--fs-h2) / 0.98 var(--font-sans);
+  letter-spacing: -0.035em;
+  max-width: 14ch;
+}
+
+.section-lead {
+  max-width: 52ch;
+  color: var(--text-on-dark-muted);
+}
+
+.on-light .section-lead {
+  color: var(--pp-neutral-700);
+}
+
+/* Palavra de destaque: amarelo da bola no escuro, marca-texto no claro (amarelo sobre creme não passa no contraste). */
+.hl {
+  color: var(--pp-ball);
+}
+
+.on-light .hl {
+  color: var(--pp-ink);
+  background: var(--pp-ball);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.08em;
+  border-radius: 0.08em;
+}
+
+/* SplitTitle (React Bits SplitText): cada palavra sobe de dentro de uma máscara. */
+.split__mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.split__word {
+  display: inline-block;
+}
+
+/* ---------- Fotos em painel ---------- */
+.photo {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--pp-green-900);
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .photo:hover img {
+    transform: scale(1.04);
+  }
+}
+
+/* ---------- Cartaz inclinável (React Bits TiltedCard) ---------- */
+.tilt {
+  touch-action: pan-y pinch-zoom;
+}
+
+.tilt__body {
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* ---------- Abas com pílula deslizante (kokonutui smooth-tab) ---------- */
+.stabs {
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 26px;
+  background: rgba(247, 245, 239, 0.08);
+  max-width: 100%;
+}
+
+.stabs__pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-radius: var(--radius-pill);
+  background: var(--pp-cream);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stabs.is-measured .stabs__pill {
+  opacity: 1;
+}
+
+.stabs__tab {
+  position: relative;
+  z-index: 1;
+  min-height: var(--tap-min);
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--pp-cream);
+  font: 600 0.875rem/1 var(--font-sans);
+  white-space: nowrap;
+  transition: color var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out);
+}
+
+.stabs__tab:hover {
+  background: rgba(247, 245, 239, 0.08);
+}
+
+/* Antes da medição (HTML pré-renderizado, sem JS), a aba ativa tem fundo próprio. */
+.stabs__tab[aria-selected='true'] {
+  color: var(--pp-green-900);
+  background: var(--pp-cream);
+}
+
+.stabs.is-measured .stabs__tab[aria-selected='true'] {
+  background: transparent;
+}
+
+@media (min-width: 380px) {
+  .stabs {
+    flex-wrap: nowrap;
+  }
+}
+
+@media (min-width: 480px) {
+  .stabs__tab {
+    padding: 0 18px;
+    font-size: 0.9375rem;
+  }
+}

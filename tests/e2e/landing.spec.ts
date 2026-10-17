@@ -12,7 +12,15 @@ test('landing pré-renderizada: título, seções e dados da arena', async ({ pa
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Seu próximo jogo começa na Prime.');
   await expect(page.locator('h1')).toHaveCount(1);
 
-  for (const name of ['Escolha onde o jogo acontece.', 'Menos combinação, mais jogo.', 'Encontros que viram história.', 'Tudo para entrar em quadra.']) {
+  for (const name of [
+    'Escolha sua quadra.',
+    'Nunca jogou padel?',
+    'Conheça nossos professores.',
+    'Encontros que viram história.',
+    'Você já conhece a West Padel?',
+    'Bora jogar hoje?',
+    'Sua quadra está esperando.',
+  ]) {
     await expect(page.getByRole('heading', { level: 2, name })).toBeAttached();
   }
   await expect(page.getByText('Avenida Belisário Ramos, 4241').first()).toBeAttached();
@@ -26,8 +34,10 @@ test('landing pré-renderizada: título, seções e dados da arena', async ({ pa
   await expect(page.locator('a[href^="https://wa.me/554999107642?text="]').first()).toBeAttached();
   await expect(page.locator('a[href="https://www.instagram.com/primepadellages/"]').first()).toHaveAttribute('rel', 'noopener');
 
-  // imagens carregadas
-  await page.locator('#eventos').scrollIntoViewIfNeeded();
+  // imagens carregadas (as de baixo da dobra são lazy: desce a página inteira antes de conferir)
+  for (const id of ['#aulas', '#professores', '#eventos', '#loja', '#comunidade', '#onde-estamos', '.final']) {
+    await page.locator(id).first().scrollIntoViewIfNeeded();
+  }
   await expect.poll(() => page.locator('img').evaluateAll((imgs) => imgs.filter((i) => (i as HTMLImageElement).complete && (i as HTMLImageElement).naturalWidth === 0).length)).toBe(0);
 
   expect(errors).toEqual([]);
@@ -48,15 +58,59 @@ test('quadras: escolher quadra e duração leva aos horários já preenchidos', 
   await expect(dialog.getByRole('radio', { name: /^1h R\$ 140$/ })).toBeChecked();
 });
 
-test('eventos: abas com mouse e teclado trocam a arte e o texto', async ({ page }) => {
+test('eventos: Prime Cup primeiro, abas com mouse e teclado trocam a arte e o texto', async ({ page }) => {
   await page.goto('/');
   const events = page.locator('#eventos');
-  await events.getByRole('tab', { name: 'Prime Cup' }).click();
-  await expect(events.getByRole('tabpanel')).toContainText('Primavera 2026');
-  await expect(events.locator('img')).toHaveAttribute('src', '/img/prime-cup.webp');
+  await expect(events.getByRole('tab', { name: 'Prime Cup' })).toHaveAttribute('aria-selected', 'true');
+  const panel = events.getByRole('tabpanel');
+  await expect(panel).toContainText('01 a 04 de outubro de 2026');
+  for (const cat of ['Masculina', 'Feminina', 'Mista', 'Infantil']) await expect(panel).toContainText(cat);
+  await expect(events.locator('.events__poster img')).toHaveAttribute('src', '/img/fotos/prime-cup-primavera-2026.webp');
+
+  await events.getByRole('tab', { name: 'Open Prime Padel' }).click();
+  await expect(panel).toContainText('categoria open masculina');
+  await expect(events.locator('.events__poster img')).toHaveAttribute('src', '/img/open-prime-padel.webp');
   await page.keyboard.press('ArrowRight');
   await expect(events.getByRole('tab', { name: 'Day Use' })).toBeFocused();
-  await expect(events.getByRole('tabpanel')).toContainText('14h às 23h');
+  await expect(panel).toContainText('14h às 23h');
+});
+
+test('professores: três cartões com fatos reais e WhatsApp com o nome do professor', async ({ page, request, isMobile }) => {
+  // os números já vêm no HTML pré-renderizado (o contador só anima no navegador)
+  const html = await (await request.get('/')).text();
+  for (const n of ['Dorotóvio R. Couto', 'Gustavo Silveira', 'Eduardo Pereira', 'Ex-atleta profissional de squash']) expect(html).toContain(n);
+
+  await page.goto('/');
+  const coaches = page.locator('#professores');
+  await expect(coaches.locator('.coach')).toHaveCount(3);
+  await expect(coaches.getByRole('heading', { level: 3 })).toHaveText(['Dorotóvio R. Couto', 'Gustavo Silveira', 'Eduardo Pereira']);
+  const eduardo = coaches.locator('.coach', { hasText: 'Eduardo Pereira' });
+  await eduardo.scrollIntoViewIfNeeded();
+  await expect(eduardo.locator('.coach__num')).toContainText('31');
+  await expect(eduardo.getByRole('link', { name: 'Aula com Eduardo' })).toHaveAttribute(
+    'href',
+    `https://wa.me/554999107642?text=${encodeURIComponent('Olá! Vi o site da Prime Padel e quero agendar uma aula com o professor Eduardo Pereira.')}`,
+  );
+
+  // celular: carrossel horizontal com encaixe; desktop: três colunas
+  const track = coaches.locator('.coaches__track');
+  const scrolls = await track.evaluate((el) => el.scrollWidth > el.clientWidth + 1);
+  expect(scrolls).toBe(Boolean(isMobile));
+});
+
+test('aulas: WhatsApp com mensagem pronta e atalho para os professores', async ({ page }) => {
+  await page.goto('/');
+  // espera a hidratação: a rolagem até a âncora é do Lenis
+  await expect(page.locator('html')).toHaveClass(/lenis/);
+  const lessons = page.locator('#aulas');
+  await expect(lessons).toContainText('Aqui você aprende do zero.');
+  await expect(lessons.getByRole('link', { name: 'Quero fazer uma aula' })).toHaveAttribute('href', /^https:\/\/wa\.me\/554999107642\?text=/);
+  const link = lessons.getByRole('link', { name: 'Conhecer os professores' });
+  // deixa a rolagem suave assentar antes do clique (o Playwright rola até o link no mesmo quadro do clique)
+  await link.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(600);
+  await link.click();
+  await expect(page.locator('#professores')).toBeInViewport();
 });
 
 test('sem rolagem lateral em larguras de celular a desktop', async ({ page }) => {
@@ -81,7 +135,7 @@ test('menu do celular abre, navega e fecha', async ({ page, isMobile }) => {
   await page.getByRole('button', { name: 'Abrir menu' }).click();
   const menu = page.getByRole('dialog', { name: 'Navegação principal' });
   await expect(menu).toBeVisible();
-  await menu.getByRole('link', { name: 'Eventos' }).click();
+  await menu.getByRole('link', { name: 'Prime Cup' }).click();
   await expect(menu).toBeHidden();
   await expect(page.locator('#eventos')).toBeInViewport();
 });

@@ -13,7 +13,7 @@ html {
 body {
   margin: 0;
   font: 400 var(--fs-body) / 1.55 var(--font-sans);
-  color: var(--text-primary);
+  color: var(--text-on-dark);
   background: var(--bg-page);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -76,13 +76,18 @@ a {
 }
 
 ::selection {
-  background: var(--pp-green-200);
-  color: var(--pp-ink);
+  background: var(--pp-ball);
+  color: var(--pp-ball-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--pp-green-700);
+  outline: 2px solid var(--pp-ball);
   outline-offset: 3px;
+}
+
+.on-light :focus-visible,
+.bk :focus-visible {
+  outline-color: var(--pp-green-700);
 }
 
 .on-brand :focus-visible,

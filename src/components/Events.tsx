@@ -1,97 +1,81 @@
-import { useRef, useState, type KeyboardEvent } from 'react';
+import { useState } from 'react';
 import { AnimatePresence, m } from 'motion/react';
 import { arena, whatsapp } from '../content/arena';
 import { site } from '../content/site';
 import { ButtonLink } from './Button';
 import { InstagramIcon, MessageCircle } from './Icons';
 import { EASE, Reveal } from './Motion';
+import { SmoothTabs } from './SmoothTabs';
+import { SplitTitle } from './SplitTitle';
+import { TiltedCard } from './TiltedCard';
 
-/** Eventos: as artes reais da arena numa placa quadrada, com abas para trocar de evento. */
+/** Prime Cup e eventos: as artes reais da arena num cartaz que inclina com o mouse, com abas para trocar de evento. */
 export function Events() {
   const e = site.events;
   const [active, setActive] = useState(0);
-  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const item = e.items[active];
 
-  // Setas trocam de aba (padrão WAI-ARIA de abas com ativação automática).
-  const onKey = (ev: KeyboardEvent<HTMLButtonElement>) => {
-    const dir = ev.key === 'ArrowRight' ? 1 : ev.key === 'ArrowLeft' ? -1 : 0;
-    if (!dir) return;
-    ev.preventDefault();
-    const next = (active + dir + e.items.length) % e.items.length;
-    setActive(next);
-    tabs.current[next]?.focus();
-  };
-
   return (
-    <section className="events" id="eventos" aria-labelledby="events-title">
-      <div className="container">
-        <div className="events__grid">
-          <Reveal as="h2" className="section-title events__title" id="events-title">
-            {e.title}
-          </Reveal>
-          <Reveal i={1} className="events__plate">
+    <section className="events panel on-brand" id="eventos" aria-labelledby="events-title">
+      <div className="container events__grid">
+        <Reveal i={1} className="events__poster">
+          <TiltedCard>
             <AnimatePresence mode="wait" initial={false}>
               <m.img
                 key={item.id}
                 src={item.image.src}
+                srcSet={item.image.srcSet}
+                sizes="(min-width: 960px) 560px, 92vw"
                 width={item.image.width}
                 height={item.image.height}
                 alt={item.image.alt}
                 loading="lazy"
                 decoding="async"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.22, ease: EASE }}
-                style={{ maxWidth: item.image.width }}
               />
             </AnimatePresence>
+          </TiltedCard>
+        </Reveal>
+
+        <div className="events__side">
+          <SplitTitle className="section-title" id="events-title" lead={e.titleLead} accent={e.titleAccent} />
+          <Reveal i={1}>
+            <SmoothTabs items={e.items.map((t) => ({ id: t.id, label: t.tab }))} active={active} onChange={setActive} label={e.tabsLabel} idPrefix="tab" panelId="event-panel" />
           </Reveal>
 
-          <div className="events__side">
-            <Reveal i={2}>
-              <div className="tabs" role="tablist" aria-label={e.tabsLabel}>
-                {e.items.map((t, i) => (
-                  <button
-                    key={t.id}
-                    ref={(el) => {
-                      tabs.current[i] = el;
-                    }}
-                    type="button"
-                    role="tab"
-                    id={`tab-${t.id}`}
-                    aria-selected={i === active}
-                    aria-controls="event-panel"
-                    tabIndex={i === active ? 0 : -1}
-                    className="tab"
-                    onClick={() => setActive(i)}
-                    onKeyDown={onKey}
-                  >
-                    {t.tab}
-                  </button>
-                ))}
+          <div className="events__panel" id="event-panel" role="tabpanel" aria-labelledby={`tab-${item.id}`}>
+            <p className="events__meta">{item.meta}</p>
+            <h3 className="events__name">{item.title}</h3>
+            <p className="events__text">{item.text}</p>
+            {item.categories.length > 0 && (
+              <div className="events__cats">
+                <h4 className="sr-only">{e.categoriesLabel}</h4>
+                <dl>
+                  {item.categories.map((cat) => (
+                    <div key={cat.name}>
+                      <dt>{cat.name}</dt>
+                      <dd>{cat.detail}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
-            </Reveal>
-
-            <div className="events__panel" id="event-panel" role="tabpanel" aria-labelledby={`tab-${item.id}`}>
-              <p className="events__meta">{item.meta}</p>
-              <h3 className="events__name">{item.title}</h3>
-              <p className="events__text">{item.text}</p>
-            </div>
-
-            <Reveal i={3} className="events__foot">
-              <p className="events__note">{e.note}</p>
-              <div className="events__actions">
-                <ButtonLink href={arena.contact.instagram.url} external size="lg" iconLeft={<InstagramIcon size={18} />}>
-                  {e.instagram}
-                </ButtonLink>
-                <ButtonLink href={whatsapp(e.whatsappMessage)} external size="lg" variant="tint" iconLeft={<MessageCircle size={18} strokeWidth={1.75} aria-hidden="true" />}>
-                  {e.whatsapp}
-                </ButtonLink>
-              </div>
-            </Reveal>
+            )}
           </div>
+
+          <Reveal i={3} className="events__foot">
+            <div className="actions">
+              <ButtonLink href={arena.contact.instagram.url} external variant="ball" size="lg" iconLeft={<InstagramIcon size={18} />}>
+                {e.instagram}
+              </ButtonLink>
+              <ButtonLink href={whatsapp(e.whatsappMessage)} external size="lg" variant="outlineOnBrand" iconLeft={<MessageCircle size={18} strokeWidth={1.75} aria-hidden="true" />}>
+                {e.whatsapp}
+              </ButtonLink>
+            </div>
+            <p className="events__note">{e.note}</p>
+          </Reveal>
         </div>
       </div>
     </section>

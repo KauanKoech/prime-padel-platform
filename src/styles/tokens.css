@@ -45,8 +45,10 @@
   --pp-success-600: #2e7d4f;
   --pp-success-50: #e3f1e8;
 
-  /* Papéis */
-  --bg-page: var(--pp-white);
+  /* Papéis. A landing é escura (verde quase preto) com seções claras em creme; a janela de agendamento é clara. */
+  --bg-page: var(--pp-green-950);
+  --text-on-dark: var(--pp-cream);
+  --text-on-dark-muted: var(--pp-green-200);
   --bg-warm: var(--pp-cream);
   --text-primary: var(--pp-ink);
   --text-secondary: var(--pp-neutral-600);
@@ -63,10 +65,11 @@
   --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-script: 'Pinyon Script', 'Snell Roundhand', cursive;
 
-  /* Escala (5 tamanhos visíveis): display, título, subtítulo, corpo, apoio. h1 <= 64px. */
-  --fs-display: clamp(2.6rem, 2.2vw + 1.9rem, 4rem);
-  --fs-h2: clamp(2.1rem, 1.6vw + 1.5rem, 3.25rem);
-  --fs-h3: clamp(1.5rem, 0.6vw + 1.3rem, 2rem);
+  /* Escala (5 tamanhos visíveis): display, título, subtítulo, corpo, apoio.
+     h1 até 88 px: exceção ao limite de 64 px registrada em design/direcao-visual.md (títulos enormes das referências). */
+  --fs-display: clamp(2.75rem, 5.2vw + 0.6rem, 5.5rem);
+  --fs-h2: clamp(2.25rem, 3.6vw + 0.6rem, 4.25rem);
+  --fs-h3: clamp(1.375rem, 0.8vw + 1.1rem, 1.75rem);
   --fs-body: clamp(1rem, 0.15vw + 0.97rem, 1.125rem);
   --fs-small: 0.875rem;
   --fs-overline: 0.8125rem;
@@ -75,7 +78,8 @@
   /* Espaço e forma */
   --container-max: 1440px;
   --container-pad: clamp(20px, 4.5vw, 64px);
-  --section-y: clamp(80px, 9vw, 136px);
+  --section-y: clamp(64px, 7vw, 112px);
+  --gutter: 12px;
   --header-h: 64px;
   --tap-min: 44px;
   --radius-sm: 10px;

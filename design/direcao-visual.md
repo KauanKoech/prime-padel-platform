@@ -1,96 +1,107 @@
-# Direção visual — Prime Padel (contrato)
+# Direção visual: Prime Padel (contrato)
 
-Contrato das etapas de código, acabamento e verificação. Substitui o checkpoint de três opções: a direção aprovada é o design system da própria Prime Padel (`DESIGN.md` e `design-system-export/`). Quando este arquivo e o design system divergirem, vale o design system; divergências intencionais ficam em `docs/DECISIONS.md`.
+Contrato das etapas de código, acabamento e verificação da landing. Reescrito em 2026-10-17 depois do retorno do responsável ("muitos espaços em branco, landing sem conteúdo, opaca") e da chegada das fotos oficiais da arena. Modo direto: sem checkpoint de três opções. Divergências do `DESIGN.md` estão em `docs/DECISIONS.md`.
 
 ## Direção escolhida
 
-**"A quadra como desenho"**, dentro do design system da marca. Sem fotos da arena, a página se apoia em três coisas que só a Prime tem: o logo e a tipografia de pôster da marca, as cinco quadras com nomes de patrocinadores e preço próprio, e as artes reais dos eventos. A quadra de padel vista de cima (20 m × 10 m, linhas de saque a 6,95 m da rede) vira o motivo gráfico em linha fina branca sobre verde, ecoando o círculo e a seta longa dos posts. A bola amarela aparece uma vez por vista, sempre dentro de uma quadra (ou como o pino do endereço).
+**"A quadra à noite"**: a Prime vista como as referências mostram um clube de padel, escura, com fotografia grande e títulos pesados, mas com as cores e as fotos da própria arena. Carta da `design-taste-frontend`: "The place carries it" (seed 3), com o hero "Menu column, sticky photograph" e as seções "Prices like a menu", "Close-up with column card", "Visit card" e "Contact as the headline", adaptadas ao pedido e à resolução das fotos.
 
-A coisa viva da página é a escolha de quadra: tocar numa das cinco quadras desenhadas mostra as durações e preços dela e leva aos horários já com quadra e duração preenchidas.
+**Ideia:** nesta página, **as fotos tiradas nas quadras da Prime (a parede da DGI/EQI, a rede, a grama sintética, os professores com a camisa da casa)** viram **painéis de foto do tamanho de um pôster, cada um carregando o conteúdo da seção**. A concorrente da rua ao lado não tem essas fotos nem esses patrocinadores.
 
-Composição tirada da carta de direção da `design-taste-frontend` ("The split stage", seed 54410796) e adaptada à falta de fotos: hero dividido (texto + painel verde com a quadra), quadras como "tabela" de pôster, passo a passo como comprovante, eventos em placa quadrada com abas, contato como cartão de visita sobre o "alvo" de círculos finos.
+**A coisa viva:** escolher a quadra na lista de preços e seguir para os horários já com quadra e duração preenchidas (agendamento simulado).
+
+Pedido do usuário e referências vencem a carta e o design system quando conflitam (ordem: pedido > referências > identidade do briefing > sugestões das skills).
 
 ## Paleta
 
 | Token | Hex | Papel |
-|---|---|---|
-| `--pp-green-700` | `#324D3E` | Marca: painéis, botões primários, seções de quadras e contato, estados selecionados |
-| `--pp-green-800` | `#25392E` | Placas das quadras, painel da quadra escolhida, fundo das artes |
-| `--pp-green-600` | `#3E5E4C` | Frase em itálico do h1, quadra selecionada |
-| `--pp-green-950` | `#121D17` | Rodapé |
+| --- | --- | --- |
+| `--pp-green-950` | `#121D17` | Chão da página (escuro), cabeçalho, rodapé |
+| `--pp-green-900` | `#1B2B22` | Painéis escuros (hero, professores, faixa de valores) |
+| `--pp-green-800` | `#25392E` | Cartões sobre o escuro, Prime Cup |
+| `--pp-green-700` | `#324D3E` | Marca: campos verdes (Onde estamos), botões no claro |
 | `--pp-green-200` | `#CEDCD2` | Texto secundário sobre verde |
-| `--pp-ink` | `#141A16` | Texto corrido |
-| `--pp-neutral-600/700` | `#5E645F` / `#464C48` | Notas secundárias |
-| `--pp-cream` | `#F7F5EF` | Faixas quentes (como agendar, loja, resumo do agendamento) |
-| `--pp-white` | `#FFFFFF` | Fundo da página, cartões |
-| `--pp-ball` | `#D8EC4C` | Acento: a bola (uma por vista) |
-| `--pp-warning-50/600` | `#FBF0DC` / `#9A5F0E` | Selos "a confirmar" e "Demonstração", alerta de conflito |
+| `--pp-cream` | `#F7F5EF` | Texto principal no escuro; chão das seções claras (quadras, loja) |
+| `--pp-ink` | `#141A16` | Texto no claro |
+| `--pp-ball` | `#D8EC4C` | Acento: a palavra de destaque do título e o botão principal da vista |
+| `--pp-ball-ink` | `#2C3308` | Texto sobre o amarelo |
 
-Contraste verificado (WCAG): tinta/branco 17,66 · verde-700/branco 9,26 · verde-600/branco 7,22 · verde-200/verde-700 6,53 · verde-200/verde-800 8,68 · verde-300/verde-950 8,97 · neutro-600/branco 6,06 · neutro-600/creme 5,56 · neutro-700/creme 8,07 · aviso-600/aviso-50 4,63 · verde-800/verde-50 11,20 · neutro-600/neutro-100 5,25. Todos AA para texto normal.
+Contraste (WCAG): creme/verde-950 16,9 · creme/verde-900 14,6 · creme/verde-800 11,8 · verde-200/verde-900 11,0 · bola/verde-950 13,4 · bola/verde-900 11,6 · bola-ink/bola 10,4 · tinta/creme 16,9 · verde-700/creme 8,6 · neutro-600/creme 5,6. Todos AA. Sobre fotos, o texto fica sobre véu escuro neutro (`rgba(12, 18, 14, .55-.85)`), conferido nas capturas.
+
+No claro, a palavra de destaque não pode ser amarela (1,2:1 sobre creme): vira marca-texto, fundo `--pp-ball` com texto `--pp-ink`.
 
 ## Tipografia
 
-- **DM Serif Display** (400 e itálico): h1, h2, nomes e preços, números. Self-hosted em `public/fonts/` (substitutos do Google Fonts definidos pelo design system), com `preload` do romano.
-- **Instrument Sans** (variável 400–700): corpo, rótulos, botões, dados (algarismos tabulares).
-- **Pinyon Script**: uma única vez, na palavra "Prime" do título "Nos vemos na Prime." (≥ 40 px).
-- Escala: display `clamp(2.6rem, 2.2vw + 1.9rem, 4rem)` (h1 ≤ 64 px), h2 `clamp(2.1rem, 1.6vw + 1.5rem, 3.25rem)`, h3 `clamp(1.5rem, .6vw + 1.3rem, 2rem)`, corpo `clamp(1rem, .15vw + .97rem, 1.125rem)`, apoio 14 px, sobrelinha 13 px com +0,14em (só endereços, datas e categorias, como nos posts).
-- `font-display: swap` em todas.
+- **Instrument Sans** (variável 400-700, self-hosted): títulos de impacto em 700, `letter-spacing: -0.035em`, entrelinha 0,95-1; corpo, rótulos e botões.
+- **DM Serif Display**: números e preços (quadras, contadores dos professores, valores) e nomes dos professores. Mantém a voz serifada da marca onde ela ajuda a ler dados.
+- **Pinyon Script**: uma vez, "Prime" em "Nos vemos na Prime." (≥ 40 px).
+- Escala: h1 `clamp(2.375rem, 4.6vw + 1.3rem, 5.5rem)` no celular (duas linhas) e `clamp(2.75rem, 7vw, 6.5rem)` no desktop, em três linhas (até 104 px: **exceção ao limite de 64 px**, porque as referências e o pedido pedem títulos enormes e o painel do hero precisa da massa), h2 `clamp(2.25rem, 3.6vw + 0.6rem, 4.25rem)`, h3 `clamp(1.375rem, 0.8vw + 1.1rem, 1.75rem)`, corpo `clamp(1rem, 0.15vw + 0.97rem, 1.125rem)`, apoio 14 px. Sobrelinha em caixa-alta só para datas e categorias (como no cartaz da Prime Cup).
 
 ## Estilo
 
-- Superfícies chapadas: branco, creme e blocos verdes. Sem gradientes visíveis, sem vidro, sem parallax, sem loops.
-- Profundidade por passo de tom (verde-700 → verde-800 → verde-600 selecionado) e por linhas finas brancas (círculos, quadra, seta), como nos posts.
-- Cantos do design system: pílula nos botões e abas, 14 px em opções e horários, 20 px em cartões e placas, 28 px no hero e no cartão de contato. O comprovante de "Como agendar" tem cantos retos e borda serrilhada (máscara).
-- Sombra só no que flutua: botão de WhatsApp e janela de agendamento.
-- Cabeçalho branco sólido (sem desfoque), com filete ao rolar.
+- Página escura em verde quase preto, com duas seções claras em creme (quadras e loja) para respirar e mostrar a marca. Campos chapados; profundidade por passo de tom (950 → 900 → 800) e pelas fotos.
+- Fotos em painéis com raio de 20 px; cartões com 20 px; botões em pílula. Um raio de painel na página inteira.
+- Sem vidro, sem gradiente colorido, sem brilho. Véu escuro neutro sob texto em foto (não é gradiente colorido). Sombra só no que flutua (janela de agendamento, botão do WhatsApp).
+- Palavra de destaque no amarelo da bola em cada título de seção, como nas referências; o botão principal da vista também é amarelo. É o acento da vista; o resto fica em creme e verde.
 
 ## Movimento
 
-- **Hero (CSS, acima da dobra):** título, texto, botões e números sobem 14 px em sequência (560 ms); a quadra se desenha uma vez (traço, 1,1 s) e a bola entra no fim. Sem loop.
-- **Abaixo da dobra (Motion, `Reveal` em `Motion.tsx`):** título, texto e bloco de cada seção sobem 16 px com opacidade, 320 ms, atraso de 70 ms entre partes, uma vez.
-- **Eventos:** troca de arte com `AnimatePresence` (220 ms, opacidade e escala 0,98 → 1).
-- **Controles:** pressão `scale(.98)`, seta do botão desliza 3 px, placas de quadra sobem 3 px no hover.
-- **Agendamento:** janela entra com 16 px e opacidade (320 ms); barras de progresso mudam de cor.
-- **Rolagem:** Lenis (`lerp: 0.085`, âncoras com offset 0 porque o `html` tem `scroll-padding-top` igual ao cabeçalho + 16 px, que o Lenis respeita).
-- **Movimento reduzido:** Lenis desligado, `MotionConfig reducedMotion="user"`, CSS zera durações e força `[data-reveal]` visível.
+- **Hero (CSS):** texto sobe em sequência (560 ms), a foto entra com escala 1,06 → 1 (1,4 s), uma vez.
+- **Títulos de seção (`SplitTitle`, adaptado do SplitText do React Bits):** palavras sobem de dentro de uma máscara, 60 ms entre palavras, uma vez ao entrar na tela.
+- **Blocos (`Reveal`):** sobem 16 px com opacidade, 320 ms, 70 ms entre partes.
+- **Números reais (`CountUp`, React Bits):** 5 quadras, 3/5/31 anos dos professores contam de 0 ao valor ao entrar na tela; o HTML pré-renderizado já traz o valor final.
+- **Cartaz da Prime Cup (`TiltedCard`, React Bits):** inclinação de até 8° seguindo o ponteiro, só com mouse (`hover: hover` e `pointer: fine`).
+- **Abas dos eventos (`SmoothTabs`, kokonutui smooth-tab):** pílula desliza até a aba escolhida; troca de arte com crossfade de 220 ms.
+- **Botões (`slide-text-button`, kokonutui):** o rótulo sobe e é trocado por uma cópia no hover e no foco.
+- **Fotos:** escala 1,04 no hover dos cartões (só com mouse).
+- **Rolagem:** Lenis (`lerp: 0.085`, âncoras com offset 0: o `html` tem `scroll-padding-top`).
+- **Proibido:** parallax, loops infinitos (sem marquee, sem crossfade automático), vidro.
+- **Movimento reduzido:** Lenis desligado, `MotionConfig reducedMotion="user"`, CSS zera durações, `[data-reveal]` visível, contadores mostram o valor final, sem inclinação.
 
-## Tratamento das imagens
+## Tratamento das fotos
 
-- Não há fotos da arena. Nada de banco de imagens apresentado como a arena.
-- Artes reais dos eventos (WebP em `public/img/`): `open-prime-padel.webp` (694×543), `prime-cup.webp` (477×327), `day-use.webp` (731×842). Exibidas inteiras (`object-fit: contain`) numa placa quadrada verde-800, nunca acima do tamanho natural.
-- Logo: PNG transparente extraído do JPG original (WebP verde e branco). Rodapé com 64 px de altura.
-- Imagem de compartilhamento `og-prime-padel.jpg` (1200×630) montada com logo + quadra desenhada.
-- **Espaços para fotos reais (futuro):** o painel verde do hero (`Hero.tsx`, `.hero__panel`) e a placa de eventos são os lugares previstos; quando houver fotos autorizadas, entram em `public/img/` e no conteúdo (`src/content/site.ts`).
+Fonte: posts oficiais da Prime em `design/originais/` (~600-650 px de largura). Recortes em `scripts/images.mjs` (`npm run images`), WebP em `public/img/fotos/` com versão de 400 px para o `srcset`. **Nunca exibidas acima do tamanho natural em px CSS**: por isso os painéis têm largura máxima e não há foto esticada em tela cheia.
+
+| Foto | Recorte | Onde | Tamanho máx. |
+| --- | --- | --- | --- |
+| `aperto-de-maos` (3.png) | inteira | painel direito do hero | 651 × 806 |
+| `saque` (9.png) | sem logo e sem o título embutido | Aulas | 646 × 530 |
+| `prof-dorotovio` (4.png) | retrato acima do balão | cartão do professor | 330 × 412 |
+| `prof-gustavo` (6.png), `prof-eduardo` (7.png) | retrato entre os balões | cartões | 172 × 214, 200 × 250 |
+| `prime-cup-primavera-2026` (2.png) | cartaz inteiro | Prime Cup | 631 × 787 |
+| `loja-west-padel` (image.png) | abaixo do balão | Loja | 599 × 662 |
+| `amarrando-o-tenis` (8.png) | abaixo do balão, acima do logo | Comunidade | 651 × 500 |
+| `raquetes` (11.png) | abaixo da caixa verde | CTA final (nítida) + fundo desfocado e escurecido | 620 × 334 |
+
+Artes antigas mantidas: `open-prime-padel.webp` e `day-use.webp` (abas de eventos).
 
 ## Estrutura de seções
 
-1. **Hero** (`#topo`): h1 "Seu próximo jogo começa na Prime.", frase de apoio, "Ver horários" (abre o agendamento) e "Quadras e valores"; três fatos reais (5 quadras, 1h · 1h30, R$ 140 a 190 por quadra); painel com a quadra e o endereço.
-2. **Quadras** (`#quadras`, verde): as cinco quadras desenhadas com nome e preço; a escolhida ganha a bola; painel com durações e "Ver horários desta quadra".
-3. **Como agendar** (`#como-agendar`, creme): passo a passo como comprovante, aviso de demonstração e "Experimentar o agendamento".
-4. **Eventos** (`#eventos`): placa com a arte, abas Open Prime Padel / Prime Cup / Day Use, nota de que são artes de edições já anunciadas, Instagram e WhatsApp.
-5. **Loja** (`#loja`, creme): West Padel Store, produtos em letra grande, link para o Instagram da loja.
-6. **Onde estamos** (`#onde-estamos`, verde): círculos finos com o pino e as coordenadas; cartão com endereço, horários (dia de hoje destacado depois de montar), contatos, "Traçar rota" e "Agendar quadra".
-7. **Rodapé**: logo, navegação, endereço, redes e aviso de demonstração.
-8. **Agendamento** (janela modal): Data e quadra → Horário → Seus dados → Revisão → Solicitação enviada.
+1. **Hero** (`#topo`, escuro): painel esquerdo com h1 "Seu próximo jogo começa na Prime." em três linhas (destaque "Prime."), frase, "Ver horários" (abre o agendamento), "Quadras e valores" e quatro fatos (5 quadras, 1h ou 1h30, R$ 140 a 190 por quadra, 3 professores). Painel direito: foto do aperto de mãos com barra creme ("Aberto todos os dias" e endereço). No celular a foto vem primeiro com o h1 por cima, sobre véu.
+2. **Faixa de valores** (escuro): quatro itens com ícone, a partir do post "Aqui você aprende do zero": quadras, aulas para todos os níveis e idades, professores capacitados, estrutura premium e loja.
+3. **Quadras** (`#quadras`, creme): lista de preços como cardápio (cinco quadras, nome, desenho da quadra, durações e preços), painel da quadra escolhida com durações e "Ver horários desta quadra", aviso da agenda em demonstração.
+4. **Aulas** (`#aulas`, escuro): foto do saque; "Nunca jogou padel?" e "Aqui você aprende do zero." com os três itens do post; WhatsApp para pedir aula e link para os professores.
+5. **Professores** (`#professores`, verde 900): três cartões (foto, contador real de anos, nome, fatos e níveis atendidos, WhatsApp para aula com o professor). No celular, carrossel horizontal com encaixe.
+6. **Prime Cup e eventos** (`#eventos`, verde 800): abas Prime Cup / 1º Open / Day Use; cartaz com inclinação; datas e categorias da Prime Cup Primavera 2026 (já realizada, 1 a 4 de outubro); Instagram e WhatsApp.
+7. **Loja** (`#loja`, creme): foto da West Padel e "Você já conhece a West Padel?", produtos em letra grande, Instagram da loja.
+8. **Comunidade** (`#comunidade`, escuro): "O melhor da semana quase sempre começa com uma mensagem:" e o balão "Bora jogar hoje?"; foto da jogadora; ver horários e WhatsApp.
+9. **Onde estamos** (`#onde-estamos`, verde 700): mapa de círculos com o pino, cartão com endereço, horários (hoje destacado depois de montar), contatos, rota e agendar.
+10. **CTA final** (escuro com as raquetes desfocadas ao fundo): "Sua quadra está esperando." com a foto nítida das raquetes, ver horários e WhatsApp.
+11. **Rodapé:** o Instagram como linha de contato gigante, logo, navegação, endereço e aviso de demonstração.
+12. **Agendamento** (janela modal, claro): sem mudanças de fluxo.
+
+Seção "Como agendar" removida: o aviso de demonstração foi para o painel das quadras e para o rodapé.
 
 ## Referências
 
-**Aproveitado:** círculo fino, seta longa e caixas de linha fina dos posts (hero, contato, comprovante); caixa-alta espaçada para endereço, datas e categorias (posts); padrões dos kits `landing` (menu móvel verde em tela cheia, cabeçalho fixo, hero em painel verde) e `booking` (faixa de datas, horários, barra fixa com preço, resumo lateral no desktop, bilhete verde de confirmação); composição da carta "The split stage" (hero dividido, comprovante serrilhado, placa quadrada com abas, cartão de visita).
+**Aproveitado:** fundo escuro e fotografia grande em painéis (as duas); títulos enormes em grotesca pesada com a palavra de destaque no amarelo de bola (as duas); faixa de valores com ícones (referência 1, "More than just a game"); cartões de professor com foto e números (referência 1 "Real people" e referência 2 "Train like a pro"); CTA final com foto (as duas); botão principal com cor de bola.
 
-**Deixado de fora:** planos, FAQ, depoimentos, "ao vivo", aluguel de raquete, estacionamento e cancelamento grátis do kit `landing` (dados ilustrativos, não confirmados); foto fixa ocupando meia tela da carta de direção (não há fotos); palavra gigante como marca d'água e escala de wordmark (o h1 fica ≤ 64 px pelo contrato); vidro no cabeçalho (o design system permite, mas o pedido proíbe glassmorphism).
+**Deixado de fora:** marquee com o nome do clube (loop infinito, proibido pelo `DESIGN.md` e pelo pedido); fotos sangrando a tela inteira no desktop (as fotos da Prime têm ~650 px e ficariam borradas; viraram painéis no tamanho natural); números de estrutura e avaliações das referências ("2.8k", "4.8", "700+ alunos": a Prime não informou números assim); assinatura manuscrita e textos das referências.
 
 ## Fontes do conteúdo
 
-`docs/PRODUCT.md`, landing anterior (commit `1b45848`, textos e dados de `src/config/`), artes em `design-system-export/assets/brand/`. Não houve consulta a site externo.
+`docs/PRODUCT.md`, briefing, landing anterior e os posts oficiais em `design/originais/` (professores, aulas, Prime Cup Primavera 2026, comunidade, loja). Nenhum site externo consultado.
 
 ## Acabamento
 
-**Rodada (impeccable critique, single-context):** nota 28/32 nas heurísticas aplicáveis (7 e 10 n/a por ser landing): status 3, linguagem 4, controle 4, consistência 3, prevenção de erro 3, reconhecimento 4, estética 3, recuperação de erro 4.
-
-Comandos e verificações rodados: `impeccable detect` (fonte e build), `design-taste-frontend inspect.mjs` e `lint.mjs`, capturas CDP a 1440, 768 e 390.
-
-Mudanças aplicadas no acabamento:
-- **adapt:** quadras no celular viraram lista vertical (quadra deitada ao lado do nome e do preço) em vez de carrossel cortado na borda; botões longos quebram linha; itens de grade com `min-width: 0` e cartão de contato sem estouro a 320 px; janela de agendamento sem estouro lateral no celular (`grid-template-columns: minmax(0, 1fr)`).
-- **polish:** desenho da quadra do hero refeito (o tracejado com `vector-effect` quebrava as linhas); preços tirados de cima das linhas da quadra; logo do rodapé sem distorção; título do agendamento focado ao abrir; rótulo duplicado "Quando você quer jogar?" trocado por "Data"; rótulo "Quadra escolhida" em caixa normal; texto do hero na tinta cheia; botão do WhatsApp com anel branco e saindo do caminho de botões no celular; conflito simulado só na primeira solicitação do dia.
-
-Achados mantidos de propósito (contrato do design system): Instrument Sans (fonte da marca, sinalizada como "comum" pelo detector); sobrelinhas em caixa-alta espaçada para endereço e categoria (linguagem dos posts); itálico no h1 (padrão de título do design system); creme `#F7F5EF` (cor da marca); poucas imagens raster (não há fotos, decisão do responsável); h1 em 62 px (regra h1 ≤ 64 px). Falsos positivos: "cramped padding" e "flat hierarchy" do detector estático (as seções têm `.container` com recuo e o h1 renderizado tem 62 px).
+Preenchido na etapa de acabamento (impeccable).
