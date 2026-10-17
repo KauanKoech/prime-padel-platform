@@ -1,6 +1,7 @@
 # Evidencias do agendamento — marco 4
 
 Data: 16/10/2026. Branch: feat/landing-agendamento.
+Revisao independente e correcao de foco: 17/10/2026.
 
 ## Escopo entregue
 
@@ -47,6 +48,24 @@ Logs, medicoes e screenshots ficam na pasta ignorada
 O CTA aparece na posicao da viewport em screenshots de pagina inteira.
 
 ## Limites e continuidade
+
+A revisao independente com gpt-6.1-sol examinou 6967a79..eb5a6c7, incluindo
+o delta do marco 4. Encontrou uma falha importante: reiniciar removia o
+botao focado sem transferir foco ao titulo da nova etapa. Dois testes de
+desktop/celular reproduziram a falha com Enter; passaram apos a nova visita
+receber uma instrucao de foco no titulo. A entrada inicial permanece igual.
+O revisor inspecionou codigo e evidencias, sem executar as suites.
+Depois da correcao: 41 testes de dominio (9,4 s), 76 E2E (46,4 s),
+lint e tipos aprovados; novo build e 4 testes de producao (7,9 s) aprovados.
+
+Permanece o ajuste menor, anterior a este marco, de Ctrl/Cmd/Shift+clique
+nas ancoras da landing. Nao foram encontrados outros problemas importantes
+ou criticos. A correcao foi verificada por testes, sem segunda revisao.
+
+O reinicio continua controlado pela composicao externa, que fornece ao hook
+uma funcao para recriar servico e visita. Esse terceiro argumento evita
+acoplar o hook ao adaptador simulado; outro consumidor devera fornecer
+tambem essa funcao.
 
 O teste de teclado virtual altera VisualViewport e dispara resize; nao
 equivale a teclado fisico de celular. O teste de retorno por bfcache usa

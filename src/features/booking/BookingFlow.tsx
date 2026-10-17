@@ -14,16 +14,16 @@ import { ReviewStep } from './ReviewStep';
 import { ResultStep } from './ResultStep';
 import styles from './booking.module.css';
 
-type Visit = { id: string; service: BookingService; courtId: string | null };
-function ActiveBooking({ service, courtId, restart }: Visit & { restart: () => void }) {
+type Visit = { id: string; service: BookingService; courtId: string | null; focusOnStart?: boolean };
+function ActiveBooking({ service, courtId, focusOnStart, restart }: Visit & { restart: () => void }) {
   const { state, actions } = useBookingFlow(service, courtId, restart);
   const title = useRef<HTMLHeadingElement>(null);
   const notice = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
     if (state.focus?.target === 'name') document.getElementById('fictitious-name')?.focus();
     else if (state.focus?.target === 'notice') notice.current?.focus();
-    else if (state.focus?.target === 'title') title.current?.focus();
-  }, [state.focus]);
+    else if (state.focus?.target === 'title' || (!state.focus && focusOnStart)) title.current?.focus();
+  }, [state.focus, focusOnStart]);
   const isTime = state.step === 'time';
   const isResult = state.step === 'result';
   const titles = { time: 'Escolha seu horário', details: 'Dados de demonstração', review: 'Revise a simulação', result: 'Solicitação simulada concluída' };
@@ -99,7 +99,7 @@ export function BookingFlow() {
   return <div className={styles.page}>
     <a href="#conteudo" className="skip-link">Pular para o conteúdo</a>
     {visit ? <ActiveBooking key={visit.id} {...visit} restart={() => setVisit({
-      id: crypto.randomUUID(), service: createBookingService(), courtId: null,
+      id: crypto.randomUUID(), service: createBookingService(), courtId: null, focusOnStart: true,
     })} /> : <main id="conteudo" tabIndex={-1} className={styles.loading}>
       <h1>Agendamento demonstrativo</h1><p role="status">Preparando a seleção de horário…</p>
       <noscript>Ative o JavaScript para experimentar os horários simulados.</noscript>

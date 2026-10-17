@@ -124,7 +124,10 @@ test('historico guarda etapas conserva rascunho e nao reenvia resultado', async 
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Solicitação simulada concluída');
   await page.goBack(); await expect(page.getByRole('heading', { level: 1 })).toHaveText('Solicitação simulada concluída');
   await page.goForward(); await expect(page.getByRole('heading', { level: 1 })).toHaveText('Solicitação simulada concluída');
-  await page.getByRole('button', { name: 'Simular outro horário' }).click();
+  const restart = page.getByRole('button', { name: 'Simular outro horário' });
+  await restart.focus();
+  await restart.press('Enter');
+  await expect(page.getByRole('heading', { name: 'Escolha seu horário', level: 1 })).toBeFocused();
   await expect(page.getByRole('group', { name: 'Quadra', exact: true }).locator(':checked')).toHaveCount(0);
   await expect(page.getByRole('radio', { name: 'quinta-feira, 15 de outubro de 2026', exact: true })).toBeChecked();
   await page.goBack(); await expect(page.getByRole('heading', { level: 1 })).toHaveText('Escolha seu horário');
