@@ -38,3 +38,7 @@ Thumbs.db
 # Codex local output
 .codex-log/
 .superpowers/
+
+# Vite pre-render e ferramentas locais de design
+dist-ssr/
+.taste-skill/

@@ -1,0 +1,104 @@
+/*
+ * Tokens da Prime Padel, adaptados de design-system-export/tokens/ (colors, typography, spacing, fonts).
+ * Mantenha os valores em sincronia com o export; divergências intencionais ficam em docs/DECISIONS.md.
+ */
+@font-face { font-family: 'DM Serif Display'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/DMSerifDisplay.woff2') format('woff2'); }
+@font-face { font-family: 'DM Serif Display'; font-style: italic; font-weight: 400; font-display: swap; src: url('/fonts/DMSerifDisplay-Italic.woff2') format('woff2'); }
+@font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/InstrumentSans-Variable.woff2') format('woff2'); }
+@font-face { font-family: 'Pinyon Script'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/PinyonScript.woff2') format('woff2'); }
+
+:root {
+  /* Verde da marca (amostrado do logo e dos posts) */
+  --pp-green-950: #121d17;
+  --pp-green-900: #1b2b22;
+  --pp-green-800: #25392e;
+  --pp-green-700: #324d3e;
+  --pp-green-600: #3e5e4c;
+  --pp-green-500: #567a64;
+  --pp-green-400: #7e9c89;
+  --pp-green-300: #aac0b1;
+  --pp-green-200: #cedcd2;
+  --pp-green-100: #e4ece6;
+  --pp-green-50: #f1f5f2;
+
+  /* Neutros quentes */
+  --pp-ink: #141a16;
+  --pp-neutral-700: #464c48;
+  --pp-neutral-600: #5e645f;
+  --pp-neutral-500: #828782;
+  --pp-neutral-400: #a9ada8;
+  --pp-neutral-300: #cdd0cb;
+  --pp-neutral-200: #e2e4df;
+  --pp-neutral-100: #eeefeb;
+  --pp-neutral-50: #f6f6f3;
+  --pp-cream: #f7f5ef;
+  --pp-white: #ffffff;
+
+  /* Acento: a bola de padel. No máximo uma aplicação de destaque por vista. */
+  --pp-ball: #d8ec4c;
+  --pp-ball-ink: #2c3308;
+
+  --pp-warning-600: #9a5f0e;
+  --pp-warning-50: #fbf0dc;
+  --pp-danger-600: #b23b2a;
+  --pp-danger-50: #f8e3df;
+  --pp-success-600: #2e7d4f;
+  --pp-success-50: #e3f1e8;
+
+  /* Papéis */
+  --bg-page: var(--pp-white);
+  --bg-warm: var(--pp-cream);
+  --text-primary: var(--pp-ink);
+  --text-secondary: var(--pp-neutral-600);
+  --text-on-brand: var(--pp-white);
+  --text-on-brand-muted: var(--pp-green-200);
+  --border-default: var(--pp-neutral-200);
+  --border-strong: var(--pp-neutral-300);
+  --border-on-brand: rgba(255, 255, 255, 0.32);
+  --focus-ring: 0 0 0 3px rgba(50, 77, 62, 0.32);
+  --focus-ring-on-brand: 0 0 0 3px rgba(255, 255, 255, 0.55);
+
+  /* Tipografia */
+  --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-script: 'Pinyon Script', 'Snell Roundhand', cursive;
+
+  /* Escala (5 tamanhos visíveis): display, título, subtítulo, corpo, apoio. h1 <= 64px. */
+  --fs-display: clamp(2.6rem, 2.2vw + 1.9rem, 4rem);
+  --fs-h2: clamp(2.1rem, 1.6vw + 1.5rem, 3.25rem);
+  --fs-h3: clamp(1.5rem, 0.6vw + 1.3rem, 2rem);
+  --fs-body: clamp(1rem, 0.15vw + 0.97rem, 1.125rem);
+  --fs-small: 0.875rem;
+  --fs-overline: 0.8125rem;
+  --ls-overline: 0.14em;
+
+  /* Espaço e forma */
+  --container-max: 1440px;
+  --container-pad: clamp(20px, 4.5vw, 64px);
+  --section-y: clamp(80px, 9vw, 136px);
+  --header-h: 64px;
+  --tap-min: 44px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  --shadow-md: 0 2px 4px rgba(20, 32, 26, 0.04), 0 16px 32px -16px rgba(20, 40, 30, 0.2);
+  --shadow-lg: 0 4px 8px rgba(20, 32, 26, 0.04), 0 32px 64px -24px rgba(20, 40, 30, 0.32);
+
+  /* Movimento: curto e discreto */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+
+  --z-header: 40;
+  --z-float: 50;
+}
+
+@media (min-width: 960px) {
+  :root {
+    --header-h: 72px;
+  }
+}
