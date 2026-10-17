@@ -1,6 +1,13 @@
 # Notas de dependencias
 
-## Auditoria inicial
+## Auditoria apos a troca para Vite (2026-10-17)
+
+- `npm audit` e `npm audit --omit=dev`: nenhuma vulnerabilidade.
+- A cadeia `eslint-config-next` deixou de existir com a remocao do Next.js; os avisos abaixo ficaram so como historico.
+- `typescript` fixado em 6.0.3 porque o `typescript-eslint` 8.71 aceita TypeScript `<6.1.0`.
+- Versoes fixadas sem `^` no `package.json`.
+
+## Auditoria inicial (base Next.js, historico)
 
 Data: 2026-10-15.
 

@@ -6,7 +6,7 @@ Este repositorio contem a plataforma digital da Prime Padel.
 
 1. Leia `README.md`.
 2. Leia `docs/PRODUCT.md` e `docs/DECISIONS.md`.
-3. Para qualquer trabalho visual, leia `DESIGN.md`, `design-system-export/SKILL.md` e `design-system-export/readme.md`.
+3. Para qualquer trabalho visual, leia `DESIGN.md`, `design-system-export/SKILL.md`, `design-system-export/readme.md` e `design/direcao-visual.md`.
 4. Consulte o plano aprovado da tarefa. Se nao houver plano aprovado, pare depois da descoberta ou do planejamento.
 5. Preserve mudancas existentes que nao pertencem a tarefa atual.
 
@@ -20,9 +20,13 @@ Este repositorio contem a plataforma digital da Prime Padel.
 
 ## Arquitetura
 
-- Use Next.js App Router, React e TypeScript estrito.
-- Use npm como gerenciador de pacotes.
+- Use Vite, React e TypeScript estrito, com pre-renderizacao no build (`src/entry-server.tsx` + `scripts/prerender.mjs`; `src/entry-client.tsx` hidrata).
+- Nada de `window`, `document` ou medicoes durante o render: o HTML do servidor e o primeiro render do cliente devem ser identicos.
+- Use Motion (`motion/react`) so com `m.*` dentro de `LazyMotion` (strict) e `MotionConfig reducedMotion="user"`; animacoes acima da dobra ficam em CSS.
+- Use Lenis (`lenis/react`) para a rolagem suave, desligado com movimento reduzido.
+- Use npm como gerenciador de pacotes e fixe versoes exatas.
 - Use CSS proprio e adapte os tokens de `design-system-export/`; nao adicione Tailwind sem uma nova decisao.
+- Textos ficam em `src/content/site.ts`; dados da arena em `src/content/arena.ts`.
 - Mantenha conteudo institucional e dados da arena centralizados.
 - Separe componentes de interface, tipos de dominio e servicos de dados.
 - A interface de dados simulados deve poder ser substituida por uma API sem reescrever as telas.
@@ -61,14 +65,3 @@ Este repositorio contem a plataforma digital da Prime Padel.
 - Delegue apenas tarefas independentes e bem delimitadas.
 - Prefira subagentes de leitura para exploracao, revisao, acessibilidade e testes.
 - Nao permita que varios agentes editem simultaneamente os mesmos arquivos.
-
-
-<!-- BEGIN:nextjs-agent-rules -->
-
-## This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
-
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
-
-<!-- END:nextjs-agent-rules -->
