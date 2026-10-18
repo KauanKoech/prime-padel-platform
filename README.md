@@ -6,7 +6,7 @@ Plataforma digital da Prime Padel, em Lages, Santa Catarina.
 
 A primeira entrega está implementada com Vite + React + TypeScript estrito, CSS próprio e pré-renderização no build:
 
-1. Landing page pública responsiva (arena, quadras e valores, como agendar, eventos, West Padel Store, localização e contato).
+1. Landing page pública responsiva, escura e com as fotos oficiais da arena: hero, faixa de valores, quadras e valores, aulas, professores, Prime Cup e eventos, West Padel Store, comunidade, localização e contato, CTA final.
 2. Jornada de agendamento com dados simulados: data → quadra → duração → horários → dados → revisão → solicitação, com estados de carregamento, vazio, erro, conflito e sucesso.
 
 Backend, autenticação, painel administrativo, pagamentos, financeiro, loja virtual e gestão completa de torneios não fazem parte desta entrega. O agendamento é uma demonstração: nenhuma reserva é registrada e nenhum dado sai do navegador.
@@ -28,9 +28,14 @@ npm run lint         # ESLint
 npm run typecheck    # tsc --noEmit
 npm run build        # typecheck + build + pré-renderização em dist/
 npm run preview      # serve o dist/ (http://127.0.0.1:4173)
+npm run images       # recorta as fotos de design/originais/ e gera WebP em public/img/fotos/
 npm run test:e2e     # Playwright (desktop e celular) contra o build pré-renderizado
 npm run test:e2e:ui  # Playwright em modo interativo
 ```
+
+### Fotos
+
+As fotos da landing vêm dos posts oficiais da Prime em `design/originais/` (PNG de ~650 px, com textos e balões embutidos). `scripts/images.mjs` recorta só a área limpa de cada post e gera o WebP no tamanho natural e uma versão de 400 px para o `srcset`, com o `sharp` (devDependency). Para trocar uma foto: substitua o original, ajuste o retângulo de recorte no script e rode `npm run images`. Os WebP gerados ficam versionados em `public/img/fotos/`, então o build e o Docker não precisam do `sharp`.
 
 Na primeira vez, instale o navegador do Playwright: `npx playwright install chromium`. Os testes fazem o build e sobem o `vite preview` na porta 4195 (mude com `E2E_PORT`).
 
@@ -52,6 +57,8 @@ Consulte `docs/DEPENDENCY-NOTES.md` antes de aplicar correções automáticas do
 - Motion (`motion/react`) para entradas abaixo da dobra: sempre `m.*` dentro de `LazyMotion` (strict) e `MotionConfig reducedMotion="user"`.
 - Lenis (`lenis/react`) para a rolagem suave, desligado com movimento reduzido.
 - Ícones Lucide (`lucide-react`).
+- Componentes adaptados de React Bits (SplitText, CountUp, TiltedCard) e kokonutui (Smooth Tab, Slide Text Button), em TypeScript e CSS próprio, com crédito MIT no topo de cada arquivo.
+- `sharp` (só desenvolvimento) para recortar e converter as fotos (`scripts/images.mjs`).
 - Pré-renderização sem biblioteca extra: `src/entry-server.tsx` + `scripts/prerender.mjs` geram o HTML de `dist/index.html`; `src/entry-client.tsx` hidrata.
 - ESLint (typescript-eslint + react-hooks) e Playwright.
 
@@ -60,22 +67,23 @@ Consulte `docs/DEPENDENCY-NOTES.md` antes de aplicar correções automáticas do
 ```text
 .
 |-- .agents/skills/             Skills específicas do repositório
-|-- design/                     Briefing e contrato visual do redesenho
+|-- design/                     Briefing, contrato visual e originais/ (posts oficiais; referencias/ fica fora do Git)
 |-- design-system-export/       Fonte de verdade visual e ativos de marca (não editar)
 |-- docs/                       Produto, decisões, arquitetura, dependências, sessões
 |-- public/
 |   |-- fonts/                  Fontes self-hosted do design system
-|   `-- img/                    Logos, artes de eventos e imagem de compartilhamento (WebP/JPG)
+|   `-- img/                    Logos, artes de eventos, imagem de compartilhamento e fotos/ (recortes WebP)
 |-- scripts/prerender.mjs       Injeta o HTML pré-renderizado em dist/index.html
+|-- scripts/images.mjs          Recortes das fotos oficiais (npm run images)
 |-- src/
 |   |-- content/arena.ts        Dados institucionais: endereço, horários, quadras e preços, loja
 |   |-- content/site.ts         Todos os textos da landing e do agendamento
 |   |-- domain/                 Contratos (tipos) e validação do agendamento
 |   |-- services/               Serviço de agendamento (mock substituível por API) e cenários de demonstração
 |   |-- features/booking/       Janela de agendamento e contexto para abri-la
-|   |-- components/             Seções da landing, botões, ícones, quadra desenhada, primitivas de animação
+|   |-- components/             Seções da landing, botões, ícones, quadra desenhada, animação e componentes adaptados
 |   |-- lib/format.ts           Datas no fuso da arena, moeda e durações
-|   |-- styles/                 tokens, base, landing e agendamento
+|   |-- styles/                 tokens, base, componentes, landing e agendamento
 |   |-- App.tsx                 Composição, LazyMotion, MotionConfig e Lenis
 |   |-- entry-client.tsx        Hidratação (ou montagem no dev)
 |   `-- entry-server.tsx        Renderização para a pré-renderização
@@ -89,7 +97,8 @@ Consulte `docs/DEPENDENCY-NOTES.md` antes de aplicar correções automáticas do
 
 ## Onde mexer
 
-- **Textos:** `src/content/site.ts`.
+- **Textos, professores, eventos e fotos usadas:** `src/content/site.ts`.
+- **Recorte das fotos:** `scripts/images.mjs` (`npm run images`).
 - **Endereço, horários, quadras, preços, WhatsApp:** `src/content/arena.ts`.
 - **Trocar o mock por uma API:** implemente `BookingService` (`src/domain/booking.ts`) e troque a composição em `src/services/booking.ts`.
 - **Cenários da demonstração** (dia vazio, erro, conflito): `src/services/booking-demo.ts`.
@@ -102,4 +111,4 @@ Consulte `docs/DEPENDENCY-NOTES.md` antes de aplicar correções automáticas do
 - Domínio de publicação: `index.html` usa `https://example.com/` como marcador em `canonical`, `og:url`, `og:image` e JSON-LD.
 - Políticas de cancelamento, reagendamento e pagamento.
 - Eventos, datas, inscrições, depoimentos e informações institucionais não confirmados.
-- Fotografias da arena (não há; ver `design/direcao-visual.md`).
+- Direitos de uso das fotos dos posts e confirmação de que o retrato de `design/originais/4.png` é do professor Dorotóvio.

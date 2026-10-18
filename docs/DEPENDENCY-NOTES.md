@@ -1,5 +1,11 @@
 # Notas de dependencias
 
+## sharp 0.35.5 (devDependency, 2026-10-17)
+
+- Uso: `scripts/images.mjs` (`npm run images`) recorta as fotos oficiais de `design/originais/` e gera WebP em `public/img/fotos/`. Nao entra no bundle do site nem no nginx de producao (que serve so o `dist/`).
+- Motivo: os posts chegaram em PNG com textos e baloes embutidos; o recorte precisa ser reproduzivel quando a arena mandar fotos novas. O Python da maquina nao tem Pillow, e o sharp traz binarios prontos para Windows, Linux e macOS.
+- `npm audit` depois da instalacao: nenhuma vulnerabilidade. Versao fixada sem `^`.
+
 ## Auditoria apos a troca para Vite (2026-10-17)
 
 - `npm audit` e `npm audit --omit=dev`: nenhuma vulnerabilidade.

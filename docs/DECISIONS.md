@@ -21,6 +21,11 @@
 | npm como gerenciador de pacotes | Aceita | Ja esta disponivel no ambiente e reduz configuracao adicional |
 | CSS proprio com tokens do design system | Aceita | Preserva a identidade sem adicionar outra camada de estilos |
 | Playwright para fluxos de navegador | Aceita | Valida a experiencia em celular e desktop |
+| Landing escura com as fotos oficiais ("A quadra a noite") | Aceita | Retorno do responsavel pelo redesenho (2026-10-17): "muitos espacos em branco, landing sem conteudo, opaca". Referencias em `design/referencias/` (clubes de padel escuros com fotografia grande). Contrato em `design/direcao-visual.md` |
+| Fotos oficiais recortadas por script (`scripts/images.mjs`, `npm run images`) | Aceita | Os posts trazem textos e baloes embutidos; o recorte fica reproduzivel e nunca amplia a foto alem do tamanho natural |
+| `design/originais/` versionado; `design/referencias/` fora do Git | Aceita | Os originais sao da Prime e sao a fonte dos recortes (cerca de 6 MB). As referencias sao capturas de sites de terceiros: ficam so na maquina, como norte visual |
+| Componentes adaptados de React Bits e kokonutui | Aceita | SplitText (`SplitTitle`), CountUp, TiltedCard, Smooth Tab (`SmoothTabs`) e Slide Text Button (no `Button`) reescritos em TypeScript, Motion e CSS proprio, sem dependencias novas, com credito MIT no topo de cada arquivo |
+| Secao "Como agendar" removida | Aceita | Repetia a janela de agendamento e quebrava o ritmo; o aviso de demonstracao foi para o painel das quadras e para o rodape |
 
 ## Decisoes pendentes antes da inicializacao da aplicacao
 
@@ -31,10 +36,17 @@
 
 ## Divergencias intencionais do design system
 
-- Cabecalho fixo branco solido, sem `backdrop-filter`: o design system permite branco 88% com desfoque, mas o pedido do redesenho proibe qualquer efeito de vidro.
+Motivo comum das cinco primeiras: pedido do responsavel pelo redesenho (2026-10-17, "landing opaca, sem conteudo") e as referencias em `design/referencias/`. Ordem de prioridade usada: pedido do responsavel > referencias visuais > identidade do briefing e do `DESIGN.md`.
+
+- **Pagina escura.** O `DESIGN.md` pede superficies brancas e neutros quentes; a landing usa o verde quase preto `#121D17` como chao, com paineis verdes e duas secoes em creme (quadras e loja). As cores continuam as da marca: verde floresta, creme e amarelo de bola.
+- **Titulos em Instrument Sans 700 em vez de DM Serif Display.** Os titulos de impacto seguem a grotesca pesada das referencias, usando a fonte de interface do proprio design system. A DM Serif Display ficou nos numeros, precos e contadores; a Pinyon Script, em "Nos vemos na Prime.".
+- **Amarelo mais de uma vez por vista.** O `DESIGN.md` limita o acento a uma aplicacao por vista; aqui a palavra de destaque de cada titulo e o botao principal da vista usam o amarelo, como nas referencias. No creme o destaque vira marca-texto (amarelo sobre creme nao passa no contraste).
+- **h1 ate 104 px** (o contrato anterior limitava a 64 px): escala das referencias, em tres linhas no desktop e duas no celular.
+- **Veu escuro sobre fotos** (hero no celular e fundo desfocado do CTA final): escurecimento neutro para o texto creme passar no contraste. Nao e gradiente colorido, que continua proibido.
+- **Mantido do `DESIGN.md`:** sem parallax, sem loops e sem vidro. O marquee com o nome do clube das referencias ficou de fora por ser loop infinito.
+- Cabecalho fixo solido (verde 950), sem `backdrop-filter`: o design system permite branco 88% com desfoque, mas o pedido do redesenho proibe qualquer efeito de vidro.
 - Icone do Instagram desenhado localmente no mesmo traco do Lucide: o `lucide-react` 1.x removeu logos de marcas.
 - Sem planos, FAQ, "ao vivo", aluguel de raquete e cancelamento gratis do kit de landing: dados ilustrativos do kit, nao confirmados pela arena.
-- Sem fotos: o painel verde com a quadra desenhada ocupa o lugar da fotografia ate existirem fotos autorizadas.
 
 ## Dados pendentes de confirmacao
 
@@ -43,7 +55,9 @@
 - Conteudo institucional.
 - Estrutura e diferenciais.
 - Politicas comerciais.
-- Fotografias e arquivos vetoriais oficiais.
+- Arquivos vetoriais oficiais e fotos em resolucao maior (os posts tem cerca de 650 px de largura).
+- Direitos de uso das fotos dos posts (professores e jogadores retratados).
+- Que o retrato do post "Conheca nosso professor" (`design/originais/4.png`) e do professor Dorotovio R. Couto.
 
 ## Como atualizar
 
