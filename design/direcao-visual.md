@@ -67,7 +67,7 @@ Fonte: posts oficiais da Prime em `design/originais/` (~600-650 px de largura). 
 | `aperto-de-maos` (3.png) | inteira | painel direito do hero | 651 × 806 |
 | `saque` (9.png) | sem logo e sem o título embutido | Aulas | 646 × 530 |
 | `prof-dorotovio` (4.png) | retrato acima do balão | cartão do professor | 330 × 412 |
-| `prof-gustavo` (6.png), `prof-eduardo` (7.png) | retrato entre os balões | cartões | 172 × 214, 200 × 250 |
+| `prof-gustavo` (6.png), `prof-eduardo` (7.png) | retrato entre os balões (Eduardo abaixo da faixa amarela do patrocinador) | cartões | 172 × 214, 189 × 236 |
 | `prime-cup-primavera-2026` (2.png) | cartaz inteiro | Prime Cup | 631 × 787 |
 | `loja-west-padel` (image.png) | abaixo do balão | Loja | 599 × 662 |
 | `amarrando-o-tenis` (8.png) | abaixo do balão, acima do logo | Comunidade | 651 × 500 |
@@ -104,4 +104,24 @@ Seção "Como agendar" removida: o aviso de demonstração foi para o painel das
 
 ## Acabamento
 
-Preenchido na etapa de acabamento (impeccable).
+**Rodada (impeccable critique, 2026-10-18, single-context: o agente não abre subagentes sem pedido):** nota 27/32 nas heurísticas aplicáveis (7 e 10 n/a por ser landing): status 3, linguagem 4, controle 3, consistência 3, prevenção de erro 3, reconhecimento 4, estética 3, recuperação de erro 4. Especificidade: alta (fotos e patrocinadores das quadras, fatos reais dos professores, categorias da Prime Cup); o padrão "palavra de destaque em amarelo" é da categoria, mas foi pedido pelas referências.
+
+Comandos rodados: `impeccable detect` no fonte (`src/`, limpo) e no build (`dist/index.html`), detector injetado no navegador a 1440 e 390 (live-server), `design-taste-frontend inspect.mjs` a 1440, 768 e 390, capturas CDP por seção.
+
+Mudanças aplicadas nesta rodada:
+
+- **layout/adapt (antes da crítica, nas capturas):** h1 do desktop em três linhas e fatos maiores para tirar o vão do painel do hero; botão do WhatsApp escondido enquanto o hero está na tela (cobria a faixa do endereço); painel de professores reduzido para caber em 900 px; lista de quadras no celular com o nome acima dos preços (o nome longo encostava no preço); faixa de valores em 2 × 2 e sem a frase de apoio no celular; título e abas antes do cartaz nos eventos do celular; mapa de círculos escondido abaixo de 720 px; abas sem quebra a partir de 380 px; rolagem lateral de 414 px no celular corrigida (os `.sr-only` dos cartões fora da tela escapavam do carrossel; o cartão agora é `position: relative`).
+- **polish:** rótulos do cartão de contato em caixa normal (eram sobrelinhas espaçadas); marca-texto do claro com mais respiro lateral; retrato do Eduardo recortado abaixo da faixa amarela do patrocinador.
+
+Achados mantidos de propósito (contrato ou falso positivo):
+
+- h1 em três linhas a 1440 (`headline-lines`): escala pedida pelas referências, registrada acima.
+- Sobrelinha de data acima do nome do evento e "Quadra escolhida" (`eyebrow`, `micro-label`): linguagem dos cartazes da Prime (datas e categorias em caixa-alta espaçada).
+- Contraste 1,2:1 na aba "Prime Cup" (`contrast`): falso positivo; o texto escuro fica sobre a pílula creme, que é um elemento irmão e por isso não entra na medição. Contraste real 14,6:1.
+- Creme `#F7F5EF` (`palette-cream`): cor da marca.
+- 17 tamanhos de fonte (`size-count`): a escala tem cinco papéis; os tamanhos extras são números de dados (preços, contadores) e a linha gigante do Instagram.
+- Sem vídeo (`no-footage`): não há vídeo da arena e nenhum clipe de banco pode ser apresentado como a Prime.
+- Carrossel de professores cortado na borda em 768 e 390 (`side-scroll`): é o padrão pedido para o celular, com pontos de posição.
+- "Prime" em Pinyon Script em "Nos vemos na Prime." (`mixed-font-headline`): momento de marca do design system.
+- Instrument Sans "comum" (`overused-font`): fonte do design system, ignorada em `.impeccable/config.json`.
+- `cramped-padding`, `tiny-text` e `flat-type-hierarchy` do detector estático no `dist/index.html`: o scanner não resolve `clamp()` nem variáveis (o "9,6 px" é o termo `0.6rem` do `clamp` da lista da loja, que renderiza a 28-44 px); as seções têm `.container` com recuo. O detector no navegador não repetiu esses achados.

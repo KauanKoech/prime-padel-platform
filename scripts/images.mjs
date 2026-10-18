@@ -29,7 +29,8 @@ const crops = {
   // Professores: retratos 4:5 entre os balões dos posts. O do Dorotóvio vem do post "Conheça nosso professor" (4.png).
   'prof-dorotovio': { file: '4.png', rect: { left: 120, top: 168, width: 330, height: 412 }, smaller: [] },
   'prof-gustavo': { file: '6.png', rect: { left: 214, top: 128, width: 172, height: 214 }, smaller: [] },
-  'prof-eduardo': { file: '7.png', rect: { left: 200, top: 128, width: 200, height: 250 }, smaller: [] },
+  // Começa abaixo da faixa amarela do patrocinador que aparece no canto de cima.
+  'prof-eduardo': { file: '7.png', rect: { left: 205, top: 142, width: 189, height: 236 }, smaller: [] },
   // Prime Cup: o cartaz oficial inteiro (é a arte do evento, com o texto dele).
   'prime-cup-primavera-2026': { file: '2.png', rect: { left: 0, top: 0, width: 631, height: 787 }, smaller: [400] },
 };

@@ -1319,10 +1319,8 @@
 }
 
 .visit-card__block h3 {
-  margin-bottom: 10px;
-  font: 600 var(--fs-overline) / 1.2 var(--font-sans);
-  letter-spacing: var(--ls-overline);
-  text-transform: uppercase;
+  margin-bottom: 8px;
+  font: 700 1rem / 1.3 var(--font-sans);
   color: var(--pp-green-700);
 }
 
@@ -1349,6 +1347,13 @@
 
 .hours td {
   text-align: right;
+}
+
+/* O selo "hoje" alarga a coluna do dia; no cartão largo o horário e o "a confirmar" ficam na mesma linha. */
+@media (min-width: 1024px) {
+  .hours td {
+    white-space: nowrap;
+  }
 }
 
 .nowrap {

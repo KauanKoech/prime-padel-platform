@@ -230,8 +230,8 @@
   background: var(--pp-ball);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-  padding: 0 0.08em;
-  border-radius: 0.08em;
+  padding: 0 0.14em;
+  border-radius: 0.1em;
 }
 
 /* SplitTitle (React Bits SplitText): cada palavra sobe de dentro de uma máscara. */

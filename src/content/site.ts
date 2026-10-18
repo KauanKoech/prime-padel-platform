@@ -136,7 +136,7 @@ export const site = {
         stat: { value: 31, unit: 'anos', label: 'como professor de esportes de raquete' },
         facts: ['Ex-atleta profissional de squash', 'Formação como professor de padel com @fabianopadel'],
         levels: ['Iniciante e intermediário'],
-        photo: foto('prof-eduardo', 200, 250, 'Professor Eduardo Pereira, sorrindo, com a camisa da Prime Padel, na quadra.', false),
+        photo: foto('prof-eduardo', 189, 236, 'Professor Eduardo Pereira, sorrindo, com a camisa da Prime Padel, na quadra.', false),
       },
     ],
   },
