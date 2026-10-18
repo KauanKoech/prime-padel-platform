@@ -148,91 +148,40 @@
   }
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero: o título é o protagonista; aurora ao fundo e um mosaico pequeno de fotos ---------- */
 .hero {
-  padding-bottom: var(--gutter);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 28px 0 40px;
+}
+
+/* A aurora sobe da base e some antes do título (máscara), para não disputar com o texto. */
+.hero__bg {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 18%, #000 70%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 18%, #000 70%);
+}
+
+/* Sem GPU a aurora não roda: um brilho parado nas mesmas cores ocupa o lugar dela. */
+.hero__bg.is-fallback {
+  background:
+    radial-gradient(ellipse 70% 55% at 30% 105%, rgba(126, 156, 137, 0.45), transparent 70%),
+    radial-gradient(ellipse 45% 45% at 95% 100%, rgba(216, 236, 76, 0.22), transparent 70%);
+  opacity: 0.6;
 }
 
 .hero__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'copy' 'mosaic' 'facts';
+  gap: 28px;
 }
 
-/* No celular o texto entra na grade da seção: o título fica sobre a foto. */
 .hero__copy {
-  display: contents;
-}
-
-.hero__photo {
-  grid-area: 1 / 1 / 3 / 2;
-  position: relative;
-  height: min(124vw, 72svh);
-  min-height: 420px;
-  margin: 0 var(--gutter);
-  overflow: hidden;
-  border-radius: var(--radius-xl);
-  background: var(--pp-green-900);
-}
-
-/* Véu neutro sob o título (escurece a foto, não colore). */
-.hero__photo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(10, 16, 12, 0.92) 0%, rgba(10, 16, 12, 0.6) 34%, rgba(10, 16, 12, 0) 62%);
-  pointer-events: none;
-}
-
-.hero__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 42% 40%;
-}
-
-.js .hero__img {
-  animation: hero-photo 1.4s var(--ease-out) both;
-}
-
-@keyframes hero-photo {
-  from {
-    transform: scale(1.06);
-  }
-}
-
-.hero__bar {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 1;
-  display: flex;
-  gap: 16px;
-  padding: 8px 14px;
-  border-radius: var(--radius-pill);
-  background: var(--pp-cream);
-  color: var(--pp-ink);
-  font: 600 var(--fs-small) / 1.2 var(--font-sans);
-}
-
-.hero__bar span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.hero__bar span:last-child {
-  display: none;
-}
-
-.hero__bar svg {
-  color: var(--pp-green-700);
+  grid-area: copy;
 }
 
 .hero__title {
-  grid-area: 2 / 1;
-  align-self: end;
-  z-index: 1;
-  padding: 0 calc(var(--gutter) + 14px) 22px;
   font: 700 clamp(2.375rem, 4.6vw + 1.3rem, 5.5rem) / 0.95 var(--font-sans);
   letter-spacing: -0.04em;
   color: var(--pp-cream);
@@ -242,14 +191,8 @@
   display: block;
 }
 
-.hero__lead,
-.hero__ctas,
-.hero__facts {
-  margin-inline: var(--container-pad);
-}
-
 .hero__lead {
-  margin-top: 24px;
+  margin-top: 20px;
   max-width: 46ch;
   font-size: 1.0625rem;
   color: var(--pp-cream);
@@ -266,12 +209,35 @@
   flex: 1 1 auto;
 }
 
-.hero__facts {
+/* Celular: uma faixa de três recortes baixos, abaixo dos botões. */
+.hero__mosaic {
+  grid-area: mosaic;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px 24px;
-  margin-top: 32px;
-  padding-bottom: 12px;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: 8px;
+}
+
+.hero__tile {
+  position: relative;
+  height: 136px;
+  border-radius: var(--radius-md);
+}
+
+.hero__tile img {
+  object-position: 50% 40%;
+}
+
+.hero__open {
+  display: none;
+}
+
+.hero__facts {
+  grid-area: facts;
+  display: grid;
+  /* colunas pelo conteúdo e números sem quebra: "R$ 140 a 190" fica numa linha no celular */
+  grid-template-columns: auto auto;
+  justify-content: start;
+  gap: 18px 28px;
 }
 
 .hero__facts > div {
@@ -281,7 +247,8 @@
 }
 
 .hero__facts dd {
-  font: 400 2.25rem/1 var(--font-display);
+  font: 400 1.875rem/1 var(--font-display);
+  white-space: nowrap;
   color: var(--pp-cream);
 }
 
@@ -307,11 +274,15 @@
   .hero__facts {
     grid-template-columns: repeat(4, auto);
     justify-content: start;
-    gap: 24px 40px;
+    gap: 24px 48px;
   }
 
   .hero__ctas .btn {
     flex: 0 0 auto;
+  }
+
+  .hero__tile {
+    height: 200px;
   }
 }
 
@@ -321,64 +292,27 @@
   }
 
   .hero__grid {
-    grid-template-columns: minmax(0, 1fr) min(651px, 44vw);
-    gap: var(--gutter);
-    height: calc(100svh - var(--header-h));
-    min-height: 620px;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-areas: 'copy mosaic' 'facts mosaic';
+    grid-template-rows: 1fr auto;
+    align-items: center;
+    column-gap: clamp(32px, 4vw, 72px);
+    row-gap: 40px;
+    min-height: calc(100svh - var(--header-h));
     max-height: 900px;
-    padding: 0 var(--gutter) var(--gutter);
+    padding-top: clamp(32px, 4vw, 64px);
+    padding-bottom: clamp(32px, 4vw, 56px);
   }
 
-  .hero__copy {
-    display: flex;
-    flex-direction: column;
-    padding: clamp(36px, 4.2vw, 72px);
-    border-radius: var(--radius-xl);
-    background: var(--pp-green-900);
-  }
-
-  .hero__photo {
-    grid-area: auto;
-    height: auto;
-    min-height: 0;
-    margin: 0;
-  }
-
-  .hero__photo::after {
-    display: none;
-  }
-
-  .hero__bar {
-    top: auto;
-    right: 12px;
-    bottom: 12px;
-    justify-content: space-between;
-    padding: 14px 20px;
-    border-radius: var(--radius-lg);
-    font-size: 0.9375rem;
-  }
-
-  .hero__bar span:last-child {
-    display: inline-flex;
-  }
-
-  /* Desktop: o título corre em três linhas largas ("Seu próximo / jogo começa / na Prime."), na escala das referências. */
+  /* Três linhas largas ("Seu próximo / jogo começa / na Prime."), na escala das referências. */
   .hero__title {
-    align-self: auto;
     max-width: 11.5ch;
-    padding: 0;
     font-size: clamp(2.75rem, 7vw, 6.5rem);
     line-height: 0.92;
   }
 
   .hero__title > span {
     display: inline;
-  }
-
-  .hero__lead,
-  .hero__ctas,
-  .hero__facts {
-    margin-inline: 0;
   }
 
   .hero__lead {
@@ -391,25 +325,63 @@
   }
 
   .hero__facts {
-    grid-template-columns: repeat(2, minmax(0, max-content));
-    gap: 28px 64px;
-    margin-top: auto;
-    padding: 32px 0 0;
+    align-self: end;
   }
 
   .hero__facts dd {
-    font-size: clamp(2.25rem, 2.6vw + 0.5rem, 3.5rem);
+    font-size: clamp(2.25rem, 2.4vw + 0.4rem, 3.25rem);
   }
 
   .hero__facts dt {
     font-size: 0.9375rem;
   }
-}
 
-@media (min-width: 1280px) {
-  .hero__facts {
-    grid-template-columns: repeat(4, max-content);
-    gap: 28px 48px;
+  /* Desktop: um retrato e dois recortes, no máximo 300 px de largura, a coluna da direita descida. */
+  .hero__mosaic {
+    justify-self: end;
+    align-self: center;
+    grid-template-columns: minmax(0, 300px) minmax(0, 230px);
+    grid-template-rows: auto auto;
+    gap: 12px;
+    width: 100%;
+    max-width: 542px;
+  }
+
+  .hero__tile {
+    height: auto;
+    border-radius: var(--radius-lg);
+  }
+
+  .hero__tile--main {
+    grid-row: 1 / 3;
+    aspect-ratio: 3 / 4;
+  }
+
+  .hero__tile--1 {
+    aspect-ratio: 6 / 5;
+    margin-top: 56px;
+  }
+
+  .hero__tile--2 {
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero__open {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--pp-cream);
+    color: var(--pp-ink);
+    font: 600 0.8125rem / 1.2 var(--font-sans);
+  }
+
+  .hero__open svg {
+    color: var(--pp-green-700);
   }
 }
 
@@ -487,9 +459,23 @@
 
 /* ---------- Quadras (painel creme, cardápio de preços) ---------- */
 .courts {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   padding: var(--section-y) 0;
   background: var(--pp-cream);
   color: var(--pp-ink);
+}
+
+/* Pontos verdes no creme: fortes nas bordas, quase sumindo no meio, onde estão a lista e o painel. */
+.courts__bg {
+  color: var(--pp-green-700);
+  -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 50%, rgba(0, 0, 0, 0.22) 35%, #000 100%);
+  mask-image: radial-gradient(ellipse 85% 80% at 50% 50%, rgba(0, 0, 0, 0.22) 35%, #000 100%);
+}
+
+.courts__bg.is-ready {
+  opacity: 0.55;
 }
 
 .courts__grid {
@@ -723,7 +709,21 @@
 
 /* ---------- Aulas (escuro, foto do saque) ---------- */
 .lessons {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   padding: var(--section-y) 0;
+}
+
+/* Fita de linhas: some nas bordas de cima e de baixo e fica mais fraca atrás do texto (à direita). */
+.lessons__bg {
+  color: var(--pp-green-300);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+}
+
+.lessons__bg.is-ready {
+  opacity: 0.75;
 }
 
 .lessons__grid {
@@ -1464,7 +1464,7 @@
 
 /* ---------- Rodapé ---------- */
 
-/* ---------- CTA final (raquetes desfocadas ao fundo, a foto nítida no tamanho natural) ---------- */
+/* ---------- CTA final (curvas de nível ao fundo, a foto nítida no tamanho natural) ---------- */
 .final {
   position: relative;
   isolation: isolate;
@@ -1473,18 +1473,9 @@
 }
 
 .final__bg {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: url('/img/fotos/raquetes-fundo.webp') center / cover no-repeat;
-}
-
-/* Véu neutro: escurece o fundo para o texto creme passar no contraste. */
-.final__bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(12, 18, 14, 0.62);
+  color: var(--pp-green-400);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
 }
 
 .final__grid {

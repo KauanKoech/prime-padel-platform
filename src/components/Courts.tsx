@@ -4,6 +4,7 @@ import { site } from '../content/site';
 import { useBookingTrigger } from '../features/booking/BookingContext';
 import { duration, money } from '../lib/format';
 import { ButtonLink } from './Button';
+import { DotField } from './backgrounds/DotField';
 import { CourtDrawing } from './CourtDrawing';
 import { ArrowRight, Info } from './Icons';
 import { Reveal } from './Motion';
@@ -30,6 +31,8 @@ export function Courts() {
 
   return (
     <section className="courts panel on-light" id="quadras" aria-labelledby="courts-title">
+      {/* fundo: meio-tom de pontos (kokonutui Dot Field) que o mouse agita */}
+      <DotField className="courts__bg" spacing={18} seed={11} />
       <div className="container courts__grid">
         <div className="courts__head">
           <SplitTitle className="section-title" id="courts-title" lead={c.titleLead} accent={c.titleAccent} />

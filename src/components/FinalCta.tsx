@@ -1,21 +1,20 @@
 import { whatsapp } from '../content/arena';
 import { site } from '../content/site';
 import { useBookingTrigger } from '../features/booking/BookingContext';
+import { Topo } from './backgrounds/Topo';
 import { ButtonLink } from './Button';
 import { ArrowRight, MessageCircle } from './Icons';
 import { Reveal } from './Motion';
 import { SplitTitle } from './SplitTitle';
 
-/**
- * CTA final com foto: as raquetes na grama, nítidas no tamanho natural, sobre um fundo feito da mesma foto
- * desfocada e escurecida (a foto original tem 620 px; esticada sem desfoque ficaria borrada).
- */
+/** CTA final com foto: as raquetes na grama, nítidas no tamanho natural, sobre as curvas de nível animadas. */
 export function FinalCta() {
   const f = site.finalCta;
   const trigger = useBookingTrigger();
   return (
     <section className="final" aria-labelledby="final-title">
-      <div className="final__bg" aria-hidden="true" />
+      {/* fundo: curvas de nível que derivam (kokonutui Topo Background) */}
+      <Topo className="final__bg" seed={41} />
       <div className="container final__grid">
         <div className="final__copy">
           <SplitTitle className="section-title" id="final-title" lead={f.titleLead} accent={f.titleAccent} />

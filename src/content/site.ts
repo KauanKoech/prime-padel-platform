@@ -46,6 +46,7 @@ export const site = {
     titleAccent: 'Prime.',
     lead: 'Cinco quadras de padel em São Cristóvão, Lages, aulas do iniciante ao avançado e a West Padel Store dentro da arena.',
     primary: 'Ver horários',
+    primaryHover: 'Abrir a agenda',
     secondary: 'Quadras e valores',
     facts: {
       courts: 'quadras',
@@ -54,12 +55,13 @@ export const site = {
       teachers: 'professores',
     },
     open: 'Aberto todos os dias',
-    photo: foto(
-      'aperto-de-maos',
-      651,
-      806,
-      'Dois jogadores se cumprimentam com as mãos em quadra, com raquetes de padel e a placa DGI / EQI ao fundo.',
-    ),
+    mosaicLabel: 'Fotos da Prime Padel',
+    // Mosaico do topo: recortes pequenos (no máximo 400 px de largura na tela), o título é o protagonista.
+    photos: [
+      foto('aperto-de-maos', 651, 806, 'Dois jogadores se cumprimentam com as mãos em quadra, com raquetes de padel e a placa DGI / EQI ao fundo.'),
+      foto('saque', 646, 530, 'Jogadora sacando, vista de cima, em preto e branco.'),
+      foto('amarrando-o-tenis', 651, 500, 'Jogadora sorrindo enquanto amarra o tênis na grama da quadra.'),
+    ],
   },
 
   values: {
@@ -91,6 +93,7 @@ export const site = {
     items: ['Acompanhamento profissional para todos os níveis e idades', 'Professores capacitados', 'Estrutura premium'],
     text: 'Do primeiro saque ao nível avançado, com aulas também para crianças. Fale com a arena para combinar a sua.',
     action: 'Quero fazer uma aula',
+    actionHover: 'Chamar no WhatsApp',
     actionMessage: 'Olá! Vi o site da Prime Padel e quero fazer uma aula.',
     secondary: 'Conhecer os professores',
     photo: foto('saque', 646, 530, 'Foto em preto e branco, vista de cima, de uma jogadora sacando na quadra de padel, com o braço esticado para o alto.'),
@@ -103,6 +106,7 @@ export const site = {
     levelsLabel: 'Atende',
     listLabel: 'Professores da Prime Padel',
     action: (first: string) => `Aula com ${first}`,
+    actionHover: 'Chamar no WhatsApp',
     message: (name: string) => `Olá! Vi o site da Prime Padel e quero agendar uma aula com o professor ${name}.`,
     swipe: 'Deslize para ver os três professores',
     items: [
@@ -187,6 +191,7 @@ export const site = {
     ],
     note: 'Artes de divulgação da arena, de edições já anunciadas. Datas, categorias e inscrições dos próximos eventos saem primeiro no Instagram.',
     instagram: 'Acompanhar no Instagram',
+    // o segundo texto do botão é o próprio perfil (vem de arena.ts no componente)
     whatsapp: 'Perguntar sobre eventos',
     whatsappMessage: 'Olá! Vi o site da Prime Padel e quero saber dos próximos eventos e torneios.',
   },

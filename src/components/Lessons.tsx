@@ -1,5 +1,6 @@
 import { whatsapp } from '../content/arena';
 import { site } from '../content/site';
+import { BackgroundPaths } from './backgrounds/BackgroundPaths';
 import { ButtonLink } from './Button';
 import { ArrowRight, Check, MessageCircle } from './Icons';
 import { Reveal } from './Motion';
@@ -10,6 +11,8 @@ export function Lessons() {
   const l = site.lessons;
   return (
     <section className="lessons" id="aulas" aria-labelledby="lessons-title">
+      {/* fundo: fita de linhas que flui (kokonutui Background Paths) */}
+      <BackgroundPaths className="lessons__bg" />
       <div className="container lessons__grid">
         <Reveal as="figure" className="lessons__photo photo">
           <img src={l.photo.src} srcSet={l.photo.srcSet} sizes="(min-width: 960px) 646px, 100vw" width={l.photo.width} height={l.photo.height} alt={l.photo.alt} loading="lazy" decoding="async" />
@@ -32,7 +35,7 @@ export function Lessons() {
             {l.text}
           </Reveal>
           <Reveal i={4} className="actions">
-            <ButtonLink variant="ball" size="lg" href={whatsapp(l.actionMessage)} external iconLeft={<MessageCircle size={18} strokeWidth={1.75} aria-hidden="true" />}>
+            <ButtonLink variant="ball" size="lg" hoverText={l.actionHover} href={whatsapp(l.actionMessage)} external iconLeft={<MessageCircle size={18} strokeWidth={1.75} aria-hidden="true" />}>
               {l.action}
             </ButtonLink>
             <ButtonLink variant="outlineOnBrand" size="lg" href="#professores" iconRight={<ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />}>

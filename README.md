@@ -57,7 +57,7 @@ Consulte `docs/DEPENDENCY-NOTES.md` antes de aplicar correções automáticas do
 - Motion (`motion/react`) para entradas abaixo da dobra: sempre `m.*` dentro de `LazyMotion` (strict) e `MotionConfig reducedMotion="user"`.
 - Lenis (`lenis/react`) para a rolagem suave, desligado com movimento reduzido.
 - Ícones Lucide (`lucide-react`).
-- Componentes adaptados de React Bits (SplitText, CountUp, TiltedCard) e kokonutui (Smooth Tab, Slide Text Button), em TypeScript e CSS próprio, com crédito MIT no topo de cada arquivo.
+- Componentes adaptados de React Bits (SplitText, CountUp, TiltedCard, Aurora) e kokonutui (Smooth Tab, Slide Text Button, Dot Field, Background Paths, Topo Background), em TypeScript e CSS próprio, sem dependências novas, com crédito MIT no topo de cada arquivo. Os fundos animados ficam em `src/components/backgrounds/` (WebGL2 e canvas 2D puros).
 - `sharp` (só desenvolvimento) para recortar e converter as fotos (`scripts/images.mjs`).
 - Pré-renderização sem biblioteca extra: `src/entry-server.tsx` + `scripts/prerender.mjs` geram o HTML de `dist/index.html`; `src/entry-client.tsx` hidrata.
 - ESLint (typescript-eslint + react-hooks) e Playwright.

@@ -45,13 +45,3 @@ for (const [name, { file, rect, smaller }] of Object.entries(crops)) {
   }
   console.log(`${name}: ${rect.width}x${rect.height}${smaller.length ? ` (+${smaller.join(', ')})` : ''}`);
 }
-
-// Fundo do CTA final: as raquetes desfocadas e escurecidas, pequenas (o desfoque esconde a ampliação).
-await sharp(src('11.png'))
-  .extract(crops.raquetes.rect)
-  .resize({ width: 320 })
-  .blur(6)
-  .modulate({ brightness: 0.55, saturation: 0.8 })
-  .webp({ quality: 60 })
-  .toFile(join(out, 'raquetes-fundo.webp'));
-console.log('raquetes-fundo: 320 px, desfocada');

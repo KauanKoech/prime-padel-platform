@@ -67,7 +67,7 @@ export function Events() {
 
           <Reveal i={3} className="events__foot">
             <div className="actions">
-              <ButtonLink href={arena.contact.instagram.url} external variant="ball" size="lg" iconLeft={<InstagramIcon size={18} />}>
+              <ButtonLink href={arena.contact.instagram.url} external variant="ball" size="lg" hoverText={arena.contact.instagram.handle} iconLeft={<InstagramIcon size={18} />}>
                 {e.instagram}
               </ButtonLink>
               <ButtonLink href={whatsapp(e.whatsappMessage)} external size="lg" variant="outlineOnBrand" iconLeft={<MessageCircle size={18} strokeWidth={1.75} aria-hidden="true" />}>

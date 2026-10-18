@@ -63,7 +63,7 @@ export function Coaches() {
                   ))}
                 </ul>
               </div>
-              <ButtonLink className="coach__cta" variant="outlineOnBrand" href={whatsapp(c.message(p.name))} external iconLeft={<MessageCircle size={18} strokeWidth={1.75} aria-hidden="true" />}>
+              <ButtonLink className="coach__cta" variant="outlineOnBrand" hoverText={c.actionHover} href={whatsapp(c.message(p.name))} external iconLeft={<MessageCircle size={18} strokeWidth={1.75} aria-hidden="true" />}>
                 {c.action(p.first)}
               </ButtonLink>
             </li>

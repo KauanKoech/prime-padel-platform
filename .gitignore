@@ -48,3 +48,4 @@ dist-ssr/
 
 # Referências visuais de terceiros: ficam só na máquina
 design/referencias/
+.impeccable/live/

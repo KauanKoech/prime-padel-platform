@@ -6,7 +6,7 @@ Contrato das etapas de código, acabamento e verificação da landing. Reescrito
 
 **"A quadra à noite"**: a Prime vista como as referências mostram um clube de padel, escura, com fotografia grande e títulos pesados, mas com as cores e as fotos da própria arena. Carta da `design-taste-frontend`: "The place carries it" (seed 3), com o hero "Menu column, sticky photograph" e as seções "Prices like a menu", "Close-up with column card", "Visit card" e "Contact as the headline", adaptadas ao pedido e à resolução das fotos.
 
-**Ideia:** nesta página, **as fotos tiradas nas quadras da Prime (a parede da DGI/EQI, a rede, a grama sintética, os professores com a camisa da casa)** viram **painéis de foto do tamanho de um pôster, cada um carregando o conteúdo da seção**. A concorrente da rua ao lado não tem essas fotos nem esses patrocinadores.
+**Ideia:** nesta página, **as fotos tiradas nas quadras da Prime (a parede da DGI/EQI, a rede, a grama sintética, os professores com a camisa da casa)** viram **painéis de foto que carregam o conteúdo de cada seção**, sobre fundos verdes que se mexem devagar (luz, pontos, linhas e curvas de nível). A concorrente da rua ao lado não tem essas fotos nem esses patrocinadores.
 
 **A coisa viva:** escolher a quadra na lista de preços e seguir para os horários já com quadra e duração preenchidas (agendamento simulado).
 
@@ -41,22 +41,29 @@ No claro, a palavra de destaque não pode ser amarela (1,2:1 sobre creme): vira 
 
 - Página escura em verde quase preto, com duas seções claras em creme (quadras e loja) para respirar e mostrar a marca. Campos chapados; profundidade por passo de tom (950 → 900 → 800) e pelas fotos.
 - Fotos em painéis com raio de 20 px; cartões com 20 px; botões em pílula. Um raio de painel na página inteira.
-- Sem vidro, sem gradiente colorido, sem brilho. Véu escuro neutro sob texto em foto (não é gradiente colorido). Sombra só no que flutua (janela de agendamento, botão do WhatsApp).
+- Sem vidro e sem brilho. Véu escuro neutro sob texto em foto. Sombra só no que flutua (janela de agendamento, botão do WhatsApp).
+- **Fundos animados** (pedido de 2026-10-18, divergência do `DESIGN.md` registrada em `docs/DECISIONS.md`): uma camada por seção, nunca repetida, sempre atrás do conteúdo, com máscara que some atrás do texto e opacidade baixa: Aurora no topo, Dot Field nas quadras, Background Paths nas aulas, Topo no CTA final.
 - Palavra de destaque no amarelo da bola em cada título de seção, como nas referências; o botão principal da vista também é amarelo. É o acento da vista; o resto fica em creme e verde.
 
 ## Movimento
 
-- **Hero (CSS):** texto sobe em sequência (560 ms), a foto entra com escala 1,06 → 1 (1,4 s), uma vez.
+- **Hero (CSS):** texto e mosaico sobem em sequência (560 ms), uma vez.
+- **Fundos (canvas):** `src/components/backgrounds/`.
+  - `Aurora` (React Bits, WebGL2): cortina verde que sobe da base do hero, ondula devagar e sobe perto do mouse; amarelo só na ponta direita.
+  - `DotField` (kokonutui, canvas 2D): meio-tom de pontos verdes no creme das quadras; o mouse deixa rastro e o clique solta uma onda (fora de links e botões).
+  - `BackgroundPaths` (kokonutui, canvas 2D): fita de linhas verde-claras que flui nas aulas e se abre na passagem do mouse.
+  - `Topo` (kokonutui, canvas 2D, mesma adaptação do jk-software): curvas de nível que derivam no CTA final; morro segue o mouse.
+  - Todos: pausam fora da tela e com a aba oculta, DPR até 1,5, interação só com mouse, quadro parado com movimento reduzido, sem `loseContext` no desmonte.
 - **Títulos de seção (`SplitTitle`, adaptado do SplitText do React Bits):** palavras sobem de dentro de uma máscara, 60 ms entre palavras, uma vez ao entrar na tela.
 - **Blocos (`Reveal`):** sobem 16 px com opacidade, 320 ms, 70 ms entre partes.
 - **Números reais (`CountUp`, React Bits):** 5 quadras, 3/5/31 anos dos professores contam de 0 ao valor ao entrar na tela; o HTML pré-renderizado já traz o valor final.
 - **Cartaz da Prime Cup (`TiltedCard`, React Bits):** inclinação de até 8° seguindo o ponteiro, só com mouse (`hover: hover` e `pointer: fine`).
 - **Abas dos eventos (`SmoothTabs`, kokonutui smooth-tab):** pílula desliza até a aba escolhida; troca de arte com crossfade de 220 ms.
-- **Botões (`slide-text-button`, kokonutui):** o rótulo sobe e é trocado por uma cópia no hover e no foco.
+- **Botões:** hover de cor em todos. A troca de texto (`slide-text-button`, kokonutui) só onde há um segundo texto real (`hoverText`): "Ver horários" → "Abrir a agenda" no hero, "Quero fazer uma aula" e "Aula com…" → "Chamar no WhatsApp", "Acompanhar no Instagram" → "@primepadellages".
 - **Fotos:** escala 1,04 no hover dos cartões (só com mouse).
 - **Rolagem:** Lenis (`lerp: 0.085`, âncoras com offset 0: o `html` tem `scroll-padding-top`).
-- **Proibido:** parallax, loops infinitos (sem marquee, sem crossfade automático), vidro.
-- **Movimento reduzido:** Lenis desligado, `MotionConfig reducedMotion="user"`, CSS zera durações, `[data-reveal]` visível, contadores mostram o valor final, sem inclinação.
+- **Proibido:** parallax, marquee, crossfade automático de fotos, vidro.
+- **Movimento reduzido:** Lenis desligado, `MotionConfig reducedMotion="user"`, CSS zera durações, `[data-reveal]` visível, contadores mostram o valor final, sem inclinação, fundos num quadro parado.
 
 ## Tratamento das fotos
 
@@ -64,20 +71,20 @@ Fonte: posts oficiais da Prime em `design/originais/` (~600-650 px de largura). 
 
 | Foto | Recorte | Onde | Tamanho máx. |
 | --- | --- | --- | --- |
-| `aperto-de-maos` (3.png) | inteira | painel direito do hero | 651 × 806 |
-| `saque` (9.png) | sem logo e sem o título embutido | Aulas | 646 × 530 |
+| `aperto-de-maos` (3.png) | inteira | retrato do mosaico do hero (300 px no desktop) | 651 × 806 |
+| `saque` (9.png) | sem logo e sem o título embutido | Aulas; recorte pequeno no mosaico do hero | 646 × 530 |
 | `prof-dorotovio` (4.png) | retrato acima do balão | cartão do professor | 330 × 412 |
 | `prof-gustavo` (6.png), `prof-eduardo` (7.png) | retrato entre os balões (Eduardo abaixo da faixa amarela do patrocinador) | cartões | 172 × 214, 189 × 236 |
 | `prime-cup-primavera-2026` (2.png) | cartaz inteiro | Prime Cup | 631 × 787 |
 | `loja-west-padel` (image.png) | abaixo do balão | Loja | 599 × 662 |
-| `amarrando-o-tenis` (8.png) | abaixo do balão, acima do logo | Comunidade | 651 × 500 |
-| `raquetes` (11.png) | abaixo da caixa verde | CTA final (nítida) + fundo desfocado e escurecido | 620 × 334 |
+| `amarrando-o-tenis` (8.png) | abaixo do balão, acima do logo | Comunidade; recorte pequeno no mosaico do hero | 651 × 500 |
+| `raquetes` (11.png) | abaixo da caixa verde | CTA final | 620 × 334 |
 
 Artes antigas mantidas: `open-prime-padel.webp` e `day-use.webp` (abas de eventos).
 
 ## Estrutura de seções
 
-1. **Hero** (`#topo`, escuro): painel esquerdo com h1 "Seu próximo jogo começa na Prime." em três linhas (destaque "Prime."), frase, "Ver horários" (abre o agendamento), "Quadras e valores" e quatro fatos (5 quadras, 1h ou 1h30, R$ 140 a 190 por quadra, 3 professores). Painel direito: foto do aperto de mãos com barra creme ("Aberto todos os dias" e endereço). No celular a foto vem primeiro com o h1 por cima, sobre véu.
+1. **Hero** (`#topo`, escuro, Aurora ao fundo): o título é o protagonista. h1 "Seu próximo jogo começa na Prime." em três linhas no desktop (destaque "Prime."), frase, "Ver horários" (abre o agendamento), "Quadras e valores" e quatro fatos (5 quadras, 1h ou 1h30, R$ 140 a 190 por quadra, 3 professores). À direita, mosaico pequeno: retrato do aperto de mãos (300 px, selo "Aberto todos os dias") e dois recortes (saque e jogadora). No celular o título vem primeiro e as fotos viram uma faixa de três recortes de 136 px abaixo dos botões.
 2. **Faixa de valores** (escuro): quatro itens com ícone, a partir do post "Aqui você aprende do zero": quadras, aulas para todos os níveis e idades, professores capacitados, estrutura premium e loja.
 3. **Quadras** (`#quadras`, creme): lista de preços como cardápio (cinco quadras, nome, desenho da quadra, durações e preços), painel da quadra escolhida com durações e "Ver horários desta quadra", aviso da agenda em demonstração.
 4. **Aulas** (`#aulas`, escuro): foto do saque; "Nunca jogou padel?" e "Aqui você aprende do zero." com os três itens do post; WhatsApp para pedir aula e link para os professores.
@@ -86,7 +93,7 @@ Artes antigas mantidas: `open-prime-padel.webp` e `day-use.webp` (abas de evento
 7. **Loja** (`#loja`, creme): foto da West Padel e "Você já conhece a West Padel?", produtos em letra grande, Instagram da loja.
 8. **Comunidade** (`#comunidade`, escuro): "O melhor da semana quase sempre começa com uma mensagem:" e o balão "Bora jogar hoje?"; foto da jogadora; ver horários e WhatsApp.
 9. **Onde estamos** (`#onde-estamos`, verde 700): mapa de círculos com o pino, cartão com endereço, horários (hoje destacado depois de montar), contatos, rota e agendar.
-10. **CTA final** (escuro com as raquetes desfocadas ao fundo): "Sua quadra está esperando." com a foto nítida das raquetes, ver horários e WhatsApp.
+10. **CTA final** (escuro, curvas de nível animadas ao fundo): "Sua quadra está esperando." com a foto nítida das raquetes, ver horários e WhatsApp.
 11. **Rodapé:** o Instagram como linha de contato gigante, logo, navegação, endereço e aviso de demonstração.
 12. **Agendamento** (janela modal, claro): sem mudanças de fluxo.
 
@@ -112,6 +119,12 @@ Mudanças aplicadas nesta rodada:
 
 - **layout/adapt (antes da crítica, nas capturas):** h1 do desktop em três linhas e fatos maiores para tirar o vão do painel do hero; botão do WhatsApp escondido enquanto o hero está na tela (cobria a faixa do endereço); painel de professores reduzido para caber em 900 px; lista de quadras no celular com o nome acima dos preços (o nome longo encostava no preço); faixa de valores em 2 × 2 e sem a frase de apoio no celular; título e abas antes do cartaz nos eventos do celular; mapa de círculos escondido abaixo de 720 px; abas sem quebra a partir de 380 px; rolagem lateral de 414 px no celular corrigida (os `.sr-only` dos cartões fora da tela escapavam do carrossel; o cartão agora é `position: relative`).
 - **polish:** rótulos do cartão de contato em caixa normal (eram sobrelinhas espaçadas); marca-texto do claro com mais respiro lateral; retrato do Eduardo recortado abaixo da faixa amarela do patrocinador.
+
+**Segunda rodada (2026-10-18, depois do pedido de hero menor, fundos animados e troca de texto só com segundo texto):** mesmos comandos (detector no fonte limpo; no navegador, só `overused-font`; `inspect.mjs` com os mesmos achados defendidos abaixo, sobrelinhas de 5 para 2). Mudanças:
+
+- **layout:** hero refeito com o título como protagonista e mosaico pequeno de fotos (300 px no desktop, faixa de 136 px no celular); fatos do hero no celular com colunas pelo conteúdo (o preço não quebra mais).
+- **animate:** quatro fundos, um por seção (Aurora, Dot Field, Background Paths, Topo), com máscaras para sumir atrás do texto; com WebGL em software (sem GPU) a aurora não roda e o CSS mostra um brilho parado (no Playwright, o SwiftShader gerava "GPU stall due to ReadPixels" no console e travava os testes).
+- **polish:** troca de texto do botão só onde há `hoverText` (quatro botões); o resto tem só o hover de cor. Fundo desfocado do CTA final (imagem) removido: as curvas de nível ocupam o lugar.
 
 Achados mantidos de propósito (contrato ou falso positivo):
 
