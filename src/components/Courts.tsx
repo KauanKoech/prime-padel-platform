@@ -9,6 +9,7 @@ import { CourtDrawing } from './CourtDrawing';
 import { ArrowRight, Info } from './Icons';
 import { Reveal } from './Motion';
 import { SplitTitle } from './SplitTitle';
+import { Wave } from './Wave';
 
 /**
  * Quadras e valores, como um cardápio (carta "Prices like a menu"). A coisa viva da página: tocar numa quadra
@@ -30,7 +31,7 @@ export function Courts() {
   };
 
   return (
-    <section className="courts panel on-light" id="quadras" aria-labelledby="courts-title">
+    <section className="courts on-light" id="quadras" aria-labelledby="courts-title">
       {/* fundo: meio-tom de pontos (kokonutui Dot Field) que o mouse agita */}
       <DotField className="courts__bg" spacing={18} seed={11} />
       <div className="container courts__grid">
@@ -100,6 +101,7 @@ export function Courts() {
           </p>
         </Reveal>
       </div>
+      <Wave to="a" />
     </section>
   );
 }

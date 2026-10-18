@@ -4,12 +4,16 @@ import { ButtonLink } from './Button';
 import { ArrowUpRight } from './Icons';
 import { Reveal } from './Motion';
 import { SplitTitle } from './SplitTitle';
+import { Wave } from './Wave';
+import { BackgroundPaths } from './backgrounds/BackgroundPaths';
 
 /** West Padel Store: a foto da loja por dentro e os produtos em letra grande (carta "Close-up with column card"). */
 export function Store() {
   const s = site.store;
   return (
-    <section className="store panel on-light" id="loja" aria-labelledby="store-title">
+    <section className="store on-light" id="loja" aria-labelledby="store-title">
+      {/* fundo: fita de linhas verdes no creme, inclinada para o outro lado (kokonutui Background Paths) */}
+      <BackgroundPaths className="store__bg" angle={10} count={30} speed={0.6} />
       <div className="container store__grid">
         <Reveal as="figure" className="store__photo photo">
           <img src={s.photo.src} srcSet={s.photo.srcSet} sizes="(min-width: 960px) 599px, 100vw" width={s.photo.width} height={s.photo.height} alt={s.photo.alt} loading="lazy" decoding="async" />
@@ -32,6 +36,7 @@ export function Store() {
           </Reveal>
         </div>
       </div>
+      <Wave to="a" />
     </section>
   );
 }

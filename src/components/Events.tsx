@@ -8,6 +8,8 @@ import { EASE, Reveal } from './Motion';
 import { SmoothTabs } from './SmoothTabs';
 import { SplitTitle } from './SplitTitle';
 import { TiltedCard } from './TiltedCard';
+import { Wave } from './Wave';
+import { Topo } from './backgrounds/Topo';
 
 /** Prime Cup e eventos: as artes reais da arena num cartaz que inclina com o mouse, com abas para trocar de evento. */
 export function Events() {
@@ -16,7 +18,9 @@ export function Events() {
   const item = e.items[active];
 
   return (
-    <section className="events panel on-brand" id="eventos" aria-labelledby="events-title">
+    <section className="events on-brand" id="eventos" aria-labelledby="events-title">
+      {/* fundo: curvas de nível claras que derivam (kokonutui Topo Background) */}
+      <Topo className="events__bg" seed={63} interval={0.08} />
       <div className="container events__grid">
         <Reveal i={1} className="events__poster">
           <TiltedCard>
@@ -78,6 +82,7 @@ export function Events() {
           </Reveal>
         </div>
       </div>
+      <Wave to="c" />
     </section>
   );
 }

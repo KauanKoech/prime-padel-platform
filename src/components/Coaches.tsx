@@ -6,6 +6,8 @@ import { CountUp } from './CountUp';
 import { MessageCircle } from './Icons';
 import { Reveal } from './Motion';
 import { SplitTitle } from './SplitTitle';
+import { Wave } from './Wave';
+import { FlowField } from './backgrounds/FlowField';
 
 /**
  * Professores: três cartões com foto, um número real (anos) que conta ao entrar na tela, fatos dos posts
@@ -26,7 +28,9 @@ export function Coaches() {
   };
 
   return (
-    <section className="coaches panel" id="professores" aria-labelledby="coaches-title">
+    <section className="coaches" id="professores" aria-labelledby="coaches-title">
+      {/* fundo: linhas de vento que contornam o mouse (kokonutui Flow Field) */}
+      <FlowField className="coaches__bg" density={0.7} speed={0.8} />
       <div className="container">
         <div className="coaches__head">
           <SplitTitle className="section-title" id="coaches-title" lead={c.titleLead} accent={c.titleAccent} />
@@ -76,6 +80,7 @@ export function Coaches() {
           ))}
         </div>
       </div>
+      <Wave to="b" />
     </section>
   );
 }

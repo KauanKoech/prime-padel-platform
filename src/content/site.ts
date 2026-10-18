@@ -22,8 +22,8 @@ export const site = {
   skip: 'Pular para o conteúdo',
 
   nav: [
-    { href: '#quadras', label: 'Quadras' },
     { href: '#aulas', label: 'Aulas' },
+    { href: '#quadras', label: 'Quadras' },
     { href: '#professores', label: 'Professores' },
     { href: '#eventos', label: 'Prime Cup' },
     { href: '#loja', label: 'Loja' },

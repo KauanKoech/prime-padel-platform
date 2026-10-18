@@ -39,10 +39,11 @@ No claro, a palavra de destaque não pode ser amarela (1,2:1 sobre creme): vira 
 
 ## Estilo
 
-- Página escura em verde quase preto, com duas seções claras em creme (quadras e loja) para respirar e mostrar a marca. Campos chapados; profundidade por passo de tom (950 → 900 → 800) e pelas fotos.
-- Fotos em painéis com raio de 20 px; cartões com 20 px; botões em pílula. Um raio de painel na página inteira.
+- **Ritmo de cores (2026-10-18):** ciclo fixo de três tons, na ordem das seções: **A** verde quase preto `#121D17`, **B** verde da marca `#324D3E`, **C** creme `#F7F5EF`. Topo A, aulas B, quadras C, professores A, eventos B, loja C, comunidade A, onde estamos B, CTA final C, rodapé A. Seções de ponta a ponta (sem painéis recuados).
+- **Emendas:** cada seção termina numa onda animada (`Wave` + `useWaves`, mesma técnica do jk-software) pintada com o tom da seguinte, com uma linha fina na crista um tom acima. A troca de cor é uma curva que se mexe devagar (e um pouco mais na rolagem), nunca um corte reto; o fundo animado da seção passa por baixo da onda.
+- Fotos com raio de 20 px; cartões com 20 px; botões em pílula.
 - Sem vidro e sem brilho. Véu escuro neutro sob texto em foto. Sombra só no que flutua (janela de agendamento, botão do WhatsApp).
-- **Fundos animados** (pedido de 2026-10-18, divergência do `DESIGN.md` registrada em `docs/DECISIONS.md`): uma camada por seção, nunca repetida, sempre atrás do conteúdo, com máscara que some atrás do texto e opacidade baixa: Aurora no topo, Dot Field nas quadras, Background Paths nas aulas, Topo no CTA final.
+- **Fundos animados** (pedido de 2026-10-18, divergência do `DESIGN.md` registrada em `docs/DECISIONS.md`): todas as seções têm um, sempre atrás do conteúdo, com máscara que some atrás do texto e opacidade baixa; tipos vizinhos nunca se repetem e quem repete muda de cor e de parâmetros. Topo: Aurora subindo. Aulas: Background Paths claro. Quadras: Dot Field verde. Professores: Flow Field (vento). Eventos: Topo claro. Loja: Background Paths verde, inclinado ao contrário. Comunidade: Aurora descendo do alto, com mais amarelo. Onde estamos: Dot Field claro e espaçado. CTA final: Topo verde no creme.
 - Palavra de destaque no amarelo da bola em cada título de seção, como nas referências; o botão principal da vista também é amarelo. É o acento da vista; o resto fica em creme e verde.
 
 ## Movimento
@@ -52,8 +53,10 @@ No claro, a palavra de destaque não pode ser amarela (1,2:1 sobre creme): vira 
   - `Aurora` (React Bits, WebGL2): cortina verde que sobe da base do hero, ondula devagar e sobe perto do mouse; amarelo só na ponta direita.
   - `DotField` (kokonutui, canvas 2D): meio-tom de pontos verdes no creme das quadras; o mouse deixa rastro e o clique solta uma onda (fora de links e botões).
   - `BackgroundPaths` (kokonutui, canvas 2D): fita de linhas verde-claras que flui nas aulas e se abre na passagem do mouse.
-  - `Topo` (kokonutui, canvas 2D, mesma adaptação do jk-software): curvas de nível que derivam no CTA final; morro segue o mouse.
-  - Todos: pausam fora da tela e com a aba oculta, DPR até 1,5, interação só com mouse, quadro parado com movimento reduzido, sem `loseContext` no desmonte.
+  - `Topo` (kokonutui, canvas 2D, mesma adaptação do jk-software): curvas de nível que derivam (eventos e CTA final); morro segue o mouse.
+  - `FlowField` (kokonutui, canvas 2D): partículas de vento com rastro nos professores; contornam o mouse e espalham num clique.
+  - Todos: só animam o que está na tela (IntersectionObserver) e com a aba visível, DPR até 1,5, interação só com mouse, quadro parado com movimento reduzido, sem `loseContext` no desmonte. A Aurora testa a GPU num canvas solto e, sem GPU, mostra um brilho parado em CSS.
+- **Emendas (`useWaves`):** maré lenta contínua, que ganha amplitude com a velocidade da rolagem; só roda com alguma onda visível; paradas com movimento reduzido.
 - **Títulos de seção (`SplitTitle`, adaptado do SplitText do React Bits):** palavras sobem de dentro de uma máscara, 60 ms entre palavras, uma vez ao entrar na tela.
 - **Blocos (`Reveal`):** sobem 16 px com opacidade, 320 ms, 70 ms entre partes.
 - **Números reais (`CountUp`, React Bits):** 5 quadras, 3/5/31 anos dos professores contam de 0 ao valor ao entrar na tela; o HTML pré-renderizado já traz o valor final.
@@ -84,20 +87,19 @@ Artes antigas mantidas: `open-prime-padel.webp` e `day-use.webp` (abas de evento
 
 ## Estrutura de seções
 
-1. **Hero** (`#topo`, escuro, Aurora ao fundo): o título é o protagonista. h1 "Seu próximo jogo começa na Prime." em três linhas no desktop (destaque "Prime."), frase, "Ver horários" (abre o agendamento), "Quadras e valores" e quatro fatos (5 quadras, 1h ou 1h30, R$ 140 a 190 por quadra, 3 professores). À direita, mosaico pequeno: retrato do aperto de mãos (300 px, selo "Aberto todos os dias") e dois recortes (saque e jogadora). No celular o título vem primeiro e as fotos viram uma faixa de três recortes de 136 px abaixo dos botões.
-2. **Faixa de valores** (escuro): quatro itens com ícone, a partir do post "Aqui você aprende do zero": quadras, aulas para todos os níveis e idades, professores capacitados, estrutura premium e loja.
-3. **Quadras** (`#quadras`, creme): lista de preços como cardápio (cinco quadras, nome, desenho da quadra, durações e preços), painel da quadra escolhida com durações e "Ver horários desta quadra", aviso da agenda em demonstração.
-4. **Aulas** (`#aulas`, escuro): foto do saque; "Nunca jogou padel?" e "Aqui você aprende do zero." com os três itens do post; WhatsApp para pedir aula e link para os professores.
-5. **Professores** (`#professores`, verde 900): três cartões (foto, contador real de anos, nome, fatos e níveis atendidos, WhatsApp para aula com o professor). No celular, carrossel horizontal com encaixe.
-6. **Prime Cup e eventos** (`#eventos`, verde 800): abas Prime Cup / 1º Open / Day Use; cartaz com inclinação; datas e categorias da Prime Cup Primavera 2026 (já realizada, 1 a 4 de outubro); Instagram e WhatsApp.
-7. **Loja** (`#loja`, creme): foto da West Padel e "Você já conhece a West Padel?", produtos em letra grande, Instagram da loja.
-8. **Comunidade** (`#comunidade`, escuro): "O melhor da semana quase sempre começa com uma mensagem:" e o balão "Bora jogar hoje?"; foto da jogadora; ver horários e WhatsApp.
-9. **Onde estamos** (`#onde-estamos`, verde 700): mapa de círculos com o pino, cartão com endereço, horários (hoje destacado depois de montar), contatos, rota e agendar.
-10. **CTA final** (escuro, curvas de nível animadas ao fundo): "Sua quadra está esperando." com a foto nítida das raquetes, ver horários e WhatsApp.
-11. **Rodapé:** o Instagram como linha de contato gigante, logo, navegação, endereço e aviso de demonstração.
-12. **Agendamento** (janela modal, claro): sem mudanças de fluxo.
+1. **Topo** (`#topo`, tom A, Aurora): o título é o protagonista. h1 "Seu próximo jogo começa na Prime." em três linhas no desktop (destaque "Prime."), frase, "Ver horários" (abre o agendamento), "Quadras e valores" e quatro fatos (5 quadras, 1h ou 1h30, R$ 140 a 190 por quadra, 3 professores). À direita, mosaico pequeno: retrato do aperto de mãos (300 px, selo "Aberto todos os dias") e dois recortes (saque e jogadora); no celular, uma faixa de três recortes de 136 px abaixo dos botões. A faixa de valores (quatro itens com ícone, do post "Aqui você aprende do zero") fecha o topo, sobre a mesma aurora.
+2. **Aulas** (`#aulas`, tom B, Background Paths): foto do saque; "Nunca jogou padel?" e "Aqui você aprende do zero." com os três itens do post; WhatsApp para pedir aula e link para os professores.
+3. **Quadras** (`#quadras`, tom C, Dot Field): lista de preços como cardápio (cinco quadras, nome, desenho da quadra, durações e preços), painel da quadra escolhida com durações e "Ver horários desta quadra", aviso da agenda em demonstração.
+4. **Professores** (`#professores`, tom A, Flow Field): três cartões (foto, contador real de anos, nome, fatos e níveis atendidos, WhatsApp para aula com o professor). No celular, carrossel horizontal com encaixe.
+5. **Prime Cup e eventos** (`#eventos`, tom B, Topo): abas Prime Cup / 1º Open / Day Use; cartaz com inclinação; datas e categorias da Prime Cup Primavera 2026 (já realizada, 1 a 4 de outubro); Instagram e WhatsApp.
+6. **Loja** (`#loja`, tom C, Background Paths): foto da West Padel e "Você já conhece a West Padel?", produtos em letra grande, Instagram da loja.
+7. **Comunidade** (`#comunidade`, tom A, Aurora do alto): "O melhor da semana quase sempre começa com uma mensagem:" e o balão "Bora jogar hoje?"; foto da jogadora; ver horários e WhatsApp.
+8. **Onde estamos** (`#onde-estamos`, tom B, Dot Field claro): mapa de círculos com o pino, cartão com endereço, horários (hoje destacado depois de montar), contatos, rota e agendar.
+9. **CTA final** (tom C, Topo verde): "Sua quadra está esperando." com a foto nítida das raquetes; ver horários (botão verde) e WhatsApp.
+10. **Rodapé** (tom A): o Instagram como linha de contato gigante, logo, navegação, endereço e aviso de demonstração.
+11. **Agendamento** (janela modal, claro): sem mudanças de fluxo.
 
-Seção "Como agendar" removida: o aviso de demonstração foi para o painel das quadras e para o rodapé.
+Seção "Como agendar" removida: o aviso de demonstração foi para o painel das quadras e para o rodapé. Aulas vêm antes das quadras (pedido de 2026-10-18), e o menu segue a mesma ordem.
 
 ## Referências
 
@@ -125,6 +127,12 @@ Mudanças aplicadas nesta rodada:
 - **layout:** hero refeito com o título como protagonista e mosaico pequeno de fotos (300 px no desktop, faixa de 136 px no celular); fatos do hero no celular com colunas pelo conteúdo (o preço não quebra mais).
 - **animate:** quatro fundos, um por seção (Aurora, Dot Field, Background Paths, Topo), com máscaras para sumir atrás do texto; com WebGL em software (sem GPU) a aurora não roda e o CSS mostra um brilho parado (no Playwright, o SwiftShader gerava "GPU stall due to ReadPixels" no console e travava os testes).
 - **polish:** troca de texto do botão só onde há `hoverText` (quatro botões); o resto tem só o hover de cor. Fundo desfocado do CTA final (imagem) removido: as curvas de nível ocupam o lugar.
+
+**Terceira rodada (2026-10-18, ciclo de tons A/B/C, emendas em onda, fundos em todas as seções, aulas antes das quadras):** detector no fonte limpo; no navegador, só `overused-font`; `inspect.mjs` com os achados já defendidos e dois novos. Mudanças:
+
+- **layout:** seções de ponta a ponta no ciclo A/B/C; respiro de baixo reduzido à metade mais a altura da onda (todas as seções ≤ 894 px a 1440); topo dimensionado para caber com a faixa de valores e a onda (824 px).
+- **colorize:** texto corrido em creme cheio no tom B (o verde-claro sobre o verde da marca dava 6,5:1, passava no AA mas ficava apagado; achado `grey-body`).
+- **Falso positivo novo:** `eyebrow` "Abrir a agenda" acima dos fatos do topo é a cópia escondida do botão (a troca de texto do hover), não um rótulo.
 
 Achados mantidos de propósito (contrato ou falso positivo):
 

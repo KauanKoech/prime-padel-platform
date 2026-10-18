@@ -10,11 +10,11 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Lessons } from './components/Lessons';
 import { Store } from './components/Store';
-import { Values } from './components/Values';
 import { Visit } from './components/Visit';
 import { site } from './content/site';
 import { BookingProvider } from './features/booking/BookingContext';
 import { BookingDialog } from './features/booking/BookingDialog';
+import { useWaves } from './hooks/useWaves';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/components.css';
@@ -23,6 +23,7 @@ import './styles/booking.css';
 
 export function App() {
   const reduce = useReducedMotion();
+  useWaves();
   return (
     // LazyMotion + m.*: só os recursos de animação de DOM usados (bundle menor)
     <LazyMotion features={domAnimation} strict>
@@ -36,9 +37,8 @@ export function App() {
           <Header />
           <main id="conteudo">
             <Hero />
-            <Values />
-            <Courts />
             <Lessons />
+            <Courts />
             <Coaches />
             <Events />
             <Store />

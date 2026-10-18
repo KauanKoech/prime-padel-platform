@@ -48,6 +48,10 @@
   /* Papéis. A landing é escura (verde quase preto) com seções claras em creme; a janela de agendamento é clara. */
   --bg-page: var(--pp-green-950);
   --text-on-dark: var(--pp-cream);
+  /* Ciclo de tons das seções (A / B / C), ver landing.css */
+  --tone-a: var(--pp-green-950);
+  --tone-b: var(--pp-green-700);
+  --tone-c: var(--pp-cream);
   --text-on-dark-muted: var(--pp-green-200);
   --bg-warm: var(--pp-cream);
   --text-primary: var(--pp-ink);
@@ -80,6 +84,7 @@
   --container-pad: clamp(20px, 4.5vw, 64px);
   --section-y: clamp(64px, 7vw, 112px);
   --gutter: 12px;
+  --wave-h: clamp(40px, 5vw, 76px);
   --header-h: 64px;
   --tap-min: 44px;
   --radius-sm: 10px;

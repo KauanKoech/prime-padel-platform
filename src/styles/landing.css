@@ -9,9 +9,101 @@
   min-width: 0;
 }
 
-.panel {
-  margin: 0 var(--gutter) var(--gutter);
-  border-radius: var(--radius-xl);
+/*
+ * Ritmo de cores: um ciclo fixo de três tons, A (verde quase preto) / B (verde da marca) / C (creme), na ordem
+ * das seções: topo A, aulas B, quadras C, professores A, eventos B, loja C, comunidade A, onde estamos B,
+ * CTA final C, rodapé A. Cada seção termina numa onda pintada com o tom da seguinte (<Wave />), então a troca
+ * de cor é uma curva animada, e o fundo animado da seção (canvas) passa por baixo da onda.
+ */
+.tone-a,
+.hero,
+.coaches,
+.community {
+  background: var(--tone-a);
+}
+
+.lessons,
+.events,
+.visit {
+  background: var(--tone-b);
+  color: var(--pp-cream);
+}
+
+.courts,
+.store,
+.final {
+  background: var(--tone-c);
+  color: var(--pp-ink);
+}
+
+.lessons,
+.courts,
+.coaches,
+.events,
+.store,
+.community,
+.visit,
+.final {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* a onda já separa as seções: embaixo basta metade do respiro, mais a altura dela */
+  padding: var(--section-y) 0 calc(var(--section-y) * 0.5 + var(--wave-h));
+}
+
+/* No tom B (verde da marca) o texto corrido vai em creme cheio: o verde-claro ficava apagado sobre o verde. */
+.lessons .section-lead,
+.events .events__text {
+  color: var(--pp-cream);
+}
+
+/* ---------- Emendas em onda ---------- */
+.wave {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: var(--wave-h);
+  pointer-events: none;
+}
+
+.wave__back {
+  opacity: 0.42;
+}
+
+.wave--to-a .wave__fill {
+  fill: var(--tone-a);
+}
+
+.wave--to-b .wave__fill {
+  fill: var(--tone-b);
+}
+
+.wave--to-c .wave__fill {
+  fill: var(--tone-c);
+}
+
+/* Linha fina na crista, um tom acima do preenchimento: a emenda tem brilho sem virar enfeite. */
+.wave__crest {
+  fill: none;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.7;
+}
+
+.wave--to-a .wave__crest {
+  stroke: var(--pp-green-600);
+}
+
+.wave--to-b .wave__crest {
+  stroke: var(--pp-green-400);
+}
+
+.wave--to-c .wave__crest {
+  stroke: var(--pp-white);
 }
 
 /* ---------- Cabeçalho ---------- */
@@ -153,7 +245,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 28px 0 40px;
+  padding: 28px 0 var(--wave-h);
 }
 
 /* A aurora sobe da base e some antes do título (máscara), para não disputar com o texto. */
@@ -298,8 +390,8 @@
     align-items: center;
     column-gap: clamp(32px, 4vw, 72px);
     row-gap: 40px;
-    min-height: calc(100svh - var(--header-h));
-    max-height: 900px;
+    /* topo + faixa de valores + onda cabem numa tela */
+    min-height: max(600px, calc(100svh - var(--header-h) - 200px));
     padding-top: clamp(32px, 4vw, 64px);
     padding-bottom: clamp(32px, 4vw, 56px);
   }
@@ -387,7 +479,7 @@
 
 /* ---------- Faixa de valores ---------- */
 .values {
-  padding: 28px 0 40px;
+  padding: 36px 0 28px;
 }
 
 .values__list {
@@ -458,14 +550,7 @@
 }
 
 /* ---------- Quadras (painel creme, cardápio de preços) ---------- */
-.courts {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding: var(--section-y) 0;
-  background: var(--pp-cream);
-  color: var(--pp-ink);
-}
+
 
 /* Pontos verdes no creme: fortes nas bordas, quase sumindo no meio, onde estão a lista e o painel. */
 .courts__bg {
@@ -708,16 +793,11 @@
 
 
 /* ---------- Aulas (escuro, foto do saque) ---------- */
-.lessons {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding: var(--section-y) 0;
-}
+
 
 /* Fita de linhas: some nas bordas de cima e de baixo e fica mais fraca atrás do texto (à direita). */
 .lessons__bg {
-  color: var(--pp-green-300);
+  color: var(--pp-green-200);
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
   mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
 }
@@ -782,8 +862,18 @@
 
 /* ---------- Professores (painel verde 900, cartões; carrossel no celular) ---------- */
 .coaches {
-  padding: calc(var(--section-y) - 24px) 0 calc(var(--section-y) - 32px);
-  background: var(--pp-green-900);
+  padding-top: calc(var(--section-y) - 24px);
+}
+
+/* Vento claro e esparso; some no alto (atrás do título) e nas bordas. */
+.coaches__bg {
+  color: var(--pp-green-400);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 85%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 85%, transparent);
+}
+
+.coaches__bg.is-ready {
+  opacity: 0.6;
 }
 
 .coaches__head {
@@ -974,9 +1064,14 @@
 }
 
 /* ---------- Prime Cup e eventos (painel verde 800) ---------- */
-.events {
-  padding: var(--section-y) 0;
-  background: var(--pp-green-800);
+.events__bg {
+  color: var(--pp-green-200);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+}
+
+.events__bg.is-ready {
+  opacity: 0.7;
 }
 
 .events__grid {
@@ -1107,10 +1202,14 @@
 }
 
 /* ---------- Loja (painel creme) ---------- */
-.store {
-  padding: var(--section-y) 0;
-  background: var(--pp-cream);
-  color: var(--pp-ink);
+.store__bg {
+  color: var(--pp-green-600);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+}
+
+.store__bg.is-ready {
+  opacity: 0.6;
 }
 
 .store__grid {
@@ -1168,8 +1267,10 @@
 }
 
 /* ---------- Comunidade (escuro, "Bora jogar hoje?") ---------- */
-.community {
-  padding: var(--section-y) 0;
+/* Aurora que desce do alto; some antes do texto da esquerda. */
+.community__bg {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 75%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 75%);
 }
 
 .community__grid {
@@ -1226,11 +1327,14 @@
 }
 
 /* ---------- Onde estamos (painel verde 700) ---------- */
-.visit {
-  padding: var(--section-y) 0;
-  background: var(--pp-green-700);
-  color: var(--pp-white);
-  overflow: hidden;
+.visit__bg {
+  color: var(--pp-green-200);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(0, 0, 0, 0.2) 30%, #000 100%);
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(0, 0, 0, 0.2) 30%, #000 100%);
+}
+
+.visit__bg.is-ready {
+  opacity: 0.35;
 }
 
 .visit__grid {
@@ -1465,15 +1569,10 @@
 /* ---------- Rodapé ---------- */
 
 /* ---------- CTA final (curvas de nível ao fundo, a foto nítida no tamanho natural) ---------- */
-.final {
-  position: relative;
-  isolation: isolate;
-  padding: var(--section-y) 0;
-  overflow: hidden;
-}
+
 
 .final__bg {
-  color: var(--pp-green-400);
+  color: var(--pp-green-500);
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
   mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
 }
@@ -1490,9 +1589,7 @@
   gap: 20px;
 }
 
-.final__copy .section-lead {
-  color: var(--pp-cream);
-}
+
 
 .final__photo {
   aspect-ratio: 620 / 334;

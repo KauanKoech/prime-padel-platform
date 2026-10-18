@@ -6,6 +6,8 @@ import { localDate, weekday } from '../lib/format';
 import { ButtonLink } from './Button';
 import { InstagramIcon, MessageCircle, Navigation } from './Icons';
 import { Reveal } from './Motion';
+import { Wave } from './Wave';
+import { DotField } from './backgrounds/DotField';
 
 const noop = () => () => {};
 
@@ -20,7 +22,9 @@ export function Visit() {
   const today = useSyncExternalStore(noop, () => weekday(localDate()), () => null);
 
   return (
-    <section className="visit panel on-brand" id="onde-estamos" aria-labelledby="visit-title">
+    <section className="visit on-brand" id="onde-estamos" aria-labelledby="visit-title">
+      {/* fundo: meio-tom de pontos claros e espaçados no verde (kokonutui Dot Field) */}
+      <DotField className="visit__bg" spacing={22} seed={29} />
       <div className="container visit__grid">
         <div className="visit__map" role="img" aria-label={v.mapLabel}>
           <svg className="visit__rings" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
@@ -109,6 +113,7 @@ export function Visit() {
           </div>
         </Reveal>
       </div>
+      <Wave to="c" />
     </section>
   );
 }

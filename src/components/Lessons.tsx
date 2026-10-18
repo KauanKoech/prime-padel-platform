@@ -5,6 +5,7 @@ import { ButtonLink } from './Button';
 import { ArrowRight, Check, MessageCircle } from './Icons';
 import { Reveal } from './Motion';
 import { SplitTitle } from './SplitTitle';
+import { Wave } from './Wave';
 
 /** Aulas: o saque em P&B e a copy dos posts "Nunca jogou padel?" e "Aqui você aprende do zero". */
 export function Lessons() {
@@ -44,6 +45,7 @@ export function Lessons() {
           </Reveal>
         </div>
       </div>
+      <Wave to="c" />
     </section>
   );
 }

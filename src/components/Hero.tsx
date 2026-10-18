@@ -6,6 +6,8 @@ import { money } from '../lib/format';
 import { Aurora } from './backgrounds/Aurora';
 import { ButtonLink } from './Button';
 import { ArrowRight, Clock } from './Icons';
+import { Values } from './Values';
+import { Wave } from './Wave';
 
 const delay = (i: number) => ({ '--i': i }) as CSSProperties;
 // Verde da marca subindo da base, com um toque do amarelo da bola na ponta direita.
@@ -82,6 +84,9 @@ export function Hero() {
           </div>
         </dl>
       </div>
+      {/* a faixa de valores faz parte do topo: mesma aurora atrás, sem corte entre as duas */}
+      <Values />
+      <Wave to="b" />
     </section>
   );
 }
