@@ -228,7 +228,9 @@
 
 .on-light .hl {
   color: var(--pp-ink);
-  background: var(--pp-ball);
+  /* o marca-texto começa abaixo do topo da linha: com o entrelinha justo dos títulos, a faixa cheia cobria as
+     descendentes da linha de cima (o g e o q de "quadra") */
+  background: linear-gradient(to bottom, transparent 0 24%, var(--pp-ball) 24% 100%);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
   padding: 0 0.14em;
