@@ -1267,10 +1267,10 @@
 }
 
 /* ---------- Comunidade (escuro, "Bora jogar hoje?") ---------- */
-/* Aurora que desce do alto; some antes do texto da esquerda. */
+/* Aurora que desce do alto: entra em fade logo abaixo da onda (sem corte na emenda) e some antes do texto. */
 .community__bg {
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 75%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 75%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 6%, #000 26%, #000 38%, transparent 80%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 6%, #000 26%, #000 38%, transparent 80%);
 }
 
 .community__grid {
