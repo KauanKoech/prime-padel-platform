@@ -1,30 +1,38 @@
 {
   "name": "prime-padel-platform",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "preview": "vite preview --host 127.0.0.1",
+    "images": "node scripts/images.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test:e2e": "playwright test --project=chromium-desktop --project=chromium-mobile",
-    "test:e2e:ui": "playwright test --project=chromium-desktop --project=chromium-mobile --ui",
-    "test:unit": "playwright test --project=domain",
-    "test:production": "npm run build && playwright test --config=playwright.production.config.ts"
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
-    "next": "16.4.1",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "lenis": "1.3.27",
+    "lucide-react": "1.59.0",
+    "motion": "14.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.64.1",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.4.1",
-    "typescript": "^5"
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "eslint": "10.13.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.13.0",
+    "sharp": "0.35.5",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vite": "8.3.4"
   }
 }

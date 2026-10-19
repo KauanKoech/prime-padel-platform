@@ -39,5 +39,13 @@ Thumbs.db
 .codex-log/
 .superpowers/
 
-# Isolated development workspaces
-.worktrees/
+# Vite pre-render e ferramentas locais de design
+dist-ssr/
+.taste-skill/
+
+# Impeccable: cache local do hook (o config.json é versionado)
+.impeccable/hook.cache.json
+
+# Referências visuais de terceiros: ficam só na máquina
+design/referencias/
+.impeccable/live/

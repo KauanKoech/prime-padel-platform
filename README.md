@@ -4,128 +4,111 @@ Plataforma digital da Prime Padel, em Lages, Santa Catarina.
 
 ## Estado atual
 
-O repositorio usa Next.js com React, TypeScript estrito, npm e CSS proprio. A especificacao e o plano foram aprovados em 15/10/2026. O catalogo centralizado, o calendario e o servico simulado estao implementados. O marco 2 entrega a landing publica responsiva, com conteudo confirmado, precos, navegacao acessivel e ativos locais.
+A primeira entrega está implementada com Vite + React + TypeScript estrito, CSS próprio e pré-renderização no build:
 
-Os marcos 3 e 4 implementam `/agendamento` e a entrada
-`/agendamento?quadra=...`: selecao de data, quadra, duracao e horario,
-nome ficticio, revisao e resultado simulado. A jornada inclui historico,
-recuperacao de erro, conflito e expiracao, sem envio ou reserva real.
-O marco 5 foi encerrado com verificacao simplificada em 17/10/2026, conforme
-alinhamento com o responsavel. O frontend esta pronto para avaliacao local
-e posterior integracao com o backend; as verificacoes manuais ampliadas
-permanecem registradas para a etapa integrada.
+1. Landing page pública responsiva, escura e com as fotos oficiais da arena: hero, faixa de valores, quadras e valores, aulas, professores, Prime Cup e eventos, West Padel Store, comunidade, localização e contato, CTA final.
+2. Jornada de agendamento com dados simulados: data → quadra → duração → horários → dados → revisão → solicitação, com estados de carregamento, vazio, erro, conflito e sucesso.
 
-A primeira entrega tera dois resultados:
-
-1. Landing page publica responsiva.
-2. Jornada de consulta e agendamento com dados simulados.
-
-Backend, autenticacao, painel administrativo, pagamentos, financeiro, loja virtual e gestao completa de torneios nao fazem parte desta entrega.
+Backend, autenticação, painel administrativo, pagamentos, financeiro, loja virtual e gestão completa de torneios não fazem parte desta entrega. O agendamento é uma demonstração: nenhuma reserva é registrada e nenhum dado sai do navegador.
 
 ## Comece por aqui
 
 1. Leia `AGENTS.md`.
 2. Leia `docs/PRODUCT.md`.
 3. Leia `docs/DECISIONS.md`.
-4. Leia `DESIGN.md` e o material em `design-system-export/`.
-5. Siga `docs/SESSION-START.md` para abrir uma sessao de planejamento ou implementacao.
-
-## Estrutura
-
-```text
-.
-|-- .agents/skills/             Skills especificas do repositorio
-|-- design-system-export/       Fonte de verdade visual e ativos de marca
-|-- docs/
-|   |-- ARCHITECTURE.md         Fronteiras tecnicas e contratos previstos
-|   |-- DECISIONS.md            Decisoes aceitas e pendentes
-|   |-- DEPENDENCY-NOTES.md     Estado conhecido das dependencias
-|   |-- PRODUCT.md              Escopo, conteudo e dados do produto
-|   `-- SESSION-START.md        Procedimento para novas sessoes
-|-- AGENTS.md                   Regras permanentes para agentes
-|-- DESIGN.md                   Guia de integracao do design system
-|-- src/app/                    Aplicacao React com Next.js App Router
-|-- tests/e2e/                  Fluxos de navegador com Playwright
-`-- README.md                   Ponto de entrada do repositorio
-```
+4. Leia `DESIGN.md`, o material em `design-system-export/` e o contrato visual em `design/direcao-visual.md`.
+5. Siga `docs/SESSION-START.md` para abrir uma sessão de planejamento ou implementação.
 
 ## Comandos
 
 ```bash
 npm install
-npm run dev
-npm run lint
-npm run typecheck
-npm run test:unit
-npm run test:e2e
-npm run build
-npm run test:production
+npm run dev          # servidor de desenvolvimento (http://127.0.0.1:5173)
+npm run lint         # ESLint
+npm run typecheck    # tsc --noEmit
+npm run build        # typecheck + build + pré-renderização em dist/
+npm run preview      # serve o dist/ (http://127.0.0.1:4173)
+npm run images       # recorta as fotos de design/originais/ e gera WebP em public/img/fotos/
+npm run test:e2e     # Playwright (desktop e celular) contra o build pré-renderizado
+npm run test:e2e:ui  # Playwright em modo interativo
 ```
 
-Use `npm run test:e2e:ui` quando precisar investigar um fluxo no navegador de forma interativa.
+### Fotos
 
-`npm run test:unit` executa somente o projeto Playwright `domain`, sem navegador
-ou servidor. `npm run test:e2e` executa os projetos `chromium-desktop` e
-`chromium-mobile`; inicia um servidor proprio em `http://127.0.0.1:3100` e
-nao reutiliza um servidor existente. Deixe a porta 3100 livre para os testes.
-O servidor de testes recebe `NEXT_PUBLIC_ENABLE_TEST_HARNESS=1`; somente o ponto
-de composicao `create-booking-service.ts` le `window.__PRIME_PADEL_TEST__` com
-essa opcao e fora de producao. Nao habilite essa variavel no build normal.
+As fotos da landing vêm dos posts oficiais da Prime em `design/originais/` (PNG de ~650 px, com textos e balões embutidos). `scripts/images.mjs` recorta só a área limpa de cada post e gera o WebP no tamanho natural e uma versão de 400 px para o `srcset`, com o `sharp` (devDependency). Para trocar uma foto: substitua o original, ajuste o retângulo de recorte no script e rode `npm run images`. Os WebP gerados ficam versionados em `public/img/fotos/`, então o build e o Docker não precisam do `sharp`.
 
-A verificacao completa inclui lint, typecheck, test:unit, test:e2e e build.
-`npm run test:production` executa o build e depois verifica a carga da landing
-e do agendamento na versao de producao, com servidor proprio na porta 3200.
-Deixe essa porta livre.
-O teste percorre os links visiveis e detecta erros de console, respostas HTTP
-com falha e chamadas externas, inclusive prefetch que nao ocorre no servidor dev.
-Os E2E verificam conteudo, menu/foco, responsividade, recuperacao de imagens e
-selecao de horarios, formulario, revisao, resultado e historico, incluindo
-vazio, erro, timeout, conflito, filtros e expiracao.
-O smoke de producao percorre a jornada e verifica descarte da visita e
-isolamento dos cenarios.
+Na primeira vez, instale o navegador do Playwright: `npx playwright install chromium`. Os testes fazem o build e sobem o `vite preview` na porta 4195 (mude com `E2E_PORT`).
 
-Consulte [as evidencias do marco 2](docs/verification/landing-marco-2.md) para
-dimensoes verificadas, contrastes medidos e limitacoes.
-Consulte tambem [as evidencias do marco 3](docs/verification/agendamento-marco-3.md).
-O fluxo completo esta registrado [nas evidencias do marco 4](docs/verification/agendamento-marco-4.md).
-O [fechamento do frontend](docs/verification/landing-agendamento.md) consolida
-os resultados finais, a cobertura e as limitacoes.
+### Docker
 
-## Servico simulado
+```bash
+docker compose up -d --build                # http://localhost:8080
+PORTA=3000 docker compose up -d --build     # outra porta
+```
 
-O contrato esta em `src/services/booking-service.ts`; a implementacao local em
-`src/services/mock/booking-service.ts`. Crie uma instancia por visita ao fluxo.
-As respostas usam unioes discriminadas para disponibilidade, pendencia de
-funcionamento, erro, conflito, expiracao e sucesso simulado.
+O `Dockerfile` faz o build em Node e serve só o HTML estático pelo nginx (`nginx.conf`).
 
-O adaptador consulta somente as seis ofertas de `src/content/courts.ts`.
-Precos sao totais por quadra/duracao. O calendario usa `America/Sao_Paulo` e
-uma janela demonstrativa de 14 dias; quarta-feira nao gera horarios.
-Consultas e envios expiram em 8 segundos. Abortamento rejeita com
-`AbortError`; o consumidor deve ignorar cancelamentos intencionais.
-Nome ficticio e tentativas ficam somente na memoria da instancia.
+Consulte `docs/DEPENDENCY-NOTES.md` antes de aplicar correções automáticas do `npm audit`.
 
-Os cenarios e atrasos podem ser injetados pelo construtor para testes:
-`normal`, `empty`, `all-unavailable`, `query-error-once`,
-`submit-error-once`, `conflict-once`, `query-timeout` e `submit-timeout`.
-Timeout continua sem resposta naquela instancia; erros com sufixo
-`-once` permitem a recuperacao na tentativa seguinte.
-Nao ha envio a arena, reserva real ou persistencia.
+## Stack
 
-Consulte `docs/DEPENDENCY-NOTES.md` antes de aplicar correcoes automaticas do `npm audit`.
+- Vite + React 19 + TypeScript em modo estrito.
+- CSS próprio em `src/styles/`, com os tokens de `design-system-export/tokens/` (sem Tailwind).
+- Motion (`motion/react`) para entradas abaixo da dobra: sempre `m.*` dentro de `LazyMotion` (strict) e `MotionConfig reducedMotion="user"`.
+- Lenis (`lenis/react`) para a rolagem suave, desligado com movimento reduzido.
+- Ícones Lucide (`lucide-react`).
+- Componentes adaptados de React Bits (SplitText, CountUp, TiltedCard, Aurora) e kokonutui (Smooth Tab, Slide Text Button, Dot Field, Background Paths, Topo Background, Flow Field), em TypeScript e CSS próprio, sem dependências novas, com crédito MIT no topo de cada arquivo. Os fundos animados ficam em `src/components/backgrounds/` (WebGL2 e canvas 2D puros); as emendas em onda entre seções, em `src/components/Wave.tsx` e `src/hooks/useWaves.ts`.
+- `sharp` (só desenvolvimento) para recortar e converter as fotos (`scripts/images.mjs`).
+- Pré-renderização sem biblioteca extra: `src/entry-server.tsx` + `scripts/prerender.mjs` geram o HTML de `dist/index.html`; `src/entry-client.tsx` hidrata.
+- ESLint (typescript-eslint + react-hooks) e Playwright.
 
-## Base tecnica
+## Estrutura
 
-- Next.js com App Router.
-- React.
-- TypeScript em modo estrito.
-- ESLint.
-- CSS proprio com tokens adaptados do design system e fontes locais.
-- Playwright com projetos de desktop e celular.
+```text
+.
+|-- .agents/skills/             Skills específicas do repositório
+|-- design/                     Briefing, contrato visual e originais/ (posts oficiais; referencias/ fica fora do Git)
+|-- design-system-export/       Fonte de verdade visual e ativos de marca (não editar)
+|-- docs/                       Produto, decisões, arquitetura, dependências, sessões
+|-- public/
+|   |-- fonts/                  Fontes self-hosted do design system
+|   `-- img/                    Logos, artes de eventos, imagem de compartilhamento e fotos/ (recortes WebP)
+|-- scripts/prerender.mjs       Injeta o HTML pré-renderizado em dist/index.html
+|-- scripts/images.mjs          Recortes das fotos oficiais (npm run images)
+|-- src/
+|   |-- content/arena.ts        Dados institucionais: endereço, horários, quadras e preços, loja
+|   |-- content/site.ts         Todos os textos da landing e do agendamento
+|   |-- domain/                 Contratos (tipos) e validação do agendamento
+|   |-- services/               Serviço de agendamento (mock substituível por API) e cenários de demonstração
+|   |-- features/booking/       Janela de agendamento e contexto para abri-la
+|   |-- components/             Seções da landing, botões, ícones, quadra desenhada, animação e componentes adaptados
+|   |-- lib/format.ts           Datas no fuso da arena, moeda e durações
+|   |-- styles/                 tokens, base, componentes, landing e agendamento
+|   |-- App.tsx                 Composição, LazyMotion, MotionConfig e Lenis
+|   |-- entry-client.tsx        Hidratação (ou montagem no dev)
+|   `-- entry-server.tsx        Renderização para a pré-renderização
+|-- tests/e2e/                  Fluxos de navegador com Playwright
+|-- index.html                  <head>: SEO, Open Graph, JSON-LD, fontes
+|-- Dockerfile, nginx.conf, docker-compose.yml
+|-- AGENTS.md                   Regras permanentes para agentes
+|-- DESIGN.md                   Guia de integração do design system
+`-- README.md                   Ponto de entrada do repositório
+```
 
-## Dados que nao podem ser publicados como definitivos
+## Onde mexer
 
-- WhatsApp informado: `+55 49 9910-7642`.
-- Abertura as `03:00` na quarta-feira.
-- Politicas de cancelamento, reagendamento e pagamento.
-- Eventos, datas, inscricoes, depoimentos e informacoes institucionais nao confirmados.
+- **Textos, professores, eventos e fotos usadas:** `src/content/site.ts`.
+- **Recorte das fotos:** `scripts/images.mjs` (`npm run images`).
+- **Endereço, horários, quadras, preços, WhatsApp:** `src/content/arena.ts`.
+- **Trocar o mock por uma API:** implemente `BookingService` (`src/domain/booking.ts`) e troque a composição em `src/services/booking.ts`.
+- **Cenários da demonstração** (dia vazio, erro, conflito): `src/services/booking-demo.ts`.
+- **SEO e JSON-LD:** `index.html`.
+
+## Dados que não podem ser publicados como definitivos
+
+- WhatsApp informado: `+55 49 9910-7642` (aparece com o selo "a confirmar"; `arena.contact.whatsapp.confirmed`).
+- Abertura às `03:00` na quarta-feira (selo "a confirmar"; fora do JSON-LD até a confirmação).
+- Domínio de publicação: `index.html` usa `https://example.com/` como marcador em `canonical`, `og:url`, `og:image` e JSON-LD.
+- Políticas de cancelamento, reagendamento e pagamento.
+- Eventos, datas, inscrições, depoimentos e informações institucionais não confirmados.
+- Direitos de uso das fotos dos posts e confirmação de que o retrato de `design/originais/4.png` é do professor Dorotóvio.

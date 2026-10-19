@@ -1,132 +1,141 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from '@playwright/test';
 
-test("conteudo factual e entradas do fluxo", async ({ page }) => {
-  await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Padel em Lages, na Prime Padel.");
-  await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
-  await expect(page.locator("#quadras article")).toHaveCount(5);
-  const antidoto = page.locator("#quadras article").filter({ hasText: "ANTIDOTO" });
-  await expect(antidoto).toContainText("1h — R$ 140");
-  await expect(antidoto).toContainText("1h30 — R$ 180");
-  await expect(antidoto.getByRole("link")).toHaveAttribute("href", "/agendamento?quadra=antidoto");
-  for (const [name, id, price] of [
-    ["EQI / DGI INVESTIMENTOS", "eqi-dgi", "190"],
-    ["ADEMICOM", "ademicom", "180"],
-    ["O BOTICARIO", "o-boticario", "180"],
-    ["RRTUR", "rrtur", "180"],
-  ]) {
-    const card = page.locator("#quadras article").filter({ hasText: name });
-    await expect(card.getByRole("heading")).toHaveText(name);
-    await expect(card).toContainText(`1h30 — R$ ${price}`);
-    await expect(card.getByRole("link")).toHaveAttribute("href", `/agendamento?quadra=${id}`);
-  }
-  expect(await page.locator("main > section").evaluateAll(sections => sections.map(section => section.id)))
-    .toEqual(["inicio", "quadras", "como-funciona", "eventos", "loja", "localizacao", "experimente"]);
-  await expect(page.getByText("Quarta-feira: horário a confirmar")).toBeVisible();
-  await expect(page.getByText("WhatsApp: contato a confirmar")).toBeVisible();
-  await expect(page.locator('a[href*="wa.me"], a[href^="tel:"], a[href="#"]')).toHaveCount(0);
-  await expect(page.locator("#localizacao")).toContainText(
-    "Avenida Belisario Ramos, 4241, Sao Cristovao, Lages - SC, CEP 88501-065, Brasil",
-  );
-  await expect(page.locator("#localizacao")).toContainText("Domingo: 09:00–20:00");
-  await expect(page.locator("#eventos")).toContainText("Datas e inscrições ainda não confirmadas nesta página.");
-  await expect(page.locator("#eventos").getByRole("heading", { level: 3 }))
-    .toHaveText(["Open Prime Padel", "Prime Cup"]);
-  await expect(page.locator("#eventos a")).toHaveAttribute("href", "https://www.instagram.com/primepadellages/");
-  await expect(page.locator("#loja a")).toHaveAttribute("href", "https://www.instagram.com/westpadelstore/");
-  await expect(page.locator("#inicio")).toContainText("Agendamento demonstrativo. Nenhuma reserva real será feita.");
-  await expect(page.getByRole("link", { name: "Ver horários", exact: true }).first())
-    .toHaveAttribute("href", "/agendamento");
-  await expect(page.getByRole("link", { name: /login|pagar|política|inscrever/i })).toHaveCount(0);
-});
-
-test("menu preserva foco e libera pagina", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
-  const trigger = page.getByRole("button", { name: "Menu", exact: true });
-  const dialog = page.getByRole("dialog", { name: "Navegação principal" });
-  await trigger.click();
-  await expect(trigger).toHaveAttribute("aria-expanded", "true");
-  await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole("button", { name: "Fechar menu" })).toBeFocused();
-  await page.keyboard.press("Shift+Tab");
-  await expect(dialog.getByRole("link", { name: "Ver horários", exact: true })).toBeFocused();
-  await page.keyboard.press("Tab");
-  await expect(dialog.getByRole("button", { name: "Fechar menu" })).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(dialog).not.toBeVisible();
-  await expect(trigger).toBeFocused();
-  await trigger.click();
-  await dialog.getByRole("link", { name: "Quadras", exact: true }).click();
-  await expect(page.locator("#quadras h2")).toBeFocused();
-  await expect(dialog).not.toBeVisible();
-  expect(await page.evaluate(() => getComputedStyle(document.body).overflow)).not.toBe("hidden");
-  await trigger.click();
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await expect(dialog).not.toBeVisible();
-  await expect(trigger).not.toBeVisible();
-  await expect(page.getByRole("navigation", { name: "Principal" }).getByRole("link", { name: "Quadras", exact: true }))
-    .toBeFocused();
-  expect(await page.evaluate(() => getComputedStyle(document.body).overflow)).not.toBe("hidden");
-});
-
-test("placeholder tolera imagem ausente", async ({ page }) => {
-  await page.route("**/brand/**", route => route.abort());
-  await page.goto("/");
-  await expect(page.getByText("Imagem ilustrativa da marca")).toBeVisible();
-  await expect(page.getByRole("figure").getByText("Prime Padel", { exact: true })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Prime Padel — início" }).first()).toBeVisible();
-  await page.getByRole("link", { name: "Conhecer as quadras" }).click();
-  await expect(page.locator("#quadras h2")).toBeFocused();
-  await expect(page.locator("#quadras article").first().getByRole("link"))
-    .toHaveAttribute("href", "/agendamento?quadra=eqi-dgi");
-});
-
-test("carrega assets locais sem erros e respeita movimento reduzido", async ({ page }) => {
-  const external: string[] = [];
+test('landing pré-renderizada: título, seções e dados da arena', async ({ page }) => {
   const errors: string[] = [];
-  page.on("request", request => {
-    if (!new URL(request.url()).hostname.match(/^(127\.0\.0\.1|localhost)$/)) external.push(request.url());
+  page.on('pageerror', (e) => errors.push(e.message));
+  page.on('console', (m) => {
+    if (m.type() === 'error' || m.type() === 'warning') errors.push(m.text());
   });
-  page.on("pageerror", error => errors.push(error.message));
-  page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
-  await page.evaluate(() => document.fonts.ready);
-  await expect(page.locator("#inicio")).toBeVisible();
-  const fontLoaded = await page.evaluate(() =>
-    Array.from(document.fonts).some(font => font.family.includes("Instrument Sans") && font.status === "loaded"));
-  expect(fontLoaded).toBe(true);
-  expect(external).toEqual([]);
-  expect(errors).toEqual([]);
-  expect(await page.getByRole("link", { name: "Conhecer as quadras" })
-    .evaluate(element => getComputedStyle(element).transitionDuration)).toBe("0s");
-});
 
-test("navegacao compacta quando texto ampliado nao cabe", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/");
-  await expect(page.getByRole("navigation", { name: "Principal" })).toBeVisible();
-  await page.evaluate(() => { document.documentElement.style.fontSize = "44px"; });
-  await expect(page.getByRole("button", { name: "Menu", exact: true })).toBeVisible();
-  await expect(page.getByRole("navigation", { name: "Principal" })).not.toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-});
+  await page.goto('/');
+  await expect(page).toHaveTitle('Prime Padel | Quadras de padel em Lages, SC');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Seu próximo jogo começa na Prime.');
+  await expect(page.locator('h1')).toHaveCount(1);
 
-test("reflow da landing e alvos acessiveis", async ({ page }) => {
-  for (const width of [320, 390, 768, 960, 1440]) {
-    await page.setViewportSize({ width, height: 900 });
-    await page.goto("/");
-    await page.evaluate(() => document.fonts.ready);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth), `${width}px`).toBeLessThanOrEqual(width);
-    await expect(page.getByRole("heading", { name: "EQI / DGI INVESTIMENTOS", exact: true })).toBeVisible();
-    const undersized = await page.locator("main a, header a, header button, footer a").evaluateAll(elements =>
-      elements.filter(element => {
-        const box = element.getBoundingClientRect();
-        return getComputedStyle(element).visibility !== "hidden" && box.width > 0 && box.height > 0 &&
-          (box.width < 44 || box.height < 44);
-      }).map(element => element.textContent),
-    );
-    expect(undersized, `touch targets at ${width}px`).toEqual([]);
+  for (const name of [
+    'Escolha sua quadra.',
+    'Nunca jogou padel?',
+    'Conheça nossos professores.',
+    'Encontros que viram história.',
+    'Você já conhece a West Padel?',
+    'Bora jogar hoje?',
+    'Sua quadra está esperando.',
+  ]) {
+    await expect(page.getByRole('heading', { level: 2, name })).toBeAttached();
   }
+  await expect(page.getByText('Avenida Belisário Ramos, 4241').first()).toBeAttached();
+
+  // dados pendentes aparecem marcados
+  const visit = page.locator('#onde-estamos');
+  await expect(visit.locator('tr', { hasText: 'Quarta' })).toContainText('a confirmar');
+  await expect(visit.locator('li', { hasText: '+55 49 9910-7642' })).toContainText('a confirmar');
+
+  // links reais
+  await expect(page.locator('a[href^="https://wa.me/554999107642?text="]').first()).toBeAttached();
+  await expect(page.locator('a[href="https://www.instagram.com/primepadellages/"]').first()).toHaveAttribute('rel', 'noopener');
+
+  // imagens carregadas (as de baixo da dobra são lazy: desce a página inteira antes de conferir)
+  for (const id of ['#aulas', '#professores', '#eventos', '#loja', '#comunidade', '#onde-estamos', '.final']) {
+    await page.locator(id).first().scrollIntoViewIfNeeded();
+  }
+  await expect.poll(() => page.locator('img').evaluateAll((imgs) => imgs.filter((i) => (i as HTMLImageElement).complete && (i as HTMLImageElement).naturalWidth === 0).length)).toBe(0);
+
+  expect(errors).toEqual([]);
+});
+
+test('quadras: escolher quadra e duração leva aos horários já preenchidos', async ({ page }) => {
+  await page.goto('/');
+  const courts = page.locator('#quadras');
+  await courts.getByRole('button', { name: /ANTÍDOTO/ }).click();
+  await expect(courts.getByRole('button', { name: /ANTÍDOTO/ })).toHaveAttribute('aria-pressed', 'true');
+  await expect(courts.locator('.courts__detail-name')).toHaveText('ANTÍDOTO');
+  await courts.getByRole('radio', { name: /^1h R\$ 140$/ }).check();
+  await courts.getByRole('link', { name: 'Ver horários desta quadra' }).click();
+
+  const dialog = page.getByRole('dialog', { name: 'Agendar quadra' });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole('radio', { name: /ANTÍDOTO/ })).toBeChecked();
+  await expect(dialog.getByRole('radio', { name: /^1h R\$ 140$/ })).toBeChecked();
+});
+
+test('eventos: Prime Cup primeiro, abas com mouse e teclado trocam a arte e o texto', async ({ page }) => {
+  await page.goto('/');
+  const events = page.locator('#eventos');
+  await expect(events.getByRole('tab', { name: 'Prime Cup' })).toHaveAttribute('aria-selected', 'true');
+  const panel = events.getByRole('tabpanel');
+  await expect(panel).toContainText('01 a 04 de outubro de 2026');
+  for (const cat of ['Masculina', 'Feminina', 'Mista', 'Infantil']) await expect(panel).toContainText(cat);
+  await expect(events.locator('.events__poster img')).toHaveAttribute('src', '/img/fotos/prime-cup-primavera-2026.webp');
+
+  await events.getByRole('tab', { name: 'Open Prime Padel' }).click();
+  await expect(panel).toContainText('categoria open masculina');
+  await expect(events.locator('.events__poster img')).toHaveAttribute('src', '/img/open-prime-padel.webp');
+  await page.keyboard.press('ArrowRight');
+  await expect(events.getByRole('tab', { name: 'Day Use' })).toBeFocused();
+  await expect(panel).toContainText('14h às 23h');
+});
+
+test('professores: três cartões com fatos reais e WhatsApp com o nome do professor', async ({ page, request, isMobile }) => {
+  // os números já vêm no HTML pré-renderizado (o contador só anima no navegador)
+  const html = await (await request.get('/')).text();
+  for (const n of ['Dorotóvio R. Couto', 'Gustavo Silveira', 'Eduardo Pereira', 'Ex-atleta profissional de squash']) expect(html).toContain(n);
+
+  await page.goto('/');
+  const coaches = page.locator('#professores');
+  await expect(coaches.locator('.coach')).toHaveCount(3);
+  await expect(coaches.getByRole('heading', { level: 3 })).toHaveText(['Dorotóvio R. Couto', 'Gustavo Silveira', 'Eduardo Pereira']);
+  const eduardo = coaches.locator('.coach', { hasText: 'Eduardo Pereira' });
+  await eduardo.scrollIntoViewIfNeeded();
+  await expect(eduardo.locator('.coach__num')).toContainText('31');
+  await expect(eduardo.getByRole('link', { name: 'Aula com Eduardo' })).toHaveAttribute(
+    'href',
+    `https://wa.me/554999107642?text=${encodeURIComponent('Olá! Vi o site da Prime Padel e quero agendar uma aula com o professor Eduardo Pereira.')}`,
+  );
+
+  // celular: carrossel horizontal com encaixe; desktop: três colunas
+  const track = coaches.locator('.coaches__track');
+  const scrolls = await track.evaluate((el) => el.scrollWidth > el.clientWidth + 1);
+  expect(scrolls).toBe(Boolean(isMobile));
+});
+
+test('aulas: WhatsApp com mensagem pronta e atalho para os professores', async ({ page }) => {
+  await page.goto('/');
+  // espera a hidratação: a rolagem até a âncora é do Lenis
+  await expect(page.locator('html')).toHaveClass(/lenis/);
+  const lessons = page.locator('#aulas');
+  await expect(lessons).toContainText('Aqui você aprende do zero.');
+  await expect(lessons.getByRole('link', { name: 'Quero fazer uma aula' })).toHaveAttribute('href', /^https:\/\/wa\.me\/554999107642\?text=/);
+  const link = lessons.getByRole('link', { name: 'Conhecer os professores' });
+  // deixa a rolagem suave assentar antes do clique (o Playwright rola até o link no mesmo quadro do clique)
+  await link.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(600);
+  await link.click();
+  await expect(page.locator('#professores')).toBeInViewport();
+});
+
+test('sem rolagem lateral em larguras de celular a desktop', async ({ page }) => {
+  await page.goto('/');
+  for (const width of [320, 390, 768, 1024, 1440, 1920]) {
+    await page.setViewportSize({ width, height: 900 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), `largura ${width}`).toBeLessThanOrEqual(0);
+  }
+});
+
+test('movimento reduzido: conteúdo visível e sem rolagem suave', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  expect(await page.evaluate(() => document.documentElement.classList.contains('lenis'))).toBe(false);
+  const hidden = await page.locator('[data-reveal]').evaluateAll((els) => els.filter((e) => getComputedStyle(e).opacity !== '1').length);
+  expect(hidden).toBe(0);
+});
+
+test('menu do celular abre, navega e fecha', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'menu só existe no celular');
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Abrir menu' }).click();
+  const menu = page.getByRole('dialog', { name: 'Navegação principal' });
+  await expect(menu).toBeVisible();
+  await menu.getByRole('link', { name: 'Prime Cup' }).click();
+  await expect(menu).toBeHidden();
+  await expect(page.locator('#eventos')).toBeInViewport();
 });

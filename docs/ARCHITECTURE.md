@@ -34,6 +34,17 @@ A interface nao deve importar diretamente arquivos de dados simulados. Ela deve 
 
 Os nomes finais dependem da convencao escolhida no projeto. Nao implemente tipos sem uso na primeira entrega.
 
+## Implementacao da primeira fase
+
+| Camada | Onde | Observacao |
+|---|---|---|
+| Conteudo | `src/content/arena.ts`, `src/content/site.ts` | Dados da arena (perfil, `OpeningHours`, `Court` com `CourtOffer` por duracao) e textos |
+| Dominio | `src/domain/booking.ts`, `src/domain/validation.ts` | `Court`, `CourtOffer`, `OpeningHours`, `AvailabilityQuery`, `AvailabilitySlot`, `BookingRequest`, `BookingConfirmation`, `BookingService`, `BookingError` |
+| Servicos | `src/services/booking.ts` (composicao), `src/services/mock-booking.ts`, `src/services/booking-demo.ts` | Mock com latencia, relogio e cenarios injetaveis (vazio, erro, conflito); trocar por um adaptador HTTP que implemente `BookingService` |
+| Interface | `src/components/`, `src/features/booking/` | A janela de agendamento so consome `BookingService` e nunca importa o mock diretamente |
+
+`ArenaProfile` ficou como o objeto `arena` em `src/content/arena.ts` e `BookingDraft` como estado local da janela de agendamento; viram tipos proprios quando a API existir.
+
 ## Responsabilidades futuras do backend
 
 - Calcular disponibilidade real.

@@ -1,0 +1,15 @@
+node_modules
+dist
+dist-ssr
+design
+design-system-export
+docs
+tests
+test-results
+playwright-report
+.agents
+.taste-skill
+.git
+Dockerfile
+.dockerignore
+*.md
