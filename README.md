@@ -108,7 +108,7 @@ Consulte `docs/DEPENDENCY-NOTES.md` antes de aplicar correções automáticas do
 
 - WhatsApp informado: `+55 49 9910-7642` (aparece com o selo "a confirmar"; `arena.contact.whatsapp.confirmed`).
 - Abertura às `03:00` na quarta-feira (selo "a confirmar"; fora do JSON-LD até a confirmação).
-- Domínio de publicação: `index.html` usa `https://example.com/` como marcador em `canonical`, `og:url`, `og:image` e JSON-LD.
+- Domínio de publicação: `https://primepadel.jksoftware.com.br/` em `canonical`, Open Graph e JSON-LD.
 - Políticas de cancelamento, reagendamento e pagamento.
 - Eventos, datas, inscrições, depoimentos e informações institucionais não confirmados.
 - Direitos de uso das fotos dos posts e confirmação de que o retrato de `design/originais/4.png` é do professor Dorotóvio.
