@@ -121,15 +121,64 @@
   background: var(--pp-neutral-50);
 }
 
+/* Pílula de vidro: desfoca o fundo animado da seção, com a linha branca fina das artes da Prime. */
 .btn--outlineOnBrand {
-  background: transparent;
-  border-color: rgba(247, 245, 239, 0.42);
+  position: relative;
+  z-index: 0;
+  background: rgba(247, 245, 239, 0.07);
+  border-color: rgba(247, 245, 239, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
   color: var(--pp-cream);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
 }
 
 .btn--outlineOnBrand:hover {
   border-color: var(--pp-cream);
+  background: rgba(247, 245, 239, 0.14);
+}
+
+/* Contorno simples, sem vidro (o "Quadras e valores" do topo) */
+.btn--outlineOnBrand.btn--clear {
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.btn--outlineOnBrand.btn--clear:hover {
   background: rgba(247, 245, 239, 0.08);
+}
+
+/* Com vidro líquido o desfoque fica na camada de trás (.btn__glass), que no Chromium/desktop também refrata. */
+.btn--liquid {
+  position: relative;
+  z-index: 0;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.btn--liquid .btn__glass {
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+}
+
+@media (min-width: 960px) {
+  .liquid-ok .btn--liquid .btn__glass.liquid-on {
+    backdrop-filter: var(--liquid) blur(4px) saturate(1.6) brightness(1.05);
+  }
+}
+
+/* Entradas ao rolar: o bloco com botão de vidro só sobe, sem fade (o fade esconderia o desfoque até o fim). */
+[data-reveal]:has(.btn--outlineOnBrand) {
+  opacity: 1 !important;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .btn--outlineOnBrand,
+  .btn--liquid .btn__glass {
+    background: var(--pp-green-800);
+  }
 }
 
 .btn--tint {

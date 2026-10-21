@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { arena, whatsapp } from '../content/arena';
 import { site } from '../content/site';
 import { InstagramIcon, MessageCircle } from './Icons';
+import { LiquidGlassLayer } from './LiquidGlassLayer';
 import { Logo } from './Logo';
 
 export function Footer() {
@@ -108,6 +109,7 @@ export function WhatsAppFloat() {
       tabIndex={hidden ? -1 : undefined}
       aria-hidden={hidden || undefined}
     >
+      <LiquidGlassLayer className="wa-float__glass" borderRadius={28} borderWidth={0.6} blur={6} distortionScale={-110} />
       <MessageCircle size={26} strokeWidth={1.75} aria-hidden="true" />
     </a>
   );
