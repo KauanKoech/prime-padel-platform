@@ -4,6 +4,7 @@ import { site } from '../content/site';
 import { useBookingTrigger } from '../features/booking/BookingContext';
 import { ButtonLink } from './Button';
 import { Menu, X } from './Icons';
+import { LiquidGlassLayer } from './LiquidGlassLayer';
 import { Logo } from './Logo';
 
 export function Header() {
@@ -53,29 +54,32 @@ export function Header() {
 
   return (
     <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
-      <div className="container site-header__in">
-        <a href="#topo" className="site-header__logo" aria-label={site.header.home}>
-          <Logo tone="white" height={40} eager />
-        </a>
-        <nav className="site-nav" aria-label={site.header.navLabel}>
-          <ul>
-            {site.nav.map((l) => (
-              <li key={l.href}>
-                <a href={l.href}>{l.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <div className="site-header__actions">
-          <ButtonLink variant="ball" size="sm" className="only-desktop" {...trigger()}>
-            {site.header.book}
-          </ButtonLink>
-          <ButtonLink variant="ball" size="sm" className="only-mobile" {...trigger()}>
-            {site.header.bookShort}
-          </ButtonLink>
-          <button type="button" className="icon-btn icon-btn--on-brand only-mobile" aria-label={site.header.menu} aria-haspopup="dialog" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
-            <Menu size={22} strokeWidth={1.75} aria-hidden="true" />
-          </button>
+      <div className="container">
+        <div className="site-header__in">
+          <LiquidGlassLayer className="site-header__glass" borderRadius={36} borderWidth={0.5} blur={9} distortionScale={-120} />
+          <a href="#topo" className="site-header__logo" aria-label={site.header.home}>
+            <Logo tone="white" height={40} eager />
+          </a>
+          <nav className="site-nav" aria-label={site.header.navLabel}>
+            <ul>
+              {site.nav.map((l) => (
+                <li key={l.href}>
+                  <a href={l.href}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="site-header__actions">
+            <ButtonLink variant="ball" size="sm" className="only-desktop" {...trigger()}>
+              {site.header.book}
+            </ButtonLink>
+            <ButtonLink variant="ball" size="sm" className="only-mobile" {...trigger()}>
+              {site.header.bookShort}
+            </ButtonLink>
+            <button type="button" className="icon-btn icon-btn--on-brand only-mobile" aria-label={site.header.menu} aria-haspopup="dialog" aria-expanded={menuOpen} onClick={() => setMenuOpen(true)}>
+              <Menu size={22} strokeWidth={1.75} aria-hidden="true" />
+            </button>
+          </div>
         </div>
       </div>
 

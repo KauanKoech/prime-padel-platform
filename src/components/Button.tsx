@@ -1,4 +1,5 @@
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+import { LiquidGlassLayer } from './LiquidGlassLayer';
 
 /**
  * Botão da Prime Padel (pílula, como em design-system-export/components/actions/Button).
@@ -10,12 +11,15 @@ import type { ComponentPropsWithoutRef, ReactNode } from 'react';
  * O efeito é adaptado do kokonutui — Slide Text Button (https://kokonutui.com, @kokonut-labs, licença MIT).
  * Mudanças: sem Next.js nem Tailwind (CSS em `components.css`, `.btn__label`/`.btn__text`), a segunda cópia
  * é `aria-hidden` (o nome acessível continua o rótulo) e o efeito só existe com mouse e sem movimento reduzido.
+ *
+ * `outlineOnBrand` é uma pílula de vidro (desfoque + a linha branca fina dos posts). `liquid` põe por trás uma
+ * camada de vidro líquido (refração nas bordas, só Chromium e só no desktop; ver LiquidGlass).
  */
 type Variant = 'primary' | 'ball' | 'onBrand' | 'outline' | 'outlineOnBrand' | 'tint' | 'ghost';
-type Common = { variant?: Variant; size?: 'sm' | 'md' | 'lg'; block?: boolean; iconLeft?: ReactNode; iconRight?: ReactNode; hoverText?: string };
+type Common = { variant?: Variant; size?: 'sm' | 'md' | 'lg'; block?: boolean; iconLeft?: ReactNode; iconRight?: ReactNode; hoverText?: string; liquid?: boolean };
 
-const classes = ({ variant = 'primary', size = 'md', block }: Common, slide: boolean, extra?: string) =>
-  ['btn', `btn--${variant}`, `btn--${size}`, block && 'btn--block', slide && 'btn--slide', extra].filter(Boolean).join(' ');
+const classes = ({ variant = 'primary', size = 'md', block, liquid }: Common, slide: boolean, extra?: string) =>
+  ['btn', `btn--${variant}`, `btn--${size}`, block && 'btn--block', slide && 'btn--slide', liquid && 'btn--liquid', extra].filter(Boolean).join(' ');
 
 function Label({ children, hoverText }: { children: ReactNode; hoverText?: string }) {
   if (!hoverText) return <span>{children}</span>;
@@ -29,9 +33,12 @@ function Label({ children, hoverText }: { children: ReactNode; hoverText?: strin
   );
 }
 
-export function Button({ variant, size, block, iconLeft, iconRight, hoverText, className, children, type = 'button', ...rest }: Common & ComponentPropsWithoutRef<'button'>) {
+const glass = <LiquidGlassLayer className="btn__glass" borderRadius={28} borderWidth={0.5} blur={8} distortionScale={-90} />;
+
+export function Button({ variant, size, block, iconLeft, iconRight, hoverText, liquid, className, children, type = 'button', ...rest }: Common & ComponentPropsWithoutRef<'button'>) {
   return (
-    <button type={type} className={classes({ variant, size, block }, Boolean(hoverText), className)} {...rest}>
+    <button type={type} className={classes({ variant, size, block, liquid }, Boolean(hoverText), className)} {...rest}>
+      {liquid && glass}
       {iconLeft}
       <Label hoverText={hoverText}>{children}</Label>
       {iconRight}
@@ -39,9 +46,10 @@ export function Button({ variant, size, block, iconLeft, iconRight, hoverText, c
   );
 }
 
-export function ButtonLink({ variant, size, block, iconLeft, iconRight, hoverText, className, children, external, ...rest }: Common & ComponentPropsWithoutRef<'a'> & { external?: boolean }) {
+export function ButtonLink({ variant, size, block, iconLeft, iconRight, hoverText, liquid, className, children, external, ...rest }: Common & ComponentPropsWithoutRef<'a'> & { external?: boolean }) {
   return (
-    <a className={classes({ variant, size, block }, Boolean(hoverText), className)} {...(external ? { target: '_blank', rel: 'noopener' } : {})} {...rest}>
+    <a className={classes({ variant, size, block, liquid }, Boolean(hoverText), className)} {...(external ? { target: '_blank', rel: 'noopener' } : {})} {...rest}>
+      {liquid && glass}
       {iconLeft}
       <Label hoverText={hoverText}>{children}</Label>
       {iconRight}

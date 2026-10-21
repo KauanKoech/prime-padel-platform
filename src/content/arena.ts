@@ -58,6 +58,8 @@ export const arena = {
 };
 
 export const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${arena.address.latitude},${arena.address.longitude}`)}`;
+/** Mapa embutido (sem chave de API), centrado no pino da arena. */
+export const mapsEmbedUrl = `https://www.google.com/maps?q=${arena.address.latitude},${arena.address.longitude}&z=16&hl=pt-BR&output=embed`;
 
 const allPrices = arena.courts.flatMap((c) => c.offers.map((o) => o.priceCents));
 export const lowestPrice = Math.min(...allPrices);

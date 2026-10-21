@@ -32,7 +32,7 @@ export function Hero() {
               {h.titleLead}
             </span>{' '}
             <span className="hero-in" style={delay(1)}>
-              {h.titleMid} <span className="hl">{h.titleAccent}</span>
+              <span className="hero__serif">{h.titleMid}</span> <span className="hero__script">{h.titleAccent}</span>
             </span>
           </h1>
           <p className="hero__lead hero-in" style={delay(2)}>
@@ -42,7 +42,7 @@ export function Hero() {
             <ButtonLink variant="ball" size="lg" hoverText={h.primaryHover} iconRight={<ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />} {...trigger()}>
               {h.primary}
             </ButtonLink>
-            <ButtonLink size="lg" variant="outlineOnBrand" href="#quadras">
+            <ButtonLink size="lg" variant="outlineOnBrand" className="btn--clear" href="#quadras">
               {h.secondary}
             </ButtonLink>
           </div>

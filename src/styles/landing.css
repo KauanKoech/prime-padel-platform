@@ -106,25 +106,78 @@
   stroke: var(--pp-white);
 }
 
-/* ---------- Cabeçalho ---------- */
+/*
+ * ---------- Cabeçalho ----------
+ * Uma pílula de vidro flutuando sobre a página (o topo passa por baixo dela: margem negativa + o hero desconta a
+ * altura). O vidro escurece o que está atrás (brightness) antes do tom verde, para o texto creme seguir legível
+ * mesmo sobre as seções creme. No Chromium e no desktop entra também a refração nas bordas (vidro líquido).
+ */
 .site-header {
   position: sticky;
   top: 0;
   z-index: var(--z-header);
-  background: var(--pp-green-950);
-  transition: background-color var(--dur-base) var(--ease-out);
+  padding-top: var(--header-gap);
+  margin-bottom: calc(-1 * (var(--header-h) + var(--header-gap)));
+  pointer-events: none;
 }
 
-.site-header.is-scrolled {
-  background: var(--pp-green-900);
+/* o menu do celular mora dentro do cabeçalho (que deixa passar cliques em volta da pílula) */
+.site-header .menu {
+  pointer-events: auto;
 }
 
 .site-header__in {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   height: var(--header-h);
+  padding: 0 8px 0 18px;
+  border-radius: var(--radius-pill);
+  pointer-events: auto;
+}
+
+.site-header__glass,
+.btn__glass,
+.wa-float__glass {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.liquid__defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.site-header__glass {
+  background: rgba(18, 29, 23, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(247, 245, 239, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 12px 32px -16px rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4) brightness(0.62);
+  backdrop-filter: blur(16px) saturate(1.4) brightness(0.62);
+  transition: background-color var(--dur-slow) var(--ease-out);
+}
+
+.site-header.is-scrolled .site-header__glass {
+  background: rgba(18, 29, 23, 0.58);
+}
+
+@media (min-width: 960px) {
+  .liquid-ok .site-header__glass.liquid-on {
+    backdrop-filter: var(--liquid) blur(14px) saturate(1.4) brightness(0.62);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .site-header__glass {
+    background: var(--pp-green-900);
+  }
 }
 
 .site-header__logo {
@@ -245,7 +298,8 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 28px 0 var(--wave-h);
+  /* o cabeçalho flutua por cima: o topo desconta a altura dele */
+  padding: calc(var(--header-h) + var(--header-gap) + 28px) 0 var(--wave-h);
 }
 
 /* A aurora sobe da base e some antes do título (máscara), para não disputar com o texto. */
@@ -281,6 +335,26 @@
 
 .hero__title > span {
   display: block;
+}
+
+/* Como nas artes da Prime: sans pesada + serifa fina (o "PADEL" do logo) + a assinatura em script do "Prime". */
+.hero__serif {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+.hero__script {
+  display: inline-block;
+  margin-left: 0.04em;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 1.45em;
+  line-height: 0.7;
+  letter-spacing: 0;
+  color: var(--pp-ball);
+  /* a script desenha além da caixa: respiro para o laço do P e a cauda do e */
+  padding: 0.08em 0.12em 0.04em 0;
 }
 
 .hero__lead {
@@ -362,6 +436,17 @@
   }
 }
 
+/* Vidro não pode ter ancestral com opacidade < 1 (o desfoque só aparece no fim do fade): entram só subindo. */
+.js .hero__mosaic.hero-in {
+  animation-name: hero-rise;
+}
+
+@keyframes hero-rise {
+  from {
+    transform: translateY(14px);
+  }
+}
+
 @media (min-width: 720px) {
   .hero__facts {
     grid-template-columns: repeat(4, auto);
@@ -380,7 +465,7 @@
 
 @media (min-width: 960px) {
   .hero {
-    padding: 0;
+    padding: calc(var(--header-h) + var(--header-gap)) 0 0;
   }
 
   .hero__grid {
@@ -465,15 +550,18 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 12px;
+    padding: 7px 13px;
     border-radius: var(--radius-pill);
-    background: var(--pp-cream);
-    color: var(--pp-ink);
+    background: rgba(18, 29, 23, 0.36);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    -webkit-backdrop-filter: blur(10px) saturate(1.5);
+    backdrop-filter: blur(10px) saturate(1.5);
+    color: var(--pp-white);
     font: 600 0.8125rem / 1.2 var(--font-sans);
   }
 
   .hero__open svg {
-    color: var(--pp-green-700);
+    color: var(--pp-ball);
   }
 }
 
@@ -1148,10 +1236,20 @@
   margin-top: 8px;
 }
 
+/* vidro com a linha branca fina das artes do Prime Cup (as categorias em pílulas contornadas) */
 .events__cats dl > div {
   padding: 12px 14px;
   border-radius: var(--radius-md);
-  background: rgba(18, 29, 23, 0.45);
+  background: rgba(247, 245, 239, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(247, 245, 239, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+  backdrop-filter: blur(12px) saturate(1.3);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .events__cats dl > div {
+    background: rgba(18, 29, 23, 0.45);
+  }
 }
 
 .events__cats dt {
@@ -1344,55 +1442,27 @@
 }
 
 .visit__map {
-  display: none;
   position: relative;
-  width: min(100%, 560px);
-  aspect-ratio: 1;
-  margin: 0 auto;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--pp-green-700, rgba(0, 0, 0, 0.2));
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 24px 60px -24px rgba(0, 0, 0, 0.55);
 }
 
-.visit__rings {
+/* no celular o título (no cartão) vem antes; o mapa fecha a seção */
+@media (max-width: 1023px) {
+  .visit__map {
+    order: 1;
+  }
+}
+
+.visit__frame {
+  display: block;
   width: 100%;
   height: 100%;
-  overflow: visible;
-}
-
-.visit__rings circle {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.24);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-}
-
-.visit__rings .visit__cross {
-  stroke: rgba(255, 255, 255, 0.16);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-}
-
-.visit__rings .visit__pin {
-  fill: var(--pp-ball);
-  stroke: none;
-}
-
-.visit__coords {
-  position: absolute;
-  left: calc(50% + 22px);
-  top: calc(50% + 14px);
-  display: flex;
-  flex-direction: column;
-  font-size: var(--fs-small);
-  line-height: 1.45;
-}
-
-.visit__city {
-  position: absolute;
-  left: 0;
-  bottom: 4%;
-  font: 600 var(--fs-overline) / 1.2 var(--font-sans);
-  letter-spacing: var(--ls-overline);
-  text-transform: uppercase;
-  color: var(--text-on-brand-muted);
+  border: 0;
 }
 
 .visit-card {
@@ -1549,11 +1619,6 @@
   }
 }
 
-@media (min-width: 720px) {
-  .visit__map {
-    display: block;
-  }
-}
 
 @media (min-width: 1024px) {
   .visit__grid {
@@ -1562,7 +1627,9 @@
   }
 
   .visit__map {
-    width: 100%;
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 480px;
   }
 }
 
@@ -1739,10 +1806,34 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--pp-ball);
-  color: var(--pp-ball-ink);
-  box-shadow: 0 0 0 2px var(--pp-green-950), var(--shadow-md);
-  transition: background-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+  color: var(--pp-ball);
+  box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.55);
+  transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+}
+
+/* bola de vidro escuro (legível sobre o creme e sobre o verde), ícone no amarelo da bola */
+.wa-float__glass {
+  background: rgba(18, 29, 23, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(216, 236, 76, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4) brightness(0.62);
+  backdrop-filter: blur(12px) saturate(1.4) brightness(0.62);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.wa-float:hover .wa-float__glass {
+  background: rgba(18, 29, 23, 0.36);
+}
+
+@media (min-width: 960px) {
+  .liquid-ok .wa-float__glass.liquid-on {
+    backdrop-filter: var(--liquid) blur(8px) saturate(1.5) brightness(0.62);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .wa-float__glass {
+    background: var(--pp-green-900);
+  }
 }
 
 /* Sai do caminho quando um botão passa pela faixa de baixo da tela (não cobre CTAs no celular). */
@@ -1753,7 +1844,6 @@
 }
 
 .wa-float:hover {
-  background: #e4f47a;
   transform: translateY(-2px);
 }
 

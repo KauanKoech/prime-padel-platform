@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { arena, mapsUrl, whatsapp } from '../content/arena';
+import { arena, mapsEmbedUrl, mapsUrl, whatsapp } from '../content/arena';
 import { site } from '../content/site';
 import { useBookingTrigger } from '../features/booking/BookingContext';
 import { localDate, weekday } from '../lib/format';
@@ -11,9 +11,7 @@ import { DotField } from './backgrounds/DotField';
 
 const noop = () => () => {};
 
-const coord = (value: number, pos: string, neg: string) => `${Math.abs(value).toFixed(4).replace('.', ',')}° ${value < 0 ? neg : pos}`;
-
-/** Onde estamos: cartão de visita sobre o "alvo" de círculos finos dos posts, centrado no endereço. */
+/** Onde estamos: o mapa do Google com o pino da arena ao lado do cartão de visita. */
 export function Visit() {
   const v = site.visit;
   const trigger = useBookingTrigger();
@@ -26,22 +24,16 @@ export function Visit() {
       {/* fundo: meio-tom de pontos claros e espaçados no verde (kokonutui Dot Field) */}
       <DotField className="visit__bg" spacing={22} seed={29} />
       <div className="container visit__grid">
-        <div className="visit__map" role="img" aria-label={v.mapLabel}>
-          <svg className="visit__rings" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
-            {[70, 140, 210, 280].map((r) => (
-              <circle key={r} cx="300" cy="300" r={r} />
-            ))}
-            <path className="visit__cross" d="M300 0v240M300 360v240M0 300h240M360 300h240" />
-            <circle className="visit__pin" cx="300" cy="300" r="9" />
-          </svg>
-          <p className="visit__coords num" aria-hidden="true">
-            <span>{coord(arena.address.latitude, 'N', 'S')}</span>
-            <span>{coord(arena.address.longitude, 'L', 'O')}</span>
-          </p>
-          <p className="visit__city" aria-hidden="true">
-            {arena.city} · Santa Catarina
-          </p>
-        </div>
+        <Reveal className="visit__map">
+          <iframe
+            className="visit__frame"
+            src={mapsEmbedUrl}
+            title={v.mapLabel}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        </Reveal>
 
         <Reveal className="visit-card">
           <h2 className="visit-card__title" id="visit-title">
