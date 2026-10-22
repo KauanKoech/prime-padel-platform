@@ -33,6 +33,10 @@ const crops = {
   'prof-eduardo': { file: '7.png', rect: { left: 205, top: 142, width: 189, height: 236 }, smaller: [] },
   // Prime Cup: o cartaz oficial inteiro (é a arte do evento, com o texto dele).
   'prime-cup-primavera-2026': { file: '2.png', rect: { left: 0, top: 0, width: 631, height: 787 }, smaller: [400] },
+  // 1º Open Prime Padel: o cartaz oficial inteiro (25 a 28 de junho, R$ 12.000 em premiações).
+  'open-prime-padel': { file: '13.png', rect: { left: 0, top: 0, width: 639, height: 853 }, smaller: [400] },
+  // Day Use de 5 de setembro: o cartaz oficial inteiro.
+  'day-use': { file: '12.png', rect: { left: 0, top: 0, width: 703, height: 873 }, smaller: [400] },
 };
 
 await mkdir(out, { recursive: true });

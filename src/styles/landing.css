@@ -121,14 +121,9 @@
   pointer-events: none;
 }
 
-/* o menu do celular mora dentro do cabeçalho (que deixa passar cliques em volta da pílula) */
-.site-header .menu {
-  pointer-events: auto;
-}
-
 .site-header__in {
   position: relative;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
@@ -230,66 +225,257 @@
   .site-nav {
     display: block;
   }
+
+  .site-header__in {
+    display: flex;
+  }
+
+  .card-nav {
+    display: none;
+  }
 }
 
-/* Menu do celular (tela cheia, verde da marca) */
-.menu {
-  width: 100%;
-  max-width: none;
-  height: 100dvh;
-  max-height: none;
-  margin: 0;
-  padding: 14px 20px calc(24px + env(safe-area-inset-bottom));
-  border: 0;
-  background: var(--pp-green-900);
-  color: var(--pp-cream);
+/*
+ * ---------- Menu do celular: CardNav (React Bits) ----------
+ * A pílula do cabeçalho é o próprio painel: cresce com uma mola e revela os cartões, um depois do outro.
+ * Mesmo vidro do cabeçalho do desktop (escurece o fundo antes do tom verde); aberto fica mais denso para leitura.
+ */
+.card-nav {
+  position: relative;
+  height: var(--header-h);
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.menu[open] {
-  display: flex;
-  flex-direction: column;
-  animation: fade-in var(--dur-base) var(--ease-out);
+.card-nav__panel {
+  position: absolute;
+  inset: 0 0 auto;
+  height: var(--header-h);
+  overflow: hidden;
+  border-radius: 30px;
+  background: rgba(18, 29, 23, 0.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4) brightness(0.62);
+  backdrop-filter: blur(16px) saturate(1.4) brightness(0.62);
+  box-shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.5);
+  transition: background-color var(--dur-slow) var(--ease-out), border-radius var(--dur-slow) var(--ease-out);
 }
 
-.menu::backdrop {
-  background: rgba(18, 29, 23, 0.6);
+.site-header.is-scrolled .card-nav__panel {
+  background: rgba(18, 29, 23, 0.58);
 }
 
-.menu__top {
+.card-nav[data-shown] .card-nav__panel {
+  border-radius: 24px;
+  background: rgba(18, 29, 23, 0.82);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4) brightness(0.55);
+  backdrop-filter: blur(22px) saturate(1.4) brightness(0.55);
+}
+
+.card-nav__rim {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(247, 245, 239, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.card-nav__bar {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: var(--header-h);
+  padding: 0 8px 0 18px;
 }
 
-.menu__top .logo {
-  height: 36px;
+.card-nav__bar .logo {
+  height: 34px;
   width: auto;
 }
 
-.menu nav {
-  margin: 28px 0;
+.card-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.menu nav a {
-  display: block;
-  padding: 10px 0;
-  font: 700 2rem/1.1 var(--font-sans);
-  letter-spacing: -0.03em;
+.card-nav__menu {
+  display: grid;
+  place-items: center;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  padding: 0;
+  border: 1px solid rgba(247, 245, 239, 0.3);
+  border-radius: 50%;
+  background: rgba(247, 245, 239, 0.06);
   color: var(--pp-cream);
-  text-decoration: none;
+  cursor: pointer;
+  transition: border-color var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out);
 }
 
-.menu nav a:hover {
+.card-nav[data-open] .card-nav__menu {
+  border-color: var(--pp-ball);
+  background: rgba(216, 236, 76, 0.1);
   color: var(--pp-ball);
 }
 
-.menu > .btn {
-  margin-top: auto;
+.card-nav__menu:focus-visible,
+.card-nav__link:focus-visible {
+  outline: 2px solid var(--pp-ball);
+  outline-offset: 2px;
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
+/* duas linhas que viram um X */
+.card-nav__burger {
+  position: relative;
+  width: 18px;
+  height: 12px;
+}
+
+.card-nav__line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.75px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), top 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-nav__line--top {
+  top: 2px;
+}
+
+.card-nav__line--bottom {
+  top: 8.25px;
+}
+
+.card-nav[data-open] .card-nav__line--top {
+  top: 5.1px;
+  transform: rotate(45deg);
+}
+
+.card-nav[data-open] .card-nav__line--bottom {
+  top: 5.1px;
+  transform: rotate(-45deg);
+}
+
+.card-nav__content {
+  position: absolute;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  display: grid;
+  gap: 8px;
+  padding: 2px 8px 8px;
+  visibility: hidden;
+}
+
+.card-nav[data-shown] .card-nav__content {
+  visibility: visible;
+}
+
+.card-nav__card {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  padding: 14px 16px 4px;
+  border-radius: 18px;
+  background: rgba(247, 245, 239, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(247, 245, 239, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: var(--pp-cream);
+  transform-origin: 50% 0;
+  will-change: transform, opacity;
+}
+
+.card-nav__label {
+  font: 400 1.375rem / 1.15 var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.card-nav__description {
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--pp-green-200);
+}
+
+.card-nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 20px;
+  margin-top: 2px;
+}
+
+.card-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--tap-min);
+  font: 600 0.9375rem / 1.2 var(--font-sans);
+  color: var(--pp-ball);
+  text-decoration: none;
+}
+
+.card-nav__arrow {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 15px;
+  height: 15px;
+  overflow: hidden;
+}
+
+.card-nav__arrow-icon {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-nav__arrow-icon--in {
+  transform: translate(-110%, 110%);
+}
+
+.card-nav__link:is(:hover, :focus-visible) .card-nav__arrow-icon--out {
+  transform: translate(110%, -110%);
+}
+
+.card-nav__link:is(:hover, :focus-visible) .card-nav__arrow-icon--in {
+  transform: none;
+}
+
+.card-nav__footer {
+  will-change: transform, opacity;
+}
+
+@media (min-width: 640px) {
+  .card-nav__content {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .card-nav__footer {
+    grid-column: 1 / -1;
+  }
+
+  .card-nav__links {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-nav__line,
+  .card-nav__arrow-icon {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .card-nav__panel,
+  .card-nav[data-shown] .card-nav__panel {
+    background: var(--pp-green-900);
   }
 }
 
@@ -1599,6 +1785,56 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.hours__toggle {
+  display: none;
+}
+
+/* Celular: o cartão enxuto. Só a linha de hoje (a semana abre no botão), sem CEP, botões lado a lado. */
+@media (max-width: 719px) {
+  .visit-card {
+    gap: 20px;
+    padding: 24px 20px;
+  }
+
+  .visit-card__cep,
+  .is-collapsed .visit-card__note,
+  .is-collapsed .hours tr:not(.is-today) {
+    display: none;
+  }
+
+  .hours__toggle {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: 0;
+    border: 0;
+    background: none;
+    font: 600 var(--fs-small) / 1.2 var(--font-sans);
+    color: var(--pp-green-700);
+    text-decoration: underline;
+    text-decoration-color: var(--pp-green-300);
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+
+  .visit-card__contacts {
+    gap: 0;
+  }
+
+  .visit-card__actions {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .visit-card__actions .btn {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0 12px;
+    font-size: 0.9375rem;
+    white-space: nowrap;
+  }
 }
 
 @media (min-width: 720px) {

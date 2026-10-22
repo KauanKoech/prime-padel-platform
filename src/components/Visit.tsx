@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 import { arena, mapsEmbedUrl, mapsUrl, whatsapp } from '../content/arena';
 import { site } from '../content/site';
 import { useBookingTrigger } from '../features/booking/BookingContext';
@@ -18,6 +18,9 @@ export function Visit() {
   const wa = arena.contact.whatsapp;
   // Destaca o dia de hoje só depois de montar (o HTML pré-renderizado não sabe que dia é).
   const today = useSyncExternalStore(noop, () => weekday(localDate()), () => null);
+  // No celular a semana fica recolhida no dia de hoje (só depois de montar, quando se sabe que dia é).
+  const [week, setWeek] = useState(false);
+  const collapsed = today !== null && !week;
 
   return (
     <section className="visit on-brand" id="onde-estamos" aria-labelledby="visit-title">
@@ -48,13 +51,13 @@ export function Visit() {
               <br />
               {arena.address.district}, {arena.address.cityState}
               <br />
-              CEP {arena.address.postalCode}
+              <span className="visit-card__cep">CEP {arena.address.postalCode}</span>
             </address>
           </div>
 
-          <div className="visit-card__block">
+          <div className={`visit-card__block${collapsed ? ' is-collapsed' : ''}`}>
             <h3>{v.hoursLabel}</h3>
-            <table className="hours">
+            <table className="hours" id="visit-hours">
               <caption className="sr-only">{v.hoursLabel}</caption>
               <tbody>
                 {arena.hours.map((h) => (
@@ -73,6 +76,11 @@ export function Visit() {
                 ))}
               </tbody>
             </table>
+            {today !== null && (
+              <button type="button" className="hours__toggle" aria-expanded={week} aria-controls="visit-hours" onClick={() => setWeek((w) => !w)}>
+                {week ? v.hoursLess : v.hoursMore}
+              </button>
+            )}
             <p className="visit-card__note">{v.hoursNote}</p>
           </div>
 
