@@ -68,8 +68,8 @@ test('eventos: Prime Cup primeiro, abas com mouse e teclado trocam a arte e o te
   await expect(events.locator('.events__poster img')).toHaveAttribute('src', '/img/fotos/prime-cup-primavera-2026.webp');
 
   await events.getByRole('tab', { name: 'Open Prime Padel' }).click();
-  await expect(panel).toContainText('categoria open masculina');
-  await expect(events.locator('.events__poster img')).toHaveAttribute('src', '/img/open-prime-padel.webp');
+  await expect(panel).toContainText('R$ 12.000 em premiações');
+  await expect(events.locator('.events__poster img')).toHaveAttribute('src', '/img/fotos/open-prime-padel.webp');
   await page.keyboard.press('ArrowRight');
   await expect(events.getByRole('tab', { name: 'Day Use' })).toBeFocused();
   await expect(panel).toContainText('14h às 23h');
@@ -133,9 +133,11 @@ test('menu do celular abre, navega e fecha', async ({ page, isMobile }) => {
   test.skip(!isMobile, 'menu só existe no celular');
   await page.goto('/');
   await page.getByRole('button', { name: 'Abrir menu' }).click();
-  const menu = page.getByRole('dialog', { name: 'Navegação principal' });
-  await expect(menu).toBeVisible();
+  // CardNav: a pílula do cabeçalho cresce e mostra as seções em cartões
+  const menu = page.getByRole('navigation', { name: 'Seções da página' });
+  await expect(page.getByRole('button', { name: 'Fechar menu' })).toHaveAttribute('aria-expanded', 'true');
   await menu.getByRole('link', { name: 'Prime Cup' }).click();
-  await expect(menu).toBeHidden();
+  await expect(page.getByRole('button', { name: 'Abrir menu' })).toHaveAttribute('aria-expanded', 'false');
+  await expect(menu.getByRole('link', { name: 'Prime Cup' })).toBeHidden();
   await expect(page.locator('#eventos')).toBeInViewport();
 });

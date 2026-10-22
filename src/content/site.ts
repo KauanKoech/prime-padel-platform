@@ -30,6 +30,34 @@ export const site = {
     { href: '#onde-estamos', label: 'Onde estamos' },
   ],
 
+  /** Menu do celular (CardNav): as seções em três cartões. */
+  menuCards: [
+    {
+      label: 'Jogar',
+      description: 'Cinco quadras, valores por duração e aulas do zero ao avançado.',
+      links: [
+        { href: '#quadras', label: 'Quadras' },
+        { href: '#aulas', label: 'Aulas' },
+      ],
+    },
+    {
+      label: 'A arena',
+      description: 'Os professores da casa e a West Padel Store.',
+      links: [
+        { href: '#professores', label: 'Professores' },
+        { href: '#loja', label: 'Loja' },
+      ],
+    },
+    {
+      label: 'Encontros',
+      description: 'Prime Cup, Open e Day Use. E como chegar.',
+      links: [
+        { href: '#eventos', label: 'Prime Cup' },
+        { href: '#onde-estamos', label: 'Onde estamos' },
+      ],
+    },
+  ],
+
   header: {
     home: 'Prime Padel, voltar ao início',
     book: 'Agendar quadra',
@@ -174,10 +202,15 @@ export const site = {
         id: 'open',
         tab: 'Open Prime Padel',
         title: '1º Open Prime Padel',
-        meta: 'Categoria open masculina',
-        text: 'A primeira edição do torneio da casa reuniu atletas na categoria open masculina.',
+        meta: '25 a 28 de junho',
+        text: 'A primeira edição do torneio da casa, com R$ 12.000 em premiações e camiseta para os 40 primeiros atletas pagantes.',
         categories: [],
-        image: { src: '/img/open-prime-padel.webp', width: 694, height: 543, alt: 'Arte do 1º Open Prime Padel: "Atletas confirmados, categoria open masculina", com o logo do torneio sobre fundo verde.' } as Photo,
+        image: foto(
+          'open-prime-padel',
+          639,
+          853,
+          'Cartaz do 1º Open Prime Padel, de 25 a 28 de junho, com R$ 12.000 em premiações e realização de Myatã e Terra Engenharia.',
+        ),
       },
       {
         id: 'dayuse',
@@ -186,7 +219,12 @@ export const site = {
         meta: 'Edição de 5 de setembro',
         text: 'Quadras em sistema rotativo das 14h às 23h, com pizza, chopp e drinks. Naquela edição, o valor foi de R$ 50 por pessoa.',
         categories: [],
-        image: { src: '/img/day-use.webp', width: 731, height: 842, alt: 'Arte do Day Use de feriado de 5 de setembro: quadras em sistema rotativo das 14h às 23h, pizzas, chopp e drinks, R$ 50 por pessoa.' } as Photo,
+        image: foto(
+          'day-use',
+          703,
+          873,
+          'Cartaz do Day Use de feriado de 5 de setembro: quadras em sistema rotativo das 14h às 23h, pizzas da Delta, chopp e drinks, R$ 50 por pessoa.',
+        ),
       },
     ],
     note: 'Artes de divulgação da arena, de edições já anunciadas. Datas, categorias e inscrições dos próximos eventos saem primeiro no Instagram.',
@@ -234,6 +272,8 @@ export const site = {
     pending: 'a confirmar',
     today: 'hoje',
     hoursNote: 'Horários informados pela arena. Consulte a equipe sobre feriados.',
+    hoursMore: 'Ver a semana toda',
+    hoursLess: 'Mostrar só hoje',
     route: 'Traçar rota',
     book: 'Agendar quadra',
     mapLabel: 'Localização da Prime Padel em Lages, Santa Catarina',
