@@ -1,9 +1,10 @@
 /*
  * BackgroundPaths: adaptado do kokonutui — Background Paths (https://kokonutui.com, @dorianbaffier, licença MIT).
- * Uma fita de linhas que flui devagar em três camadas de profundidade; o mouse abre as linhas ao passar.
- * Mudanças: vira uma camada decorativa (canvas dentro da seção, eventos da seção), sem Tailwind nem `cn`, sem
- * conteúdo padrão e sem o relógio de troca de tema; cor vinda do CSS (`color` do canvas); DPR até 1,5; pausa fora
- * da tela e com a aba oculta; com movimento reduzido as linhas aparecem inteiras e paradas.
+ * Uma fita de linhas que flui devagar em três camadas de profundidade, sozinha.
+ * Mudanças: vira uma camada decorativa (canvas dentro da seção), sem Tailwind nem `cn`, sem conteúdo padrão e sem
+ * o relógio de troca de tema; cor vinda do CSS (`color` do canvas); DPR até 1,5; pausa fora da tela e com a aba
+ * oculta; com movimento reduzido as linhas aparecem inteiras e paradas. Sem a interação com o mouse e repintado a
+ * ~30 quadros por segundo (o fluxo é lento), para não pesar.
  */
 import { useEffect, useRef } from 'react';
 
@@ -11,18 +12,18 @@ const SAMPLES = 64;
 const OVERSCAN = 0.06;
 const DRAW_MS = 1400;
 const DRAW_STAGGER_MS = 40;
-const PART_RADIUS = 150;
-const PART_PUSH = 56;
+/** O fluxo é lento: ~30 quadros por segundo bastam. */
+const PAINT_MS = 33;
 
-type Layer = { width: number; opacity: number; phase: number; pace: number; part: number };
+type Layer = { width: number; opacity: number; phase: number; pace: number };
 const LAYERS: Layer[] = [
-  { width: 1, opacity: 0.16, phase: 0.6, pace: 0.7, part: 0.45 },
-  { width: 1.25, opacity: 0.26, phase: 0.3, pace: 0.85, part: 0.75 },
-  { width: 1.5, opacity: 0.4, phase: 0, pace: 1, part: 1 },
+  { width: 1, opacity: 0.16, phase: 0.6, pace: 0.7 },
+  { width: 1.25, opacity: 0.26, phase: 0.3, pace: 0.85 },
+  { width: 1.5, opacity: 0.4, phase: 0, pace: 1 },
 ];
 
-type Frame = { width: number; height: number; time: number; drawn: number[]; pointer: { x: number; y: number; amount: number; on: boolean } };
-type Shape = { count: number; spread: number; slope: number; interactive: boolean };
+type Frame = { width: number; height: number; time: number; drawn: number[] };
+type Shape = { count: number; spread: number; slope: number };
 
 /** Altura da linha `s` (-0,5 a 0,5 na fita) no ponto `u` (0 a 1 ao longo dela). */
 function lineY(s: number, u: number, layer: Layer, frame: Frame, shape: Shape, band: number) {
@@ -33,17 +34,6 @@ function lineY(s: number, u: number, layer: Layer, frame: Frame, shape: Shape, b
   const breathe = 0.3 * Math.sin(t * 0.5 + s * 4 + layer.phase);
   const twist = Math.cos(Math.PI * (u - turn) + s * (0.6 + breathe) + layer.phase);
   return center + s * shape.spread * band * twist;
-}
-
-/** Empurra o ponto para longe do cursor, na vertical, com queda suave. */
-function part(x: number, y: number, frame: Frame, strength: number) {
-  const { pointer } = frame;
-  if (pointer.amount < 0.001) return y;
-  const dx = x - pointer.x;
-  const dy = y - pointer.y;
-  const falloff = Math.exp(-(dx * dx + dy * dy) / (PART_RADIUS * PART_RADIUS));
-  const side = dy / (Math.abs(dy) + 24);
-  return y + side * falloff * PART_PUSH * strength * pointer.amount;
 }
 
 function drawLines(ctx: CanvasRenderingContext2D, frame: Frame, shape: Shape, color: string) {
@@ -65,10 +55,8 @@ function drawLines(ctx: CanvasRenderingContext2D, frame: Frame, shape: Shape, co
       const last = Math.max(1, Math.ceil(SAMPLES * drawn));
       for (let k = 0; k <= last; k++) {
         const u = -OVERSCAN + (k / SAMPLES) * (1 + OVERSCAN * 2);
-        const x = u * width;
-        const y = lineY(s, u, layer, frame, shape, band);
-        xs[k] = x;
-        ys[k] = shape.interactive ? part(x, y, frame, layer.part) : y;
+        xs[k] = u * width;
+        ys[k] = lineY(s, u, layer, frame, shape, band);
       }
       ctx.globalAlpha = layer.opacity * (0.45 + 0.55 * (1 - Math.abs(s) * 2));
       ctx.beginPath();
@@ -96,15 +84,13 @@ export function BackgroundPaths({ count = 36, spread = 1, angle = -8, speed = 0.
     if (!canvas || !host || !ctx) return;
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    const shape: Shape = { count, spread, slope: Math.tan((angle * Math.PI) / 180), interactive: fine && !reduce };
+    const shape: Shape = { count, spread, slope: Math.tan((angle * Math.PI) / 180) };
     const perLayer = Math.max(1, Math.round(count / LAYERS.length));
     const frame: Frame = {
       width: 0,
       height: 0,
       time: 40, // começa no meio do fluxo
       drawn: new Array(perLayer * LAYERS.length).fill(reduce ? 1 : 0),
-      pointer: { x: 0, y: 0, amount: 0, on: false },
     };
     let color = getComputedStyle(canvas).color;
     let start = 0;
@@ -131,15 +117,17 @@ export function BackgroundPaths({ count = 36, spread = 1, angle = -8, speed = 0.
         start = now;
         last = now;
       }
-      const dt = Math.min((now - last) / 1000, 0.05);
+      if (now - last < PAINT_MS - 4) {
+        if (visible) raf = requestAnimationFrame(loop);
+        return;
+      }
+      const dt = Math.min((now - last) / 1000, 0.1);
       last = now;
       frame.time += dt * speed;
       const elapsed = now - start;
       for (let i = 0; i < frame.drawn.length; i++) {
         if (frame.drawn[i] < 1) frame.drawn[i] = EASE_OUT(Math.min(Math.max((elapsed - (i % perLayer) * DRAW_STAGGER_MS) / DRAW_MS, 0), 1));
       }
-      const { pointer } = frame;
-      pointer.amount += ((pointer.on ? 1 : 0) - pointer.amount) * 0.08;
       paint();
       if (visible) raf = requestAnimationFrame(loop);
     };
@@ -167,26 +155,11 @@ export function BackgroundPaths({ count = 36, spread = 1, angle = -8, speed = 0.
     io.observe(host);
     document.addEventListener('visibilitychange', update);
 
-    const onMove = (e: PointerEvent) => {
-      if (e.pointerType !== 'mouse' || !shape.interactive) return;
-      const rect = canvas.getBoundingClientRect();
-      frame.pointer.x = e.clientX - rect.left;
-      frame.pointer.y = e.clientY - rect.top;
-      frame.pointer.on = true;
-    };
-    const onLeave = () => {
-      frame.pointer.on = false;
-    };
-    host.addEventListener('pointermove', onMove);
-    host.addEventListener('pointerleave', onLeave);
-
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
       document.removeEventListener('visibilitychange', update);
-      host.removeEventListener('pointermove', onMove);
-      host.removeEventListener('pointerleave', onLeave);
     };
   }, [count, spread, angle, speed]);
 

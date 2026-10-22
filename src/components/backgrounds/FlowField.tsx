@@ -1,10 +1,11 @@
 /*
  * FlowField: adaptado do kokonutui — Flow Field / Wind (https://kokonutui.com, @dorianbaffier, licença MIT).
- * Linhas de vento que derivam devagar; contornam o mouse, deixam redemoinhos no rastro e espalham num clique.
- * Mudanças: vira uma camada decorativa (canvas dentro da seção, que dá o retângulo para o mouse), sem Tailwind,
- * `cn` nem conteúdo; cor vinda do CSS (`color` do canvas), sem o relógio de troca de tema e sem o vigia de DPR;
- * DPR até 1,5; densidade menor no celular; pausa fora da tela e com a aba oculta; quadro parado (linhas de
- * corrente) com movimento reduzido. A física e o desenho são os do original.
+ * Linhas de vento que derivam devagar, sozinhas.
+ * Mudanças: vira uma camada decorativa (canvas dentro da seção), sem Tailwind, `cn` nem conteúdo; cor vinda do
+ * CSS (`color` do canvas), sem o relógio de troca de tema e sem o vigia de DPR; DPR até 1,5; densidade menor no
+ * celular; pausa fora da tela e com a aba oculta; quadro parado (linhas de corrente) com movimento reduzido.
+ * Sem a interação com o mouse (o disco que o ar contornava, os redemoinhos e a rajada do clique) e a ~30 quadros
+ * por segundo, para não pesar. O vento e o desenho são os do original.
  */
 import { useEffect, useRef } from 'react';
 
@@ -20,33 +21,12 @@ const TURN = 1.15;
 const RESPONSE = 9;
 // Trails fade with this time constant (seconds).
 const TRAIL_TAU = 0.22;
-// The cursor is a disc of this radius (px) that the air flows around.
-const DISC_RADIUS = 64;
-const DISC_FOLLOW = 18;
-const DISC_RISE = 7;
-// Moving faster than this (px/s) sheds vortices behind the disc.
-const SHED_SPEED = 150;
-const SHED_MS = 42;
-const MAX_VORTICES = 30;
-// Each shed vortex: core radius (px), strength per px/s of cursor speed,
-// how fast it weakens (s) and how fast its core spreads (s).
-const VORTEX_CORE = 30;
-const VORTEX_GAIN = 0.62 * Math.PI * 2 * VORTEX_CORE * 0.5;
-const VORTEX_TAU = 1.1;
-const VORTEX_SPREAD = 0.5;
-const MAX_CURSOR_SPEED = 1600;
-// A click sends a ring of wind outwards.
-const GUST_MS = 1300;
-const GUST_SPEED = 0.62; // px per ms
-const GUST_WIDTH = 64;
-const GUST_STRENGTH = 560; // px/s at the crest
 // Four alpha levels: each is one stroked path, so a frame is four draw calls.
 const BUCKETS = [0.18, 0.34, 0.54, 0.8] as const;
 // Segments longer than this are a wrap or a push, not motion.
 const MAX_SEGMENT = 40;
-// The drift alone is slow; half the frame rate looks the same and costs
-// half as much. Anything following the hand gets every frame.
-const IDLE_FRAME_MS = 33;
+// The drift is slow; half the frame rate looks the same and costs half as much.
+const FRAME_MS = 33;
 // Destination-out can't fade the last few alpha levels in small steps, so
 // while frames are short a stronger pass clears that residue once a second.
 const CLEANUP_MS = 1000;
@@ -132,43 +112,10 @@ function createNoise(seed: number) {
 
 type Noise = ReturnType<typeof createNoise>;
 
-/** The cursor, as a solid disc the air has to go around. */
-interface Disc {
-  x: number;
-  y: number;
-  targetX: number;
-  targetY: number;
-  vx: number;
-  vy: number;
-  /** 0 to 1: grows when the cursor arrives, shrinks when it leaves. */
-  amount: number;
-  on: boolean;
-  lastShed: number;
-  side: number;
-}
-
-/** A Lamb-Oseen vortex shed by the moving disc. */
-interface Vortex {
-  x: number;
-  y: number;
-  gamma: number;
-  age: number;
-}
-
-interface Gust {
-  x: number;
-  y: number;
-  start: number;
-}
-
 interface Air {
   noise: Noise;
   time: number;
   wind: number;
-  disc: Disc;
-  vortices: Vortex[];
-  gusts: Gust[];
-  now: number;
 }
 
 // Scratch vector the field functions write into, so a frame allocates
@@ -183,129 +130,6 @@ function baseWind(air: Air, x: number, y: number) {
     TURN;
   out.x = Math.cos(angle) * air.wind;
   out.y = Math.sin(angle) * air.wind;
-}
-
-/**
- * Potential flow around a disc: the local wind (relative to the moving disc)
- * plus a doublet, so streams split ahead of it, speed up round its sides and
- * close up behind. In complex form, u - iv = conj(w) - (w - V) R^2 / z^2.
- */
-function addDisc(disc: Disc, x: number, y: number) {
-  const radius = DISC_RADIUS * disc.amount;
-  const dx = x - disc.x;
-  const dy = y - disc.y;
-  const r2 = Math.max(dx * dx + dy * dy, radius * radius);
-  const k = (radius * radius) / (r2 * r2);
-  const rx = out.x - disc.vx;
-  const ry = out.y - disc.vy;
-  const p = dx * dx - dy * dy;
-  const q = -2 * dx * dy;
-  out.x -= k * (rx * p - ry * q);
-  out.y += k * (rx * q + ry * p);
-}
-
-function addVortices(vortices: Vortex[], x: number, y: number) {
-  for (const v of vortices) {
-    const dx = x - v.x;
-    const dy = y - v.y;
-    const r2 = dx * dx + dy * dy + 1;
-    const core = VORTEX_CORE * VORTEX_CORE * (1 + v.age / VORTEX_SPREAD);
-    const swirl =
-      ((v.gamma * Math.exp(-v.age / VORTEX_TAU)) / (2 * Math.PI * r2)) *
-      (1 - Math.exp(-r2 / core));
-    out.x -= swirl * dy;
-    out.y += swirl * dx;
-  }
-}
-
-function addGusts(gusts: Gust[], now: number, x: number, y: number) {
-  for (const g of gusts) {
-    const age = now - g.start;
-    const dx = x - g.x;
-    const dy = y - g.y;
-    const r = Math.hypot(dx, dy) + 0.001;
-    const d = r - age * GUST_SPEED;
-    const fadeOut = 1 - age / GUST_MS;
-    const push =
-      GUST_STRENGTH *
-      fadeOut *
-      fadeOut *
-      Math.exp(-(d * d) / (2 * GUST_WIDTH * GUST_WIDTH));
-    out.x += (push * dx) / r;
-    out.y += (push * dy) / r;
-  }
-}
-
-/** The air's velocity at one point, written into `out`. */
-function velocityAt(air: Air, x: number, y: number) {
-  baseWind(air, x, y);
-  if (air.disc.amount > 0.002) {
-    addDisc(air.disc, x, y);
-  }
-  if (air.vortices.length > 0) {
-    addVortices(air.vortices, x, y);
-  }
-  if (air.gusts.length > 0) {
-    addGusts(air.gusts, air.now, x, y);
-  }
-}
-
-/** Glide the disc after the cursor and shed vortices off its sides. */
-function stepDisc(disc: Disc, vortices: Vortex[], dt: number, now: number) {
-  const px = disc.x;
-  const py = disc.y;
-  const follow = 1 - Math.exp(-DISC_FOLLOW * dt);
-  disc.x += (disc.targetX - disc.x) * follow;
-  disc.y += (disc.targetY - disc.y) * follow;
-  const goal = disc.on ? 1 : 0;
-  disc.amount += (goal - disc.amount) * (1 - Math.exp(-DISC_RISE * dt));
-  if (disc.amount < 0.002 && !disc.on) {
-    disc.amount = 0;
-  }
-  const smooth = 1 - Math.exp(-14 * dt);
-  disc.vx += ((disc.x - px) / dt - disc.vx) * smooth;
-  disc.vy += ((disc.y - py) / dt - disc.vy) * smooth;
-
-  const speed = Math.hypot(disc.vx, disc.vy);
-  if (
-    speed < SHED_SPEED ||
-    disc.amount < 0.5 ||
-    now - disc.lastShed < SHED_MS
-  ) {
-    return;
-  }
-  disc.lastShed = now;
-  disc.side = -disc.side;
-  const ux = disc.vx / speed;
-  const uy = disc.vy / speed;
-  const radius = DISC_RADIUS * disc.amount;
-  // Alternate sides, like the vortex street behind a cylinder. The air
-  // dragged along the disc's flank sets which way each one spins.
-  vortices.push({
-    x: disc.x - ux * radius * 0.9 - uy * disc.side * radius * 0.55,
-    y: disc.y - uy * radius * 0.9 + ux * disc.side * radius * 0.55,
-    gamma: disc.side * VORTEX_GAIN * Math.min(speed, MAX_CURSOR_SPEED),
-    age: 0,
-  });
-  if (vortices.length > MAX_VORTICES) {
-    vortices.shift();
-  }
-}
-
-/** Age the wake: vortices drift downwind and weaken until they're gone. */
-function stepWake(air: Air, dt: number) {
-  for (const v of air.vortices) {
-    baseWind(air, v.x, v.y);
-    v.x += out.x * 0.85 * dt;
-    v.y += out.y * 0.85 * dt;
-    v.age += dt;
-  }
-  while (air.vortices.length > 0 && air.vortices[0].age > VORTEX_TAU * 3.5) {
-    air.vortices.shift();
-  }
-  while (air.gusts.length > 0 && air.now - air.gusts[0].start > GUST_MS) {
-    air.gusts.shift();
-  }
 }
 
 /** Particle state as flat arrays: cheap to walk 700 times a frame. */
@@ -392,23 +216,6 @@ interface StepContext {
   dt: number;
 }
 
-/** Push a particle the disc swept over back out to its surface. */
-function keepOutOfDisc(p: Particles, i: number, disc: Disc) {
-  if (disc.amount === 0) {
-    return;
-  }
-  const radius = DISC_RADIUS * disc.amount;
-  const dx = p.x[i] - disc.x;
-  const dy = p.y[i] - disc.y;
-  const r2 = dx * dx + dy * dy;
-  if (r2 >= radius * radius || r2 < 0.0001) {
-    return;
-  }
-  const r = Math.sqrt(r2);
-  p.x[i] = disc.x + (dx / r) * radius;
-  p.y[i] = disc.y + (dy / r) * radius;
-}
-
 function stepParticle(c: StepContext, i: number) {
   const { air, particles: p, dt } = c;
   p.life[i] += dt;
@@ -418,21 +225,19 @@ function stepParticle(c: StepContext, i: number) {
   }
   const x0 = p.x[i];
   const y0 = p.y[i];
-  velocityAt(air, x0, y0);
+  baseWind(air, x0, y0);
   const take = 1 - Math.exp(-RESPONSE * dt);
   p.vx[i] += (out.x * p.pace[i] - p.vx[i]) * take;
   p.vy[i] += (out.y * p.pace[i] - p.vy[i]) * take;
   p.x[i] = wrap(x0 + p.vx[i] * dt, c.width);
   p.y[i] = wrap(y0 + p.vy[i] * dt, c.height);
-  keepOutOfDisc(p, i, air.disc);
 
   const sx = p.x[i] - x0;
   const sy = p.y[i] - y0;
   if (sx * sx + sy * sy > MAX_SEGMENT * MAX_SEGMENT) {
     return;
   }
-  // Faster air draws darker, so the wake and the flanks of the disc stand
-  // out against the drift.
+  // Faster air draws darker.
   const pace = Math.hypot(p.vx[i], p.vy[i]) / (air.wind * 2.4 + 1);
   const intensity = envelope(p.life[i], p.maxLife[i]) * Math.min(1, 0.4 + pace);
   const path = c.paths[bucketOf(intensity)];
@@ -480,117 +285,6 @@ function createAir(speed: number): Air {
     time: 0,
     // A still frame (speed 0) is still traced with the default wind.
     wind: WIND * (speed > 0 ? speed : 1),
-    disc: {
-      x: 0,
-      y: 0,
-      targetX: 0,
-      targetY: 0,
-      vx: 0,
-      vy: 0,
-      amount: 0,
-      on: false,
-      lastShed: 0,
-      side: 1,
-    },
-    vortices: [],
-    gusts: [],
-    now: 0,
-  };
-}
-
-/** Pointer events (on the window) mapped onto the disc and gusts. */
-function bindPointer(
-  root: HTMLElement,
-  air: Air,
-  wake: () => void,
-  isVisible: () => boolean
-) {
-  const local = (event: PointerEvent) => {
-    const rect = root.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
-    return { x, y, inside };
-  };
-  const onLeave = () => {
-    air.disc.on = false;
-  };
-  const onMove = (event: PointerEvent) => {
-    // A finger only stirs the air while it's down.
-    if (
-      !isVisible() ||
-      (event.pointerType === "touch" && event.buttons === 0)
-    ) {
-      return;
-    }
-    const point = local(event);
-    const disc = air.disc;
-    if (!point.inside) {
-      disc.on = false;
-      return;
-    }
-    if (disc.amount < 0.05) {
-      // Appear where the cursor came in rather than sliding over from the
-      // last place it left.
-      disc.x = point.x;
-      disc.y = point.y;
-      disc.vx = 0;
-      disc.vy = 0;
-    }
-    disc.targetX = point.x;
-    disc.targetY = point.y;
-    disc.on = true;
-    wake();
-  };
-  const onOut = (event: PointerEvent) => {
-    if (!event.relatedTarget) {
-      onLeave();
-    }
-  };
-  const onUp = (event: PointerEvent) => {
-    if (event.pointerType === "touch") {
-      onLeave();
-    }
-  };
-  const onDown = (event: PointerEvent) => {
-    if (!isVisible() || event.button !== 0) {
-      return;
-    }
-    // Clicks on the content (links, buttons, fields) are not gusts.
-    const target = event.target instanceof Element ? event.target : null;
-    if (
-      target?.closest(
-        "a, button, input, textarea, select, label, [role='button']"
-      )
-    ) {
-      return;
-    }
-    const point = local(event);
-    if (!point.inside) {
-      return;
-    }
-    air.gusts.push({ x: point.x, y: point.y, start: performance.now() });
-    if (air.gusts.length > 4) {
-      air.gusts.shift();
-    }
-    onMove(event);
-    wake();
-  };
-
-  const options = { passive: true };
-  window.addEventListener("pointermove", onMove, options);
-  window.addEventListener("pointerdown", onDown, options);
-  window.addEventListener("pointerup", onUp, options);
-  window.addEventListener("pointercancel", onLeave, options);
-  document.addEventListener("pointerout", onOut, options);
-  window.addEventListener("blur", onLeave);
-  return () => {
-    window.removeEventListener("pointermove", onMove);
-    window.removeEventListener("pointerdown", onDown);
-    window.removeEventListener("pointerup", onUp);
-    window.removeEventListener("pointercancel", onLeave);
-    document.removeEventListener("pointerout", onOut);
-    window.removeEventListener("blur", onLeave);
   };
 }
 
@@ -605,7 +299,6 @@ export function FlowField({ density = 1, speed = 1, className }: { density?: num
     if (!canvas || !host || !ctx) return;
 
     const still = speed <= 0 || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const air = createAir(speed);
     const particles = new Particles();
     const size = { width: 0, height: 0 };
@@ -638,8 +331,6 @@ export function FlowField({ density = 1, speed = 1, className }: { density?: num
       if (still) paintStill();
     };
 
-    const isActive = () => air.disc.on || air.disc.amount > 0 || air.vortices.length > 0 || air.gusts.length > 0;
-
     // O rastro some apagando um pouco de alfa por quadro: o canvas segue transparente sobre a seção.
     const fade = (dt: number, now: number) => {
       ctx.globalCompositeOperation = 'destination-out';
@@ -659,13 +350,10 @@ export function FlowField({ density = 1, speed = 1, className }: { density?: num
       raf = 0;
       if (!visible) return;
       raf = requestAnimationFrame(frame);
-      if (!isActive() && now - lastStep < IDLE_FRAME_MS - 4) return;
-      const dt = lastStep ? Math.min((now - lastStep) / 1000, 0.05) : 1 / 60;
+      if (now - lastStep < FRAME_MS - 4) return;
+      const dt = lastStep ? Math.min((now - lastStep) / 1000, 0.05) : 1 / 30;
       lastStep = now;
-      air.now = now;
       air.time += dt * speed;
-      stepDisc(air.disc, air.vortices, dt, now);
-      stepWake(air, dt);
       fade(dt, now);
       const paths = BUCKETS.map(() => new Path2D());
       const step: StepContext = { air, particles, paths, width: size.width, height: size.height, dt };
@@ -698,14 +386,12 @@ export function FlowField({ density = 1, speed = 1, className }: { density?: num
     });
     io.observe(host);
     document.addEventListener('visibilitychange', update);
-    const unbind = fine && !still ? bindPointer(host, air, start, () => visible) : undefined;
 
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
       document.removeEventListener('visibilitychange', update);
-      unbind?.();
     };
   }, [density, speed]);
 

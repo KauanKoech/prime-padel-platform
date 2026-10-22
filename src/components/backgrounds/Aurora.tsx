@@ -1,8 +1,9 @@
 /*
  * Aurora: adaptado de React Bits — Aurora (https://reactbits.dev, licença MIT).
- * Uma cortina de luz que ondula devagar e sobe um pouco perto do cursor.
- * Mudanças: TypeScript; vira uma camada decorativa (o canvas ocupa o pai, que recebe os eventos), sem
- * contêiner próprio; paleta da marca (verde e um toque de amarelo); DPR limitado a 1,5; pausa fora da tela e
+ * Uma cortina de luz que ondula devagar, sozinha.
+ * Mudanças: TypeScript; vira uma camada decorativa (o canvas ocupa o pai), sem contêiner próprio; paleta da marca
+ * (verde e um toque de amarelo); sem a interação com o mouse; como a luz é toda difusa, desenha em meia
+ * resolução (o CSS estica o canvas) e a ~30 quadros por segundo, para não pesar na GPU; pausa fora da tela e
  * com a aba oculta; com movimento reduzido desenha um quadro parado e não anima; no desmonte apaga programa e
  * buffers mas não chama `loseContext` (no StrictMode o efeito monta duas vezes no mesmo canvas); com WebGL em
  * software (sem GPU) não desenha e deixa o CSS mostrar um brilho parado (`.is-fallback`).
@@ -12,6 +13,9 @@ import { useEffect, useRef } from 'react';
 const MAX_STOPS = 5;
 const MAX_LAYERS = 3;
 const INTRO_SECONDS = 2.4;
+/** Pixels desenhados por pixel CSS: a luz é difusa, meia resolução não aparece e custa um quarto. */
+const RENDER_SCALE = 0.5;
+const FRAME_MS = 33;
 
 const VERTEX = `#version 300 es
 in vec2 aPosition;
@@ -34,7 +38,6 @@ uniform float uGlow;
 uniform float uBrightness;
 uniform int uLayers;
 uniform float uFlip;
-uniform vec3 uPointer;
 uniform float uReveal;
 uniform float uOpacity;
 out vec4 outColor;
@@ -110,7 +113,6 @@ void main() {
   float u = frag.x / uResolution.x;
   float X = (frag.x - uResolution.x * 0.5) / uResolution.y;
   float t = uTime;
-  float reach = uPointer.z * exp(-pow((X - uPointer.x) / 0.38, 2.0));
 
   vec3 glow = vec3(0.0);
   float cover = 0.0;
@@ -123,7 +125,6 @@ void main() {
     float wave = snoise(vec2(X * 0.75 * uScale + warp * 0.35 - pace * 0.03 + seed, pace * 0.07 - seed)) * 0.72
       + snoise(vec2(X * 1.6 * uScale + warp * 0.5 + pace * 0.04 - seed, pace * 0.1 + seed * 0.5)) * 0.28;
     float hem = uHeight + layer * 0.07 + wave * 0.15 * uAmplitude;
-    hem += reach * 0.08 * (layer < 0.5 ? 1.0 : 0.4);
     hem = mix(-0.25, hem, uReveal);
 
     float soft = (0.04 + uBlend * 0.16) * (1.0 + layer * 0.9);
@@ -133,7 +134,7 @@ void main() {
     float body = pow(smootherstep(low, high, rise), 1.5 + uGlow * 0.6);
     float lobes = 0.86 + 0.14 * snoise(vec2(X * 0.9 * uScale - pace * 0.025 + seed, y * 0.3 + pace * 0.04));
     float alpha = body * lobes * (layer < 0.5 ? 1.0 : 0.32 / layer);
-    alpha = clamp(alpha * (1.0 + reach * 0.25 * smootherstep(0.9, 0.0, abs(y - hem))), 0.0, 1.0);
+    alpha = clamp(alpha, 0.0, 1.0);
 
     vec3 tint = ramp(u + 0.05 * sin(pace * 0.08 + layer * 2.3) + layer * 0.1 + max(rise, 0.0) * 0.05);
     glow = 1.0 - (1.0 - glow) * (1.0 - tint * alpha);
@@ -266,7 +267,6 @@ export function Aurora({ colors, height = 0.45, amplitude = 1, blend = 0.5, glow
       bright: U('uBrightness'),
       layers: U('uLayers'),
       flip: U('uFlip'),
-      pointer: U('uPointer'),
       reveal: U('uReveal'),
       opacity: U('uOpacity'),
     };
@@ -285,9 +285,7 @@ export function Aurora({ colors, height = 0.45, amplitude = 1, blend = 0.5, glow
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const flip = direction === 'bottom' ? 1 : 0;
-    const view = { width: 1, height: 1 };
-    const pointer = { x: 0, y: 0, inside: false };
-    const state = { clock: 7, px: 0, py: 0.5, reach: 0, reveal: reduce ? 1 : 0 };
+    const state = { clock: 7, reveal: reduce ? 1 : 0 };
     let raf = 0;
     let last = 0;
     let visible = true;
@@ -308,7 +306,6 @@ export function Aurora({ colors, height = 0.45, amplitude = 1, blend = 0.5, glow
       gl.uniform1f(u.bright, brightness);
       gl.uniform1i(u.layers, clamp(Math.round(layers), 1, MAX_LAYERS));
       gl.uniform1f(u.flip, flip);
-      gl.uniform3f(u.pointer, state.px, state.py, state.reach);
       gl.uniform1f(u.reveal, 1 - Math.pow(1 - state.reveal, 3));
       gl.uniform1f(u.opacity, opacity);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -317,15 +314,13 @@ export function Aurora({ colors, height = 0.45, amplitude = 1, blend = 0.5, glow
     const frame = (now: number) => {
       raf = 0;
       if (!visible || document.hidden) return;
-      const dt = last ? clamp((now - last) / 1000, 0.0005, 0.05) : 1 / 60;
+      if (last && now - last < FRAME_MS - 4) {
+        raf = requestAnimationFrame(frame);
+        return;
+      }
+      const dt = last ? clamp((now - last) / 1000, 0.0005, 0.1) : 1 / 30;
       last = now;
       state.clock += dt * speed * 0.6;
-      const follow = 1 - Math.exp(-dt / 0.6);
-      if (pointer.inside) {
-        state.px += ((pointer.x - view.width / 2) / view.height - state.px) * follow;
-        state.py += ((flip ? 1 - pointer.y / view.height : pointer.y / view.height) - state.py) * follow;
-      }
-      state.reach += ((pointer.inside ? 1 : 0) - state.reach) * (1 - Math.exp(-dt / (pointer.inside ? 0.9 : 1.4)));
       if (state.reveal < 1) state.reveal = Math.min(1, state.reveal + dt / INTRO_SECONDS);
       render();
       raf = requestAnimationFrame(frame);
@@ -342,24 +337,11 @@ export function Aurora({ colors, height = 0.45, amplitude = 1, blend = 0.5, glow
     const resize = () => {
       const width = Math.max(1, host.clientWidth);
       const h = Math.max(1, host.clientHeight);
-      const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-      view.width = width;
-      view.height = h;
-      canvas.width = Math.round(width * ratio);
-      canvas.height = Math.round(h * ratio);
+      canvas.width = Math.max(1, Math.round(width * RENDER_SCALE));
+      canvas.height = Math.max(1, Math.round(h * RENDER_SCALE));
       render();
     };
 
-    const onMove = (e: PointerEvent) => {
-      if (e.pointerType !== 'mouse') return;
-      const r = host.getBoundingClientRect();
-      pointer.x = e.clientX - r.left;
-      pointer.y = e.clientY - r.top;
-      pointer.inside = pointer.x >= 0 && pointer.y >= 0 && pointer.x <= r.width && pointer.y <= r.height;
-    };
-    const onLeave = () => {
-      pointer.inside = false;
-    };
     const onVisibility = () => wake();
 
     resize();
@@ -372,10 +354,6 @@ export function Aurora({ colors, height = 0.45, amplitude = 1, blend = 0.5, glow
     });
     io.observe(host);
     document.addEventListener('visibilitychange', onVisibility);
-    if (!reduce) {
-      host.addEventListener('pointermove', onMove);
-      host.addEventListener('pointerleave', onLeave);
-    }
     wake();
 
     return () => {
@@ -383,8 +361,6 @@ export function Aurora({ colors, height = 0.45, amplitude = 1, blend = 0.5, glow
       ro.disconnect();
       io.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
-      host.removeEventListener('pointermove', onMove);
-      host.removeEventListener('pointerleave', onLeave);
       gl.deleteProgram(program);
       gl.deleteBuffer(buffer);
       gl.deleteVertexArray(vao);
